@@ -16,6 +16,10 @@ public class PostEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private AccountEntity uploader;
+
     @Column(nullable = false, length = 255)
     private String title;
 

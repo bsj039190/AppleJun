@@ -8,6 +8,6 @@ public class Test {
 
     @GetMapping("/ttt")
     public String test() {
-        return "he is alive!";
+        return "니말랄루?";
     }
 }

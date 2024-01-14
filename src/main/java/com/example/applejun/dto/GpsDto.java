@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class GpsDto {
     private Long id;
+    private String name;
     private double gpsLng;
     private double gpsLat;
     private String url;

@@ -8,6 +8,6 @@ public class Test {
 
     @GetMapping("/ttt")
     public String test() {
-        return "준";
+        return "식";
     }
 }

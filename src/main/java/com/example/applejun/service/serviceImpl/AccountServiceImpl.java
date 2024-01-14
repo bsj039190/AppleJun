@@ -23,6 +23,7 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
 
+
     @Override
     public List<AccountDto> getAccountList(Pageable pageable) {
         Page<AccountEntity> accountEntityPage = accountRepository.findAll(pageable);

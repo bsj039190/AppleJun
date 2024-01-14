@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 public interface GpsMapper {
     GpsMapper INSTANCE = Mappers.getMapper(GpsMapper.class);
 
-    GpsResponse gpsDtoToResponse(GpsResponse gpsResponse);
+    GpsResponse gpsDtoToResponse(GpsDto gpsDto);
 
     GpsDto gpsEntityToDto(GpsEntity gpsEntity);
 

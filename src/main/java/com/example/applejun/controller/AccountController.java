@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 public class AccountController {
 
-    private final AccountServiceImpl accountService;
+    private final AccountService accountService;
 
     @GetMapping("/aaa")
     public String test() {
@@ -59,7 +59,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/get/{id}")
-    public ResponseEntity<BaseResponse> getCenter(@PathVariable("id") @NotBlank String id) {
+    public ResponseEntity<BaseResponse> getAccount(@PathVariable("id") @NotBlank String id) {
         log.debug("start get account. id = {}", id);
 
         AccountDto accountDto = accountService.getAccount(Long.parseLong(id));

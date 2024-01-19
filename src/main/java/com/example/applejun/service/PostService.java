@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostService {
     List<PostDto> getPostList(Pageable pageable);
-    List<PostDto> getPostListByTitle(String title);
+    List<PostDto> getPostListByTitle(String title, Pageable pageable);
     Long getPostSize();
     PostDto getPost(Long id);
     void createPost(PostDto postDto);

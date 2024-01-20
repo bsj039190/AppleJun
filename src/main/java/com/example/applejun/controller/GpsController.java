@@ -2,7 +2,6 @@ package com.example.applejun.controller;
 
 import com.example.applejun.dto.GpsDto;
 import com.example.applejun.mapper.GpsMapper;
-import com.example.applejun.request.AccountRequest;
 import com.example.applejun.request.GpsRequest;
 import com.example.applejun.response.BaseResponse;
 import com.example.applejun.response.BindingErrorResponse;
@@ -32,7 +31,7 @@ import java.util.List;
 public class GpsController {
     private final GpsService gpsService;
 
-    @GetMapping("gps/get/list")
+    @GetMapping("/gps/get/list")
     public ResponseEntity<BaseResponse> getGpsList(@PageableDefault (sort = {"id"},
             direction = Sort.Direction.DESC) Pageable pageable) {
         log.debug("start get gps list.");

@@ -97,7 +97,7 @@ public class GpsServiceImpl implements GpsService {
 
     @Override
     public void deleteGps(Long id) {
-        if (gpsRepository.findById(id).isPresent()) {
+        if (!gpsRepository.findById(id).isPresent()) {
             throw new RuntimeException("gps not found.");
         }
 

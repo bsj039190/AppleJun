@@ -90,7 +90,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePost(Long id) {
-        if (postRepository.findById(id).isPresent()) {
+        if (!postRepository.findById(id).isPresent()) {
             throw new RuntimeException("post not found.");
         }
 

@@ -32,6 +32,9 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    
+    //포스트맨 테스트 완료
+    
     @GetMapping("/aaa")
     public String test() {
         log.warn("Um jun sik");
@@ -88,7 +91,7 @@ public class AccountController {
 
         accountService.createAccount(accountDto);
 
-        log.debug("end create account");
+        log.debug("end create account. id = {}", accountDto.getId());
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new BaseResponse(HttpStatus.CREATED.value(), "success"));

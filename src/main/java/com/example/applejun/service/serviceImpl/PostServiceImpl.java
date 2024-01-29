@@ -69,11 +69,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void createPost(PostDto postDto) {
+        log.debug("Ummmmm");
         PostEntity postEntity = PostMapper.INSTANCE.postDtoToEntity(postDto);
 
         if (postRepository.save(postEntity) == null) {
+            log.debug("Junnnnn");
             throw new RuntimeException("post not found.");
         }
+        log.debug("Sikkkkk");
     }
 
     @Override

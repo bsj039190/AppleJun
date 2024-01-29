@@ -55,6 +55,8 @@ public class AccountServiceImpl implements AccountService {
         if (accountRepository.save(accountEntity) == null) {
             throw new RuntimeException("account save failed.");
         }
+
+        log.debug("success save account. id = {}", accountEntity.getId());
     }
 
     @Override

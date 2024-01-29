@@ -31,6 +31,9 @@ import java.util.List;
 public class GpsController {
     private final GpsService gpsService;
 
+
+    //서브젝트 들어가있는 2개 빼고 완료, repository가 문제인거같음
+
     @GetMapping("/gps/get/list")
     public ResponseEntity<BaseResponse> getGpsList(@PageableDefault (sort = {"id"},
             direction = Sort.Direction.DESC) Pageable pageable) {

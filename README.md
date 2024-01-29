@@ -10,5 +10,5 @@
 6. ~~상세 서비스 만들기~~
 7. ~~상세 서비스 테스트~~
 8. 로그가 안된다고 하는데 작동은 잘됨, 해결하기
-9. postman 써서 실제로 돌려보기
+9. postman 써서 실제로 돌려보기, post에서 create가 안되고 있음, Customizer를 못찾는다고 ClassNotFountException이 뜸
 10. 이미지 업로드 만들기

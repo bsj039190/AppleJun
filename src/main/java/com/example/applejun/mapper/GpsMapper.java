@@ -14,10 +14,12 @@ public interface GpsMapper {
 
     GpsResponse gpsDtoToResponse(GpsDto gpsDto);
 
+    @Mapping(source = "post.id", target = "post")
     GpsDto gpsEntityToDto(GpsEntity gpsEntity);
 
     @Mapping(target = "id", ignore = true)
     GpsDto gpsRequestToDto(GpsRequest gpsRequest);
 
+    @Mapping(source = "post", target = "post.id")
     GpsEntity gpsDtoToEntity(GpsDto gpsDto);
 }

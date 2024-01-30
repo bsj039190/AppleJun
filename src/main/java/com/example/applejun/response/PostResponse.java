@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +18,7 @@ public class PostResponse {
     private Long uploader;
     private LocalDate date;
     private String content;
-    private Long gps1;
-    private Long gps2;
-    private Long gps3;
+    private List<Long> gps;
 
     //사진 일단 건너뜀
 }

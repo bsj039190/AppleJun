@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -17,7 +19,7 @@ public class PostEntity extends BaseEntity{
     private Long id;
 
     @JoinColumn(name = "account_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private AccountEntity uploader;
 
     @Column(nullable = false, length = 255)
@@ -29,17 +31,9 @@ public class PostEntity extends BaseEntity{
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
-    @JoinColumn(name = "gps_id1") //Cascade는 나중에 확인해보기
-    @ManyToOne(cascade = CascadeType.ALL)
-    private GpsEntity gps1;
-
-    @JoinColumn(name = "gps_id2")
-    @ManyToOne(cascade = CascadeType.ALL)
-    private GpsEntity gps2;
-
-    @JoinColumn(name = "gps_id3")
-    @ManyToOne(cascade = CascadeType.ALL)
-    private GpsEntity gps3;
+    @JoinColumn(name = "gps_id") //Cascade는 나중에 확인해보기
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<GpsEntity> gps;
 
     /*@Column
     private 사진 업로드*/

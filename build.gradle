@@ -24,11 +24,13 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 
 	//implementation 'javax.persistence:javax.persistence-api:2.2' // javax.persistence 라이브러리
 	implementation 'org.hibernate:hibernate-core:5.6.9.Final' // Hibernate 라이브러리
 	implementation 'org.hibernate:hibernate-entitymanager:5.6.9.Final' // Hibernate Entity Manager
 	implementation 'com.h2database:h2:1.4.200' // H2 데이터베이스 (옵션, 개발 및 테스트 용도)
+	implementation 'commons-io:commons-io:2.11.0' //사진 업로드
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
 	//implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4' //사진업로드

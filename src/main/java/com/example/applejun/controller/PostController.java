@@ -31,6 +31,7 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
+    //포스트맨 테스트 완료
     @GetMapping("/post/get/list")
     public ResponseEntity<BaseResponse> getPostList(@PageableDefault(sort = {"id"},
             direction = Sort.Direction.DESC) Pageable pageable) {

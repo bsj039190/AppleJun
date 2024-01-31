@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageRequest {
+public class ProfileImageRequest {
     private String originalFileName;
     private String savedFileName;
 }

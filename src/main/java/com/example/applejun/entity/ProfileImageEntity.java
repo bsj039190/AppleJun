@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "TB_IMAGE")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ImageEntity extends BaseEntity{
+public class ProfileImageEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

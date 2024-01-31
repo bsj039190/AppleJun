@@ -17,7 +17,7 @@ public class PostEntity extends BaseEntity{
     private Long id;
 
     @JoinColumn(name = "account_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private AccountEntity uploader;
 
     @Column(nullable = false, length = 255)
@@ -30,15 +30,15 @@ public class PostEntity extends BaseEntity{
     private String content;
 
     @JoinColumn(name = "gps_id1") //Cascade는 나중에 확인해보기
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private GpsEntity gps1;
 
     @JoinColumn(name = "gps_id2")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private GpsEntity gps2;
 
     @JoinColumn(name = "gps_id3")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private GpsEntity gps3;
 
     /*@Column

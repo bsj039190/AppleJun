@@ -1,16 +1,15 @@
-package com.example.applejun.response;
+package com.example.applejun.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageResponse {
-    private Long id;
+public class ProfileImageDto {
     private String originalFileName;
     private String savedFileName;
 }

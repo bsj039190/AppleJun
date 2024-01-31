@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "TB_ACCOUNT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccountEntity {
+public class AccountEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

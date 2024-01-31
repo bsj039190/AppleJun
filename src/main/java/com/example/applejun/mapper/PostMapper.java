@@ -15,17 +15,19 @@ public interface PostMapper {
     PostResponse postDtoToResponse(PostDto postDto);
 
     @Mapping(source = "uploader.id", target = "uploader")
-    @Mapping(target = "gps", ignore = true)
-    /*@Mapping(source = "gps2.id", target = "gps2")
-    @Mapping(source = "gps3.id", target = "gps3")*/
+    //@Mapping(target = "gps", ignore = true)
+    @Mapping(source = "gps1.id", target = "gps1")
+    @Mapping(source = "gps2.id", target = "gps2")
+    @Mapping(source = "gps3.id", target = "gps3")
     PostDto postEntityToDto(PostEntity postEntity);
 
     @Mapping(target = "id", ignore = true)
     PostDto postRequestToDto(PostRequest postRequest);
 
     @Mapping(source = "uploader", target = "uploader.id")
-    @Mapping(target = "gps", ignore = true)
-    /*@Mapping(source = "gps2", target = "gps2.id")
-    @Mapping(source = "gps3", target = "gps3.id")*/
+    //@Mapping(target = "gps", ignore = true)
+    @Mapping(source = "gps1", target = "gps1.id")
+    @Mapping(source = "gps2", target = "gps2.id")
+    @Mapping(source = "gps3", target = "gps3.id")
     PostEntity postDtoToEntity(PostDto postDto);
 }

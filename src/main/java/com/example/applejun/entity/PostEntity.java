@@ -31,9 +31,22 @@ public class PostEntity extends BaseEntity{
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
-    @JoinColumn(name = "gps_id") //Cascade는 나중에 확인해보기
+    @JoinColumn(name = "gps_id1")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GpsEntity gps1;
+
+    @JoinColumn(name = "gps_id2")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GpsEntity gps2;
+
+    @JoinColumn(name = "gps_id3")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GpsEntity gps3;
+
+
+    /*@JoinColumn(name = "gps_id") //Cascade는 나중에 확인해보기
     @OneToMany(fetch = FetchType.LAZY)
-    private List<GpsEntity> gps;
+    private List<GpsEntity> gps;*/
 
     /*@Column
     private 사진 업로드*/

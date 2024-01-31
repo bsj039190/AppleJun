@@ -19,7 +19,11 @@ public class PostDto {
     private Long uploader;
     private LocalDate date;
     private String content;
-    private List<Long> gps;
+    private Long gps1;
+    private Long gps2;
+    private Long gps3;
+
+    //private List<Long> gps;
 
     //사진 일단 건너뜀
 }

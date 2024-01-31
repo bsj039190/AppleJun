@@ -35,7 +35,7 @@ public class GpsEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "post_id")
-    private PostEntity post;
+    private PostEntity post;*/
 }

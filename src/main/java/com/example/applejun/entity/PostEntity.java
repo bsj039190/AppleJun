@@ -19,7 +19,7 @@ public class PostEntity extends BaseEntity{
     private Long id;
 
     @JoinColumn(name = "account_id")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private AccountEntity uploader;
 
     @Column(nullable = false, length = 255)
@@ -32,7 +32,7 @@ public class PostEntity extends BaseEntity{
     private String content;
 
     @JoinColumn(name = "gps_id") //Cascade는 나중에 확인해보기
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<GpsEntity> gps;
 
     /*@Column

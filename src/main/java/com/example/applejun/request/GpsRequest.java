@@ -18,5 +18,5 @@ public class GpsRequest {
     private String url;
     private String subject;
     private LocalDate date;
-    private Long post;
+    //private Long post;
 }

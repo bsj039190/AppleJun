@@ -16,6 +16,7 @@ import javax.persistence.Id;
 public class ProfileImageDto {
 
     private Long id;
-    private String originalFileName;
-    private String savedFileName;
+    private String fileName;
+    private String filePath;
+    private Long account;
 }

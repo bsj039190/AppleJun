@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProfileImageResponse {
     private Long id;
-    private String originalFileName;
-    private String savedFileName;
+    private String fileName;
+    private String filePath;
+    private Long account;
 }

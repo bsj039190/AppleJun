@@ -14,10 +14,11 @@ public class ProfileImageEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
-    private String originalFileName;
-
+    private String fileName;
     @Column(nullable = false)
-    private String savedFileName;
+    private String filePath;
+    @JoinColumn(name = "account_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private AccountEntity account;
 }

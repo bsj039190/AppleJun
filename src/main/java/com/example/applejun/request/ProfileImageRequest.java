@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileImageRequest {
-    private Long id;
     private String fileName;
     private String filePath;
     private Long account;

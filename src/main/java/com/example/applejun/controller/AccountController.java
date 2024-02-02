@@ -38,7 +38,7 @@ public class AccountController {
     @GetMapping("/aaa")
     public String test() {
         log.warn("Um jun sik");
-        return "은 살아있다";
+        return "엄준식은 살아있다";
     }
 
     @GetMapping("/account/get/list")

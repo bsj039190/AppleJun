@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @RestController
 @Validated
 @RequiredArgsConstructor
@@ -24,28 +26,32 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileImageController {
     private final ProfileImageService profileImageService;
 
-    @PostMapping("/image/upload")
-    public ResponseEntity<BaseResponse> uploadImage(@RequestBody ProfileImageRequest profileImageRequest,
-                                                    @RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BaseResponse> uploadImage(@RequestParam("file") MultipartFile file) {
 
-        //리퀘스트를 넣으니까 에러가남 밑에 업로드 뉴는 잘됨
+        String uuid = UUID.randomUUID().toString();
 
-        log.debug("start upload profile image. request = {}", profileImageRequest);
+        log.debug("start upload profile image. uuid = {}", uuid);
 
-
-        ProfileImageDto profileImageDto = ProfileImageMapper.INSTANCE.profileImageRequestToDto(profileImageRequest);
-
-        profileImageService.uploadProfile(profileImageDto, file);
+        profileImageService.uploadProfile(file, uuid);
 
         log.debug("end upload profile image.");
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new BaseResponse(HttpStatus.CREATED.value(), "success"));
+                .body(new BaseResponse(HttpStatus.CREATED.value(), file.getOriginalFilename()));
     }
 
     @PostMapping(value = "/image/upload/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BaseResponse> uploadImageNew(@RequestParam("file") MultipartFile file) {
-        log.debug("Ummmmmm");
+    public ResponseEntity<BaseResponse> uploadImageSec(@RequestParam("file") MultipartFile file,
+                                                       @RequestParam("account") ProfileImageRequest profileImageRequest) {
+
+        String uuid = UUID.randomUUID().toString();
+
+        log.debug("start upload profile image. uuid = {}", uuid);
+
+        profileImageService.uploadProfile(file, uuid);
+
+        log.debug("end upload profile image.");
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new BaseResponse(HttpStatus.CREATED.value(), file.getOriginalFilename()));

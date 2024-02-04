@@ -17,7 +17,7 @@ public class AccountResponse {
     private String email;
     private String account;
     private String pwd;
-    //사진 일단 건너뜀
     private String connection;
     private LocalDate birthday;
+    private String profileImage;
 }

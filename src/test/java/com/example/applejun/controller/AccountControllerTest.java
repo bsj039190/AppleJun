@@ -73,7 +73,7 @@ public class AccountControllerTest {
     @Test
     public void createAccountTest() throws Exception {
         LocalDate localDate = LocalDate.of(2023, 1, 1);
-        AccountRequest accountRequest = new AccountRequest("name", "bsj039190@gmail.com", "account", "pwd", "connection", localDate);
+        AccountRequest accountRequest = new AccountRequest("name", "bsj039190@gmail.com", "account", "pwd", "connection", localDate, null);
         AccountDto accountDto = new AccountDto();
         accountDto.setId(1L);
 
@@ -93,7 +93,7 @@ public class AccountControllerTest {
     public void updateAccountTest() throws Exception {
         String id = "1";
         LocalDate localDate = LocalDate.of(2023, 1, 1);
-        AccountRequest accountRequest = new AccountRequest("name", "bsj039190@gmail.com", "account", "pwd", "connection", localDate);
+        AccountRequest accountRequest = new AccountRequest("name", "bsj039190@gmail.com", "account", "pwd", "connection", localDate, null);
 
         String requestString = objectMapper.registerModule(new JavaTimeModule()).writeValueAsString(accountRequest);
 

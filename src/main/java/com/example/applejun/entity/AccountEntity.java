@@ -38,6 +38,6 @@ public class AccountEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate birthday;
 
-    private ProfileImageEntity profileImage;
+    private String profileImage;
 
 }

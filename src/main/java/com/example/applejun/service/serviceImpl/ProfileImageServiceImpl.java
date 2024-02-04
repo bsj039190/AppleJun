@@ -1,8 +1,10 @@
 package com.example.applejun.service.serviceImpl;
 
+import com.example.applejun.dto.AccountDto;
 import com.example.applejun.dto.ProfileImageDto;
 import com.example.applejun.entity.AccountEntity;
 import com.example.applejun.entity.ProfileImageEntity;
+import com.example.applejun.mapper.AccountMapper;
 import com.example.applejun.mapper.ProfileImageMapper;
 import com.example.applejun.repository.AccountRepository;
 import com.example.applejun.repository.ProfileImageRepository;
@@ -16,6 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -74,9 +80,6 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     @Override
     public void uploadProfile(MultipartFile file, ProfileImageDto profileImageDto) {
 
-        //근데 생각해보니까 프사업로드를 할거면 어카운트랑 연계가 되야하는데 이거는 그냥 업로드만 하고있는데 이러면 어떻게 지정하지...?
-        //컨트롤러에서 리퀘스트 받는거는 또 안되던데
-
         log.debug("Ummmmmmmmm");
 
         try {
@@ -99,13 +102,35 @@ public class ProfileImageServiceImpl implements ProfileImageService {
             // 파일 복사
             FileCopyUtils.copy(file.getBytes(), dest);
 
+            //profileImageEntity 생성
+            profileImageDto.setFilePath(filePath);
+            ProfileImageEntity profileImageEntity = ProfileImageMapper.INSTANCE.profileImageDtoToEntity(profileImageDto);
+
+            if (profileImageRepository.save(profileImageEntity) == null) {
+                throw new RuntimeException("profileImage save failed.");
+            }
+            log.debug("success save profile image, id = {}", profileImageEntity.getId());
+
             //dto내용 어카운트에 넣기
             Long accountId = profileImageDto.getAccount();
 
-            // 여기서부터 하면됨 AccountEntity accountEntity = accountRepository.findById(accountId);
+            Optional<AccountEntity> accountEntityOptional = accountRepository.findById(accountId);
+            AccountEntity accountEntity = accountEntityOptional.orElse(null);
+            if (accountEntity == null) {
+                log.debug("account not found. account id = {}", accountId);
+                throw new RuntimeException("account not found. account id = {}");
+            }
+
+            AccountDto accountDto = AccountMapper.INSTANCE.accountEntityToDto(accountEntity);
+            accountDto.setProfileImage(profileImageDto.getFileName());
+            AccountEntity newAccountEntity = AccountMapper.INSTANCE.accountDtoToEntity(accountDto);
+
+            accountRepository.save(accountEntity);
+
 
 
             log.debug("is alive");
+            log.debug("profile filePath = {}", profileImageEntity.getFilePath());
 
             // 여기에서 필요한 추가 로직을 수행할 수 있습니다. (예: 데이터베이스에 파일 경로 저장 등)
         } catch (IOException e) {
@@ -115,11 +140,53 @@ public class ProfileImageServiceImpl implements ProfileImageService {
         }
     }
 
-    /*@Override
-    public byte[] getProfileImage(String fileName) {
+    @Override
+    public void updateProfile(Long profileImageId, MultipartFile file, ProfileImageDto profileImageDto) {
+        log.debug("start update profile, id = {}", profileImageId);
+
         try {
 
+            //기존의 이미지 검색
+            Optional<ProfileImageEntity> existingProfileImageOptional = profileImageRepository.findById(profileImageId);
+            if (!existingProfileImageOptional.isPresent()) {
+                throw new RuntimeException("profile image not found.");
+            }
+
+            ProfileImageEntity existingProfileImage = existingProfileImageOptional.get();
+
+            // 업로드할 디렉토리 생성
+            String uuid = UUID.randomUUID().toString();
+            File uploadDir = new File(UPLOAD_DIR);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+
+            // 새로운 파일 저장 경로 설정
+            String filePath = UPLOAD_DIR + uuid + "_" + file.getOriginalFilename();
+            File newFile = new File(filePath);
+
+            // 파일 복사
+            FileCopyUtils.copy(file.getBytes(), newFile);
+
+            // 프로필 이미지 정보 업데이트
+            profileImageDto.setId(profileImageId);
+            profileImageDto.setFilePath(filePath);
+            ProfileImageEntity profileImageEntity = ProfileImageMapper.INSTANCE.profileImageDtoToEntity(profileImageDto);
+
+
+            //기존 사진 삭제
+            Path existingFilePath = Paths.get(existingProfileImage.getFilePath());
+            Files.delete(existingFilePath);
+
+            profileImageRepository.save(profileImageEntity);
+
+            log.debug("Profile image updated successfully, id = {}", profileImageId);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update profile image.");
         }
-    }*/
+    }
 
 }

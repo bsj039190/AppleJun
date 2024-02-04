@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Getter
 @Builder
 @AllArgsConstructor
-@Table(name = "TB_PROFILE")
+@Table(name = "TB_BACKGROUND")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProfileImageEntity extends BaseEntity{
+public class BackgroundImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,4 @@ public class ProfileImageEntity extends BaseEntity{
     private String fileName;
     @Column(nullable = false)
     private String filePath;
-    @JoinColumn(name = "account_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private AccountEntity account;
 }

@@ -19,6 +19,6 @@ public class AccountDto {
     private String connection;
     private LocalDate birthday;
 
-    private Long profileImage;
+    private String profileImage;
 
 }

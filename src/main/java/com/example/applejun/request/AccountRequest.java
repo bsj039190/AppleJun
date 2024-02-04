@@ -16,8 +16,7 @@ public class AccountRequest {
     private String email;
     private String account;
     private String pwd;
-
-    //사진 건너뜀
     private String connection;
     private LocalDate birthday;
+    private String profileImage;
 }

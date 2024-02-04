@@ -68,7 +68,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void createPost(PostDto postDto) {
+    public Long createPost(PostDto postDto) {
         log.debug("Ummmmm");
         PostEntity postEntity = PostMapper.INSTANCE.postDtoToEntity(postDto);
 
@@ -76,7 +76,11 @@ public class PostServiceImpl implements PostService {
             log.debug("Junnnnn");
             throw new RuntimeException("post not found.");
         }
+
+        Long postId = postEntity.getId();
         log.debug("Sikkkkk");
+
+        return postId;
     }
 
     @Override

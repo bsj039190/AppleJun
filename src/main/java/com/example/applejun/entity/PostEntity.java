@@ -41,6 +41,4 @@ public class PostEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private GpsEntity gps3;
 
-    /*@Column
-    private 사진 업로드*/
 }

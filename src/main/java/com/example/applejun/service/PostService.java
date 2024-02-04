@@ -10,7 +10,7 @@ public interface PostService {
     List<PostDto> getPostListByTitle(String title, Pageable pageable);
     Long getPostSize();
     PostDto getPost(Long id);
-    void createPost(PostDto postDto);
+    Long createPost(PostDto postDto);
     void updatePost(Long id, PostDto postDto);
     void deletePost(Long id);
 }

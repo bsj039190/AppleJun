@@ -1,8 +1,10 @@
 package com.example.applejun.service.serviceImpl;
 
 import com.example.applejun.dto.ProfileImageDto;
+import com.example.applejun.entity.AccountEntity;
 import com.example.applejun.entity.ProfileImageEntity;
 import com.example.applejun.mapper.ProfileImageMapper;
+import com.example.applejun.repository.AccountRepository;
 import com.example.applejun.repository.ProfileImageRepository;
 import com.example.applejun.service.ProfileImageService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.UUID;
 @Transactional
 public class ProfileImageServiceImpl implements ProfileImageService {
     private final ProfileImageRepository profileImageRepository;
+
+    private final AccountRepository accountRepository;
 
     private final String UPLOAD_DIR = "src/main/resources/static/files/uploads/profile-images/";
 
@@ -68,7 +72,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     }*/
 
     @Override
-    public void uploadProfile(MultipartFile file, String uuid) {
+    public void uploadProfile(MultipartFile file, ProfileImageDto profileImageDto) {
 
         //근데 생각해보니까 프사업로드를 할거면 어카운트랑 연계가 되야하는데 이거는 그냥 업로드만 하고있는데 이러면 어떻게 지정하지...?
         //컨트롤러에서 리퀘스트 받는거는 또 안되던데
@@ -77,6 +81,8 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
         try {
             // 업로드할 디렉토리 생성
+            String uuid = UUID.randomUUID().toString();
+
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
@@ -92,6 +98,12 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
             // 파일 복사
             FileCopyUtils.copy(file.getBytes(), dest);
+
+            //dto내용 어카운트에 넣기
+            Long accountId = profileImageDto.getAccount();
+
+            // 여기서부터 하면됨 AccountEntity accountEntity = accountRepository.findById(accountId);
+
 
             log.debug("is alive");
 

@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -27,13 +28,14 @@ public class ProfileImageController {
     private final ProfileImageService profileImageService;
 
     @PostMapping(value = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BaseResponse> uploadImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<BaseResponse> uploadImage(@RequestParam("file") MultipartFile file,
+                                                    @RequestPart("profileImageRequest") ProfileImageRequest profileImageRequest) throws IOException { //나중에 리스트로 바꾸기
 
-        String uuid = UUID.randomUUID().toString();
+        log.debug("start upload profile image. request = {}", profileImageRequest);
 
-        log.debug("start upload profile image. uuid = {}", uuid);
+        ProfileImageDto profileImageDto = ProfileImageMapper.INSTANCE.profileImageRequestToDto(profileImageRequest);
 
-        profileImageService.uploadProfile(file, uuid);
+        profileImageService.uploadProfile(file, profileImageDto);
 
         log.debug("end upload profile image.");
 
@@ -41,7 +43,7 @@ public class ProfileImageController {
                 .body(new BaseResponse(HttpStatus.CREATED.value(), file.getOriginalFilename()));
     }
 
-    @PostMapping(value = "/image/upload/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    /*@PostMapping(value = "/image/upload/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BaseResponse> uploadImageSec(@RequestParam("file") MultipartFile file,
                                                        @RequestParam("account") ProfileImageRequest profileImageRequest) {
 
@@ -56,4 +58,21 @@ public class ProfileImageController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new BaseResponse(HttpStatus.CREATED.value(), file.getOriginalFilename()));
     }
+
+    @PostMapping(value = "/image/upload/th", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BaseResponse> uploadImageThr(@RequestPart("file") MultipartFile file,
+                                                    @RequestPart("profileImageRequest") ProfileImageRequest profileImageRequest) throws IOException {
+
+        String uuid = UUID.randomUUID().toString();
+
+        log.debug("start upload profile image. uuid = {}", uuid);
+        log.debug("Um, {}", profileImageRequest.getFileName());
+
+        profileImageService.uploadProfile(file, uuid);
+
+        log.debug("end upload profile image.");
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new BaseResponse(HttpStatus.CREATED.value(), file.getOriginalFilename()));
+    }*/
 }

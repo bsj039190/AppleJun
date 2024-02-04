@@ -17,4 +17,9 @@ public class ProfileImageRequest {
     private String fileName;
     private String filePath;
     private Long account;
+
+    /*public ProfileImageRequest(String fileName, Long account) {
+        this.fileName = fileName;
+        this.account = account;
+    }*/
 }

@@ -32,12 +32,12 @@ public class AccountEntity extends BaseEntity{
     @Column(nullable = false, length = 255)
     private String pwd;
 
-    //사진은 일단 건너뜀, 사진 엔티티 따로 만들어서 외래키로 할수도 있음
-
     @Column(nullable = false, length = 255)
     private String connection; //상대방의 account
 
     @Column(nullable = false)
     private LocalDate birthday;
-    
+
+    private ProfileImageEntity profileImage;
+
 }

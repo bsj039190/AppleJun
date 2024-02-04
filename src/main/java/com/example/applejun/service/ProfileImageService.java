@@ -4,7 +4,7 @@ import com.example.applejun.dto.ProfileImageDto;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProfileImageService {
-    void uploadProfile(MultipartFile file, String uuid);
+    void uploadProfile(MultipartFile file, ProfileImageDto profileImageDto);
 
     //byte[] getProfileImage(String fileName);
 }

@@ -101,7 +101,11 @@ public class PostController {
 
         PostDto postDto = postService.getPost(Long.parseLong(id));
 
+        List<byte[]> images = postImageService.getPostImageList(Long.parseLong(id));
+
         PostResponse postResponse = PostMapper.INSTANCE.postDtoToResponse(postDto);
+
+        postResponse.setImages(images);
 
         ContentsResponse<PostResponse> response = new ContentsResponse<>(HttpStatus.OK.value(),
                 "success", postResponse);
@@ -109,8 +113,6 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    //포스트맨 할때 어카운트 gps 다 선언하고서 해야됨
-    //여기까지 완료됨, 업데이트랑 삭제, 불러오기도 진행해야함
     @PostMapping(value = "/post/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BaseResponse> createPost(@RequestPart("postRequest") @Validated PostRequest postRequest,
                                                    @RequestPart("fileList") List<MultipartFile> fileList,
@@ -138,7 +140,8 @@ public class PostController {
 
     @PutMapping("/post/update/{id}")
     public ResponseEntity<BaseResponse> updatePost(@PathVariable("id") @NotBlank String id,
-                                                   @RequestBody @Validated PostRequest postRequest,
+                                                   @RequestPart("postRequest") @Validated PostRequest postRequest,
+                                                   @RequestPart("fileList") List<MultipartFile> fileList,
                                                    BindingResult bindingResult) {
         log.debug("start update post. request = {}", postRequest);
 
@@ -151,6 +154,8 @@ public class PostController {
 
         postService.updatePost(Long.parseLong(id), postDto);
 
+        postImageService.updatePostImage(fileList, Long.parseLong(id));
+
         log.debug("end update post.");
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -160,6 +165,8 @@ public class PostController {
     @DeleteMapping("/post/delete/{id}")
     public ResponseEntity<BaseResponse> deletePost(@PathVariable("id") @NotBlank String id) {
         log.debug("start delete post. id = {}", id);
+
+        postImageService.deletePostImage(Long.parseLong(id));
 
         postService.deletePost(Long.parseLong(id));
 

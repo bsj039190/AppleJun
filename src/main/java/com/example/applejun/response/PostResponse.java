@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +23,5 @@ public class PostResponse {
     private Long gps2;
     private Long gps3;
 
-    //사진 일단 건너뜀
+    private List<byte[]> images;
 }

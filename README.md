@@ -30,3 +30,7 @@ post의 gps값에 널값이 들어갈 수 없기 때문에 gps의 id 1번의 값
 포스트 이미지 업로드는 controller createPost에서 같이 진행할거임
 createPost컨트롤러 내부에 if문 걸고 사진이 있으면 바로 postImageService로
 넘어가서 진행하는 흐름으로 ㄱㄱ
+업데이트 부분에서 기존의 엔티티를 삭제하고서 
+
+getpost하는데 이미지 리턴이 가능하기는 한데 텍스트로 가서 양이 너무 많은거같음
+이래도 되는건지 확인하기

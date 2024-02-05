@@ -44,11 +44,21 @@ public class PostController {
 
         List<PostDto> postDtoList = postService.getPostList(pageable);
 
+        List<List<String>> postImageList = postImageService.getPostImageList(pageable);
+
         List<PostResponse> postResponseList = new ArrayList<>();
 
         for (PostDto postDto : postDtoList) {
             PostResponse postResponse = PostMapper.INSTANCE.postDtoToResponse(postDto);
             postResponseList.add(postResponse);
+        }
+
+        int i=0;
+
+        for (List<String> postImage : postImageList) {
+            PostResponse postResponse = postResponseList.get(i);
+            postResponse.setImages(postImage);
+            i++;
         }
 
         ContentsResponse<List<PostResponse>> response = new ContentsResponse<>(HttpStatus.OK.value(),
@@ -101,11 +111,11 @@ public class PostController {
 
         PostDto postDto = postService.getPost(Long.parseLong(id));
 
-        List<byte[]> images = postImageService.getPostImageList(Long.parseLong(id));
+        List<String> imagePathList = postImageService.getPostImage(Long.parseLong(id));
 
         PostResponse postResponse = PostMapper.INSTANCE.postDtoToResponse(postDto);
 
-        postResponse.setImages(images);
+        postResponse.setImages(imagePathList);
 
         ContentsResponse<PostResponse> response = new ContentsResponse<>(HttpStatus.OK.value(),
                 "success", postResponse);

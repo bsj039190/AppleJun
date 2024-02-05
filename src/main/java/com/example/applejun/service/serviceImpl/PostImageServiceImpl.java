@@ -10,6 +10,8 @@ import com.example.applejun.repository.PostRepository;
 import com.example.applejun.service.PostImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,31 +41,43 @@ public class PostImageServiceImpl implements PostImageService {
 
 
     @Override
-    public List<byte[]> getPostImageList(Long postId) {
+    public List<List<String>> getPostImageList(Pageable pageable) {
 
-        try {
-            //postId로 엔티티 검색
-            Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
-            PostEntity postEntity = postEntityOptional.orElse(null);
+        Page<PostEntity> postEntityPage = postRepository.findAll(pageable);
+
+        List<List<String>> postImageList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntityPage) {
+            List<String> imagePathList = new ArrayList<>();
             List<PostImageEntity> postImageEntityList = postImageRepository.findByPostId(postEntity);
 
-            List<byte[]> imageBytesList = new ArrayList<>();
-            //각 엔티티의 filePath에 있는 이미지를 검색후 리스트에 저장
             for (PostImageEntity postImageEntity : postImageEntityList) {
-                //파일 경로를 path 객체로 변환
-                byte[] imageBytes = Files.readAllBytes(Paths.get(postImageEntity.getFilePath()));
-                imageBytesList.add(imageBytes);
+                imagePathList.add(postImageEntity.getFilePath());
             }
 
-            return imageBytesList;
-
-        } catch (IOException e) {
-            // 파일 저장 중 에러 발생 시 예외 처리
-            e.printStackTrace();
-            throw new RuntimeException("Failed to upload post image.");
+            postImageList.add(imagePathList);
         }
 
+        return postImageList;
+    }
 
+
+    @Override
+    public List<String> getPostImage(Long postId) {
+
+        //postId로 엔티티 검색
+        Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
+        PostEntity postEntity = postEntityOptional.orElse(null);
+        List<PostImageEntity> postImageEntityList = postImageRepository.findByPostId(postEntity);
+
+        List<String> imageFilePathList = new ArrayList<>();
+        //각 엔티티의 filePath에 있는 이미지를 검색후 리스트에 저장
+        for (PostImageEntity postImageEntity : postImageEntityList) {
+            //파일 경로를 path 객체로 변환
+            imageFilePathList.add(postImageEntity.getFilePath());
+        }
+
+        return imageFilePathList;
     }
 
 

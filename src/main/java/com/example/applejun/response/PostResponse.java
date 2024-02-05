@@ -23,5 +23,5 @@ public class PostResponse {
     private Long gps2;
     private Long gps3;
 
-    private List<byte[]> images;
+    private List<String> images;
 }

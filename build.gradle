@@ -40,6 +40,8 @@ dependencies {
 
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
+	implementation 'mysql:mysql-connector-java' //mysql
+
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

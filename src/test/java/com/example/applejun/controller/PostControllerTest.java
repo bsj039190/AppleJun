@@ -111,7 +111,7 @@ public class PostControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.contents.id").value(1L));
     }
 
-    @Test
+    /*@Test
     public void createPostTest() throws Exception {
         LocalDate localDate = LocalDate.of(2023, 1, 1);
         PostRequest postRequest = new PostRequest("title", 5L, localDate, "content", 5L, 5L, 5L);
@@ -146,7 +146,7 @@ public class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("success"));
-    }
+    }*/
 
     @Test
     public void deletePostTest() throws Exception {

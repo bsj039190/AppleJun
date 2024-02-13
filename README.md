@@ -12,7 +12,7 @@
 8. ~~로그가 안된다고 하는데 작동은 잘됨, 해결하기~~ 그냥쓰자
 9. ~~postman 써서 실제로 돌려보기, post에서 create가 안되고 있음, Customizer를 못찾는다고 ClassNotFountException이 뜸~~
 10. ~~이미지 업로드 만들기~~
-11. ~~mysql로 데베 바꾸기~~, 노트북에 데베 있음
+11. ~~mysql로 데베 바꾸기~~, 노트북이랑 데탑이랑 데베가 따로 되어있음
 12. 리액트로 볼 견본파일 만들기 
 13. 실제로 배포하기
 
@@ -31,3 +31,7 @@ post의 gps값에 널값이 들어갈 수 없기 때문에 gps의 id 1번의 값
 createPost컨트롤러 내부에 if문 걸고 사진이 있으면 바로 postImageService로
 넘어가서 진행하는 흐름으로 ㄱㄱ
 업데이트 부분에서 기존의 엔티티를 삭제하고서 
+
+mysql에 접속하는데 auth-gssapi_client 관련 에러가 뜨면 크롬 북마크에 있는거
+들어가서 비번 바꾸고 다시 하면 잘됨(일단 그랬음)
+하고나서 application.properties 파일 비밀번호 바꿔야함

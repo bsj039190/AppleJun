@@ -28,6 +28,7 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin
 public class AccountController {
 
     private final AccountService accountService;
@@ -39,6 +40,12 @@ public class AccountController {
     public String test() {
         log.warn("Um jun sik");
         return "엄준식은 살아있다";
+    }
+
+    @GetMapping("/bbb")
+    public String testB() {
+        log.warn("Um jun sik");
+        return "엄";
     }
 
     @GetMapping("/account/get/list")

@@ -37,9 +37,15 @@ public class AccountController {
     //포스트맨 테스트 완료
     
     @GetMapping("/aaa")
-    public String test() {
+    public ResponseEntity<BaseResponse> test() {
+
+        String Um = "엄준식은 살아있다!";
+        ContentsResponse<String> response = new ContentsResponse<>(HttpStatus.OK.value(), "success",
+                Um);
+
         log.warn("Um jun sik");
-        return "엄준식은 살아있다";
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/bbb")

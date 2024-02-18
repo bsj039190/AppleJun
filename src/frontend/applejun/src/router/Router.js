@@ -5,6 +5,7 @@ import Aaa from "../app/Aaa";
 import PostList from "../post/PostList";
 import PostWrite from "../post/PostWrite";
 import PostDetail from "../post/PostDetail";
+import Write from "../post/Write";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/post/get/list" render={() => <PostList />} />
       <Route path="/post/write" render={() => <PostWrite />} />
       <Route path="/post/:id" render={() => <PostDetail />} />
+      <Route path="/write" render={() => <Write />} />
     </Switch>
   );
 }

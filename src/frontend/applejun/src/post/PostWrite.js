@@ -5,11 +5,7 @@ const PostWrite = () => {
   const [formData, setFormData] = useState({
     title: "수정된 제목",
     uploader: 1,
-    date: "", // 현재 날짜로 초기화
     content: "수정된 내용",
-    gps1: 1,
-    gps2: 1,
-    gps3: 1,
   });
 
   const handleFileChange = (event) => {
@@ -37,25 +33,24 @@ const PostWrite = () => {
 
     // 파일들을 formData에 추가
     files.forEach((file, index) => {
-      postData.append("fileList[${index}]", file);
+      postData.append(`fileList[${index}]`, file);
     });
 
     // 정보를 JSON 형식으로 추가
     const contentsData = {
-      userNo: formData.uploader,
+      uploader: Number(formData.uploader),
       title: formData.title,
       content: formData.content,
-      categoryCode: 1, // 예시로 1로 고정
-      dues: 0, // 예시로 0으로 고정
-      personNumber: 1, // 예시로 1로 고정
+      date: getCurrentDate(),
+      gps1: 1, // Example value
+      gps2: 1, // Example value
+      gps3: 1, // Example value
     };
+
     postData.append(
-      "contentsData",
+      "postRequest",
       new Blob([JSON.stringify(contentsData)], { type: "application/json" })
     );
-
-    // 'postRequest' 파트 추가
-    postData.append("postRequest", ""); // 빈 값을 추가
 
     try {
       const response = await fetch("http://localhost:8080/post/create", {
@@ -67,10 +62,8 @@ const PostWrite = () => {
       });
 
       if (response.ok) {
-        // 성공적으로 업로드되었을 때의 처리
         console.log("업로드 성공");
       } else {
-        // 업로드 실패 시의 처리
         console.error("업로드 실패");
       }
     } catch (error) {
@@ -110,3 +103,42 @@ const PostWrite = () => {
 };
 
 export default PostWrite;
+// const [post, setPost] = useState();
+// const [fileList, setFileList] = useState([]);
+
+// const changeValue = (e) => {
+//   setPost({
+//     ...post,
+//     [e.target.name]: e.target.value,
+//   });
+// };
+
+// const saveFile = (e) => {
+//   setFileList(e.target.files[0]);
+// };
+
+// const submitPost = (e) => {
+//   e.preventDefault();
+
+//   const formData = new FormData();
+
+//   formData.append("fileList", fileList);
+//   formData.append("postRequest", JSON.stringify(post));
+
+//   fetch("http://localhost:8080/post/create", {
+//     method: "POST",
+//     body: formData,
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//     },
+//   });
+// };
+
+// return (
+//   <form onSubmit={submitPost}>
+//     <input type="text" name="title" onChange={changeValue} />
+//     <input type="text" name="contents" onChange={changeValue} />
+//     <input type="file" onChange={saveFile} />
+//     <button type="submit">등록</button>
+//   </form>
+// );

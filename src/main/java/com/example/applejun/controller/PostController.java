@@ -138,9 +138,12 @@ public class PostController {
 
         Long postId = postService.createPost(postDto);
 
-        if (!fileList.isEmpty()) {
+         /*if (fileList != null && !fileList.isEmpty()) {
             postImageService.uploadPostImage(fileList, postId);
-        }
+        }*/
+         if (!"blob".equals(fileList.get(0).getOriginalFilename())) {
+             postImageService.uploadPostImage(fileList, postId);
+         }
 
         log.debug("end create post.");
 

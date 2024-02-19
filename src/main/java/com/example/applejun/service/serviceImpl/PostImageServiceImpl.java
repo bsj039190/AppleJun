@@ -38,6 +38,7 @@ public class PostImageServiceImpl implements PostImageService {
     private final PostRepository postRepository;
 
     public final String UPLOAD_DIR = "src/main/resources/static/files/uploads/post-images/";
+    public final String NEW_UPLOAD_DIR = "src/frontend/applejun/src/post-image/";
 
 
     @Override
@@ -86,7 +87,7 @@ public class PostImageServiceImpl implements PostImageService {
         try {
             //업로드 할 디렉토리 생성
 
-            File uploadDir = new File(UPLOAD_DIR);
+            File uploadDir = new File(NEW_UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
@@ -95,7 +96,7 @@ public class PostImageServiceImpl implements PostImageService {
                 String uuid = UUID.randomUUID().toString();
 
                 //저장경로 설정
-                String filePath = UPLOAD_DIR + uuid + "_" + file.getOriginalFilename();
+                String filePath = NEW_UPLOAD_DIR + uuid + "_" + file.getOriginalFilename();
                 File dest = new File(filePath);
 
                 //파일 복사

@@ -1,144 +1,160 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const PostWrite = () => {
-  const [files, setFiles] = useState([]);
-  const [formData, setFormData] = useState({
-    title: "수정된 제목",
+  const [postRequest, setPostRequest] = useState({
+    title: "",
     uploader: 1,
-    content: "수정된 내용",
+    date: "2000-01-01",
+    content: "",
+    gps1: 1,
+    gps2: 1,
+    gps3: 1,
   });
+  const [fileList, setFileList] = useState([]);
 
-  const handleFileChange = (event) => {
-    setFiles([...event.target.files]);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPostRequest({
+      ...postRequest,
       [name]: value,
     });
   };
 
-  const getCurrentDate = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    setFileList(files);
   };
 
-  const handleUpload = async () => {
-    const postData = new FormData();
+  const history = useHistory();
 
-    // 파일들을 formData에 추가
-    files.forEach((file, index) => {
-      postData.append(`fileList[${index}]`, file);
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // 정보를 JSON 형식으로 추가
-    const contentsData = {
-      uploader: Number(formData.uploader),
-      title: formData.title,
-      content: formData.content,
-      date: getCurrentDate(),
-      gps1: 1, // Example value
-      gps2: 1, // Example value
-      gps3: 1, // Example value
-    };
+    const formData = new FormData();
 
-    postData.append(
+    if (fileList.length > 0) {
+      for (let i = 0; i < fileList.length; i++) {
+        formData.append("fileList", fileList[i]);
+      }
+    } else {
+      formData.append("fileList", new Blob()); // fileList가 비어 있을 때 빈 Blob을 append
+    }
+
+    formData.append(
       "postRequest",
-      new Blob([JSON.stringify(contentsData)], { type: "application/json" })
+      new Blob([JSON.stringify(postRequest)], { type: "application/json" })
     );
 
+    console.log([...formData]);
     try {
-      const response = await fetch("http://localhost:8080/post/create", {
-        method: "POST",
-        body: postData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/post/create",
+        formData
+      );
 
-      if (response.ok) {
-        console.log("업로드 성공");
-      } else {
-        console.error("업로드 실패");
-      }
+      console.log(response.data);
+      alert("작성을 완료하였습니다!");
+      history.push("/post/get/list");
     } catch (error) {
-      console.error("업로드 중 오류 발생", error);
+      console.error("Error creating post:", error);
     }
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <label>
         Title:
         <input
           type="text"
           name="title"
-          value={formData.title}
-          onChange={handleInputChange}
+          value={postRequest.title}
+          onChange={handleChange}
         />
       </label>
       <br />
+
       <label>
-        Files:
-        <input type="file" onChange={handleFileChange} multiple />
+        Uploader:
+        <input
+          type="text"
+          name="uploader"
+          value={postRequest.uploader}
+          onChange={handleChange}
+        />
       </label>
       <br />
+
       <label>
-        Contents:
-        <textarea
+        Date:
+        <input
+          type="text"
+          name="date"
+          value={postRequest.date}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+
+      <label>
+        Content:
+        <input
+          type="text"
           name="content"
-          value={formData.content}
-          onChange={handleInputChange}
+          value={postRequest.content}
+          onChange={handleChange}
         />
       </label>
       <br />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
+
+      <label>
+        GPS1:
+        <input
+          type="text"
+          name="gps1"
+          value={postRequest.gps1}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+
+      <label>
+        GPS2:
+        <input
+          type="text"
+          name="gps2"
+          value={postRequest.gps2}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+
+      <label>
+        GPS3:
+        <input
+          type="text"
+          name="gps3"
+          value={postRequest.gps3}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+
+      <label>
+        File(s):
+        <input
+          type="file"
+          name="fileList"
+          multiple
+          onChange={handleFileChange}
+        />
+      </label>
+      <br />
+
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
 export default PostWrite;
-// const [post, setPost] = useState();
-// const [fileList, setFileList] = useState([]);
-
-// const changeValue = (e) => {
-//   setPost({
-//     ...post,
-//     [e.target.name]: e.target.value,
-//   });
-// };
-
-// const saveFile = (e) => {
-//   setFileList(e.target.files[0]);
-// };
-
-// const submitPost = (e) => {
-//   e.preventDefault();
-
-//   const formData = new FormData();
-
-//   formData.append("fileList", fileList);
-//   formData.append("postRequest", JSON.stringify(post));
-
-//   fetch("http://localhost:8080/post/create", {
-//     method: "POST",
-//     body: formData,
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//     },
-//   });
-// };
-
-// return (
-//   <form onSubmit={submitPost}>
-//     <input type="text" name="title" onChange={changeValue} />
-//     <input type="text" name="contents" onChange={changeValue} />
-//     <input type="file" onChange={saveFile} />
-//     <button type="submit">등록</button>
-//   </form>
-// );

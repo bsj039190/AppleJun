@@ -1,23 +1,40 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-//import extractFileNameAddPath from "./extractFileNameAddPath";
-import logo from "../post-image/dc787a5f-6946-4644-89c7-4b876c8523c8_defaultProfile.jpg";
 
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
-  const [loading, setLoading] = useState(true);
+
+  // eslint-disable-next-line no-restricted-globals
+  const history = useHistory();
 
   useEffect(() => {
     const fetchPostDetail = async () => {
       const response = await axios.get(`http://localhost:8080/post/${id}`);
       setPost(response.data.contents);
-      setLoading(false);
       console.log(response);
     };
     fetchPostDetail();
   }, [id]);
+
+  const handleDelete = async () => {
+    // 사용자에게 정말 삭제하시겠습니까? 라는 확인 메시지를 띄웁니다.
+    const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
+
+    if (isConfirmed) {
+      try {
+        // 삭제 요청을 보냅니다.
+        await axios.delete(`http://localhost:8080/post/delete/${id}`);
+        // 삭제가 완료되면 리스트 페이지로 이동합니다.
+        alert("삭제가 완료되었습니다.");
+        history.replace("/post/get/list");
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    }
+  };
 
   const extractFileNameAddPath = (filePath) => {
     // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
@@ -39,32 +56,30 @@ const PostDetail = () => {
       <p>gps2: {post.gps2}</p>
       <p>gps3: {post.gps3}</p>
 
+      <button onClick={() => history.push(`/post/update/${id}`)}>
+        수정하기
+      </button>
+
+      <button onClick={handleDelete}>삭제</button>
+
       <h3>이미지</h3>
       {post.images && post.images.length > 0 ? (
         post.images.map((image, index) => (
           <div key={index}>
             <p>File Name: {extractFileNameAddPath(image)}</p>
+            <p>Image : {image}</p>
             <img
-              src={extractFileNameAddPath(image)}
+              src={`/post-image/${extractFileNameAddPath(image)}`}
               alt={`Image ${index + 1}`}
               style={{ maxWidth: "100%" }}
               onLoad={() => console.log("Image loaded successfully")}
               onError={() => console.error("Error loading image")}
-            />
-
-            <p>엥</p>
-            <img
-              src={
-                require("../post-image/dc787a5f-6946-4644-89c7-4b876c8523c8_defaultProfile.jpg")
-                  .default
-              }
             />
           </div>
         ))
       ) : (
         <p>No images available</p>
       )}
-      <button>수정하기</button>
     </div>
   );
 };

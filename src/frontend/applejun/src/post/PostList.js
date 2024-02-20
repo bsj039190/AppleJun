@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const PostList = () => {
   const [postList, setPostList] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchGetPostList = async () => {
@@ -20,6 +21,9 @@ const PostList = () => {
 
   return (
     <div>
+      <div>
+        <button onClick={() => history.push(`/`)}>홈으로</button>
+      </div>
       <h2>포스트 목록</h2>
       <ul>
         {postList.map((post) => (

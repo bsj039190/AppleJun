@@ -45,6 +45,12 @@ function Home() {
           </Link>
         </div>
 
+        <div>
+          <Link to="map/naver">
+            <button>Go to NaverMap</button>
+          </Link>
+        </div>
+
         <br></br>
         <br></br>
         <div className="mt-4">

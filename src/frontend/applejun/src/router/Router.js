@@ -6,6 +6,7 @@ import PostList from "../post/PostList";
 import PostDetail from "../post/PostDetail";
 import PostWrite from "../post/PostWrite";
 import PostUpdate from "../post/PostUpdate";
+import MapNaver from "../map/MapNaver";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/post/get/:id" render={() => <PostDetail />} />
       <Route path="/post/write" render={() => <PostWrite />} />
       <Route path="/post/update/:id" render={() => <PostUpdate />} />
+      <Route path="/map/naver" render={() => <MapNaver />} />
     </Switch>
   );
 }

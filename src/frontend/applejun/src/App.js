@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Main from "./app/Main";
+import { NavermapsProvider } from "react-naver-maps";
 
 function App() {
   console.log("Um");
@@ -9,7 +10,9 @@ function App() {
     <div>
       <Router>
         {console.log("Jun")}
-        <Main />
+        <NavermapsProvider ncpClientId="f5z13y2f41">
+          <Main />
+        </NavermapsProvider>
         {console.log("Sik")}
       </Router>
       {console.log("Is")}

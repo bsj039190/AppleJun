@@ -40,7 +40,7 @@ function Home() {
         </div>
 
         <div>
-          <Link to="/gps/get/list">
+          <Link to="/map/list">
             <button>Go to Map</button>
           </Link>
         </div>

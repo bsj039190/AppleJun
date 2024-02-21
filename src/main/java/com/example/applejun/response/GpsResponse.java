@@ -19,4 +19,5 @@ public class GpsResponse {
     private String url;
     private String subject;
     private LocalDate date;
+    private String address;
 }

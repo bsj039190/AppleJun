@@ -17,7 +17,7 @@ public class GpsEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String name;
 
     @Column
@@ -32,6 +32,9 @@ public class GpsEntity extends BaseEntity{
     @Column(length = 50)
     private String subject;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate date;
+
+    @Column(nullable = false)
+    private String address;
 }

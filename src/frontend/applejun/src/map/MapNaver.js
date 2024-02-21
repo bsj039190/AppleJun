@@ -40,7 +40,9 @@ function MapNaver() {
               address: gps.address,
             });
 
-            console.log(geocodeResponse.addresses);
+            console.log("엄");
+            console.log(geocodeResponse);
+            console.log("준");
 
             // geocode 응답에서 위도와 경도 추출
             const coordinates = geocodeResponse.addresses[0];

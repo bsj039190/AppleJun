@@ -22,7 +22,7 @@
 1. ~~post write, update 페이지 만들기 --> 왜 안되는지 모르겠다...~~
 2. ~~post 상세페이지 만들기~~
 3. ~~map api 끌어오기~~, 표시하는게 힘들면 리스트로 해서 누르면 해당 url로 들어가서 연결되게 하기
-4. map list 만들기
+4. ~~map list 만들기~~ ===> 네이버 지도에 동적으로 다중마커 찍는데 성공!
 5. post list 에서 몇개단위로 몇페이지 할지, 페이지 구조 만들기
 6. 로그인 구현하기, 이거는 백엔드도 해야됨
 7. 
@@ -40,6 +40,8 @@ scr=()여기 안에 require 넣는거 더 해봐야 할듯
 네이버지도 api 불러오기 가능!
 https://console.ncloud.com/naver-service/application
 여기로 가면됨
+
+네이버 지도 testmap 버튼이 성공한 지도임 그거 그대로 쓰자 더 하면 너무 힘들다...
 
 ## BackEnd
 post의 gps값에 널값이 들어갈 수 없기 때문에 gps의 id 1번의 값은 

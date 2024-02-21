@@ -8,6 +8,7 @@ import PostWrite from "../post/PostWrite";
 import PostUpdate from "../post/PostUpdate";
 import MapNaver from "../map/MapNaver";
 import MapList from "../map/MapList";
+import MapNaverSec from "../map/MapNaverSec";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
 
       <Route path="/map/naver" render={() => <MapNaver />} />
       <Route path="/map/list" render={() => <MapList />} />
+      <Route path="/map/sec" render={() => <MapNaverSec />} />
     </Switch>
   );
 }

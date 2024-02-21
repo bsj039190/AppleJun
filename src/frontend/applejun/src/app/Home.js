@@ -51,6 +51,12 @@ function Home() {
           </Link>
         </div>
 
+        <div>
+          <Link to="map/sec">
+            <button>TestMap</button>
+          </Link>
+        </div>
+
         <br></br>
         <br></br>
         <div className="mt-4">

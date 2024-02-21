@@ -1,6 +1,3 @@
-// import React, { useEffect } from "react";
-// import { NaverMap, Marker } from "react-naver-maps";
-
 import React, { useEffect, useState } from "react";
 import {
   Container as MapDiv,
@@ -24,6 +21,8 @@ function MapList() {
           console.log("error");
           return alert("Something wrong!");
         }
+
+        console.log(response.result);
 
         const result = response.result;
         const items = result.items;

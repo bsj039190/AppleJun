@@ -9,6 +9,7 @@ import PostUpdate from "../post/PostUpdate";
 import MapNaver from "../map/MapNaver";
 import MapList from "../map/MapList";
 import MapNaverSec from "../map/MapNaverSec";
+import MapCreate from "../map/MapCreate";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/map/naver" render={() => <MapNaver />} />
       <Route path="/map/list" render={() => <MapList />} />
       <Route path="/map/sec" render={() => <MapNaverSec />} />
+      <Route path="/map/create" render={() => <MapCreate />} />
     </Switch>
   );
 }

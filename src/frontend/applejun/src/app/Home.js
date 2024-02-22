@@ -27,6 +27,7 @@ function Home() {
         <hr className="my-4" />
         <h3>MENU</h3>
 
+        <p>📋 게시판</p>
         <div>
           <Link to="/post/get/list">
             <button>Go to Board List</button>
@@ -39,6 +40,9 @@ function Home() {
           </Link>
         </div>
 
+        <br />
+
+        <p>🗺️ 지도</p>
         <div>
           <Link to="/map/list">
             <button>Go to Map</button>
@@ -46,14 +50,8 @@ function Home() {
         </div>
 
         <div>
-          <Link to="map/naver">
-            <button>Go to NaverMap</button>
-          </Link>
-        </div>
-
-        <div>
-          <Link to="map/sec">
-            <button>TestMap</button>
+          <Link to="/map/create">
+            <button>Create Map Point</button>
           </Link>
         </div>
 

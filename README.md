@@ -43,6 +43,9 @@ https://console.ncloud.com/naver-service/application
 
 네이버 지도 testmap 버튼이 성공한 지도임 그거 그대로 쓰자 더 하면 너무 힘들다...
 
+2/22
+지도 밑에 GpsList 만들어서 정렬하고 수정 삭제 바로바로 되게 만들어야 함
+
 ## BackEnd
 post의 gps값에 널값이 들어갈 수 없기 때문에 gps의 id 1번의 값은 
 아무것도 아닌 값으로 설정해서 널값 대신 1번을 넣어서 뭘하든 항상 1번값은 

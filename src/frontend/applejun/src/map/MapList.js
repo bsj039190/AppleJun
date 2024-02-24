@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import MapUpdate from "./MapUpdate";
 import MapDelete from "./MapDelete";
+import ReactDOM from "react-dom"; // ReactDOM 추가
 
 // ContentsResponse 클래스의 구조와 유사한 React 응답 형식을 정의
 class ApiResponse {
@@ -66,13 +67,18 @@ function MapList() {
       });
   }, [navermaps.Service]); // useEffect가 한 번만 실행되도록 빈 배열을 전달
 
-  function openUpdateFloating() {
-    const newWindow = window.open(
-      "MapUpdate.js",
-      "_blank",
-      "width=500,height=300"
+  const openUpdateFloating = (gps) => {
+    const newWindow = window.open("", "_blank", "width=500,height=300");
+
+    newWindow.document.write(
+      "<html><head><title>Update GPS</title></head><body><div id='root'></div></body></html>"
     );
-  }
+
+    ReactDOM.render(
+      <MapUpdate gps={gps} />,
+      newWindow.document.getElementById("root")
+    );
+  };
 
   return (
     <>

@@ -55,6 +55,12 @@ function Home() {
           </Link>
         </div>
 
+        <div>
+          <Link to="/modal">
+            <button>ModalTest</button>
+          </Link>
+        </div>
+
         <br></br>
         <br></br>
         <div className="mt-4">

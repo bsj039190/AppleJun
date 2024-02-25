@@ -10,6 +10,7 @@ import MapNaver from "../map/MapNaver";
 import MapList from "../map/MapList";
 import MapNaverSec from "../map/MapNaverSec";
 import MapCreate from "../map/MapCreate";
+import ModalTest from "../map/ModalTest";
 
 function Router() {
   return (
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/map/list" render={() => <MapList />} />
       <Route path="/map/sec" render={() => <MapNaverSec />} />
       <Route path="/map/create" render={() => <MapCreate />} />
+      <Route path="/modal" render={() => <ModalTest />} />
     </Switch>
   );
 }

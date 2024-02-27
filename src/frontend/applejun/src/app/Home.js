@@ -61,9 +61,10 @@ function Home() {
           </Link>
         </div>
 
+        <p>🎞️ 배경화면</p>
         <div>
-          <Link to="/modal">
-            <button>ModalTest</button>
+          <Link to="/background/list">
+            <button>Background</button>
           </Link>
         </div>
 

@@ -136,8 +136,11 @@ function MapListAndUpdate() {
   };
 
   const deleteMap = (id, name) => {
-    MapDelete(id, name);
-    history.push("/map/list");
+    //삭제를 하면 지도로 가고 하지 않았으면 그페이지 그대로
+    const successValue = MapDelete(id, name);
+    if (successValue == 1) {
+      history.push("/map/list");
+    }
   };
 
   const openModal = (gps) => {

@@ -50,6 +50,12 @@ function Home() {
         </div>
 
         <div>
+          <Link to="/map/text/list">
+            <button>Go to Map List</button>
+          </Link>
+        </div>
+
+        <div>
           <Link to="/map/create">
             <button>Create Map Point</button>
           </Link>

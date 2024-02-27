@@ -43,11 +43,16 @@ https://console.ncloud.com/naver-service/application
 
 네이버 지도 testmap 버튼이 성공한 지도임 그거 그대로 쓰자 더 하면 너무 힘들다...
 
-modal이 안되고있음 invalid hook문제가 뜨는데 진짜 리액트18이 17로 되면 가능한지 확인하기
-안되면 팝업 없애야지뭐...
-
 2/22
 지도 밑에 GpsList 만들어서 정렬하고 수정 삭제 바로바로 되게 만들어야 함
+
+modal이 안되고있음 invalid hook문제가 뜨는데 진짜 리액트18이 17로 되면 가능한지 확인하기
+안되면 팝업 없애야지뭐... ==> 팝업 없애자..
+
+2/27
+온클릭에서는 () => openModal(gps) 이런모양으로 쓰자 무한렌더링 된다
+
+
 
 ## BackEnd
 post의 gps값에 널값이 들어갈 수 없기 때문에 gps의 id 1번의 값은 

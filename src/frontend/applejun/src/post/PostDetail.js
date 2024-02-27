@@ -7,7 +7,6 @@ const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
 
-  // eslint-disable-next-line no-restricted-globals
   const history = useHistory();
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const PostDetail = () => {
   }, [id]);
 
   const handleDelete = async () => {
-    // 사용자에게 정말 삭제하시겠습니까? 라는 확인 메시지를 띄웁니다.
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
 
     if (isConfirmed) {

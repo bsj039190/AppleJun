@@ -33,11 +33,11 @@ function BackgroundUpload(uploadFile, backgroundRequest) {
       return 1;
     } catch (error) {
       console.log(error);
+      return 0;
     }
   };
-  upload();
 
-  return 0;
+  upload();
 }
 
 export default BackgroundUpload;

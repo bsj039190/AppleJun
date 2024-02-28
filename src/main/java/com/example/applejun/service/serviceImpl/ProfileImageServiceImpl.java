@@ -33,7 +33,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
     private final AccountRepository accountRepository;
 
-    private final String UPLOAD_DIR = "src/main/resources/static/files/uploads/profile-images/";
+    private final String UPLOAD_DIR = "src/frontend/applejun/public/profile-image/";
 
 
     //업로드프로필 예전함수들

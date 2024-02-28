@@ -116,7 +116,6 @@ function MapListAndUpdate() {
 
       console.log(apiResponse.data);
       alert("위치 정보 수정이 완료되었습니다!");
-      alert("지도로 이동합니다.");
       setModalIsOpen(false);
       history.push("/map/list");
     } catch (error) {
@@ -136,9 +135,8 @@ function MapListAndUpdate() {
   };
 
   const deleteMap = (id, name) => {
-    //삭제를 하면 지도로 가고 하지 않았으면 그페이지 그대로
-    const successValue = MapDelete(id, name);
-    if (successValue == 1) {
+    const isConfirmed = MapDelete(id, name);
+    if (isConfirmed == 1) {
       history.push("/map/list");
     }
   };

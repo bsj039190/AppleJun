@@ -10,12 +10,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "TB_BACKGROUND")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BackgroundImageEntity {
+public class BackgroundImageEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column
     private String fileName;
     @Column(nullable = false)
     private String filePath;
+
+    @Column(nullable = false)
+    private Long uploader;
 }

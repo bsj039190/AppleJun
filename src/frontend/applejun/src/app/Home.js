@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import GetBackground from "./GetBackground";
 
 function Home() {
+  const [id, setId] = useState(1);
   const joinButtonHandler = () => {
     alert("회원가입은 관리자에게 직접 문의해주세요");
   };
+
+  const fileName = GetBackground(id);
 
   return (
     <div className="container mt-5">
@@ -68,6 +73,18 @@ function Home() {
           </Link>
         </div>
 
+        <br />
+        <br />
+        <div>
+          <Link to="/background/list">
+            <button>BackgroundList</button>
+          </Link>
+        </div>
+
+        <br />
+        <br />
+        <p>배경화면</p>
+        <img src={`/background-image/${fileName}`} />
         <br></br>
         <br></br>
         <div className="mt-4">

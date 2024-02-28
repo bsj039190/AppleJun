@@ -8,13 +8,11 @@ function MapDelete(id, name) {
       axios.delete(`http://localhost:8080/gps/delete/${id}`);
 
       alert("삭제가 완료되었습니다.");
-
       return 1;
     } catch (error) {
       console.error(error);
     }
   }
-
   return 0;
 }
 

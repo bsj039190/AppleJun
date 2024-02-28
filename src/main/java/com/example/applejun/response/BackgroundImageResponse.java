@@ -13,4 +13,5 @@ public class BackgroundImageResponse {
     private Long id;
     private String fileName;
     private String filePath;
+    private Long uploader;
 }

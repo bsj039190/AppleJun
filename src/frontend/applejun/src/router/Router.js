@@ -12,6 +12,7 @@ import MapNaverSec from "../map/MapNaverSec";
 import MapCreate from "../map/MapCreate";
 import ModalTest from "../map/ModalTest";
 import MapListAndUpdate from "../map/MapListAndUpdate";
+import BackgroundList from "../background/BackgroundList";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/map/create" render={() => <MapCreate />} />
       <Route path="/modal" render={() => <ModalTest />} />
       <Route path="/map/text/list" render={() => <MapListAndUpdate />} />
+      <Route path="/background/list" render={() => <BackgroundList />} />
     </Switch>
   );
 }

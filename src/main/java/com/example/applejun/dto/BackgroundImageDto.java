@@ -13,4 +13,5 @@ public class BackgroundImageDto {
     private Long id;
     private String fileName;
     private String filePath;
+    private Long uploader;
 }

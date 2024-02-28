@@ -7,6 +7,7 @@ import com.example.applejun.repository.BackgroundImageRepository;
 import com.example.applejun.service.BackgroundImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,7 +32,22 @@ public class BackgroundImageServiceImpl implements BackgroundImageService {
 
     public final BackgroundImageRepository backgroundImageRepository;
 
-    private final String UPLOAD_DIR = "src/main/resources/static/files/uploads/background-images/";
+    private final String UPLOAD_DIR = "src/frontend/applejun/public/background-image/";
+
+    @Override
+    public List<BackgroundImageDto> getBackgroundList(Long id) {
+
+        List<BackgroundImageEntity> backgroundImageEntityList = backgroundImageRepository.findByUploader(id);
+
+        List<BackgroundImageDto> backgroundImageDtoList = new ArrayList<>();
+
+        for (BackgroundImageEntity backgroundImageEntity : backgroundImageEntityList) {
+            BackgroundImageDto backgroundImageDto = BackgroundImageMapper.INSTANCE.backgroundImageEntityToDto(backgroundImageEntity);
+            backgroundImageDtoList.add(backgroundImageDto);
+        }
+
+        return backgroundImageDtoList;
+    }
 
     @Override
     public void uploadBackground(MultipartFile file, BackgroundImageDto backgroundImageDto) {
@@ -40,6 +58,11 @@ public class BackgroundImageServiceImpl implements BackgroundImageService {
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
+            }
+
+            // 파일 이름 설정
+            if (backgroundImageDto.getFileName() == "") {
+                backgroundImageDto.setFileName(file.getOriginalFilename());
             }
 
             log.debug("Um");
@@ -117,6 +140,34 @@ public class BackgroundImageServiceImpl implements BackgroundImageService {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to update profile image.");
+        }
+    }
+
+    @Override
+    public void deleteBackground(Long backgroundImageId) {
+        log.debug("start delete background image, id = {}", backgroundImageId);
+
+        try {
+            // 배경 이미지 검색
+            Optional<BackgroundImageEntity> backgroundImageOptional = backgroundImageRepository.findById(backgroundImageId);
+            if (!backgroundImageOptional.isPresent()) {
+                throw new RuntimeException("background image not found.");
+            }
+
+            BackgroundImageEntity backgroundImage = backgroundImageOptional.get();
+
+            // 배경 이미지 파일 삭제(물리)
+            Path filePath = Paths.get(backgroundImage.getFilePath());
+            Files.delete(filePath);
+
+            // 데이터베이스에서 배경 이미지 삭제
+            backgroundImageRepository.deleteById(backgroundImageId);
+
+            log.debug("background image deleted success, id = {}", backgroundImageId);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to delete background image.");
         }
     }
 }

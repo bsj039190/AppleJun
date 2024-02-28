@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class BackgroundImageRequest {
     private String fileName;
     private String filePath;
+    private Long uploader;
 }

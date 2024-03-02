@@ -5,17 +5,14 @@ import Main from "./app/Main";
 import { NavermapsProvider } from "react-naver-maps";
 
 function App() {
-  console.log("Um");
   return (
     <div>
       <Router>
-        {console.log("Jun")}
         <NavermapsProvider ncpClientId="f5z13y2f41">
           <Main />
         </NavermapsProvider>
-        {console.log("Sik")}
       </Router>
-      {console.log("Is")}
+      {console.log("Main Render in App.js")}
     </div>
   );
 }

@@ -112,7 +112,7 @@ function Home() {
         <br />
 
         <p>배경화면</p>
-        <img src={`/background-image/${fileName}`} alt="background" />
+        <img className="background" src={`/background-image/${fileName}`} alt="background" />
 
         <br></br>
         <br></br>

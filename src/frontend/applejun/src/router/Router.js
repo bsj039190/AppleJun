@@ -13,11 +13,13 @@ import MapCreate from "../map/MapCreate";
 import ModalTest from "../map/ModalTest";
 import MapListAndUpdate from "../map/MapListAndUpdate";
 import BackgroundList from "../background/BackgroundList";
+import Login from "../app/Login";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" exact render={() => <Home />} />
+      <Route path="/" exact render={() => <Login />} />
+      <Route path="/home" render={() => <Home />} />
       <Route path="/aaa" render={() => <Aaa />} />
       <Route path="/post/get/list" render={() => <PostList />} />
       <Route path="/post/get/:id" render={() => <PostDetail />} />

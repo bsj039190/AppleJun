@@ -28,6 +28,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+	implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 시큐리티
+
 	//implementation 'javax.persistence:javax.persistence-api:2.2' // javax.persistence 라이브러리
 	implementation 'org.hibernate:hibernate-core:5.6.9.Final' // Hibernate 라이브러리
 	implementation 'org.hibernate:hibernate-entitymanager:5.6.9.Final' // Hibernate Entity Manager

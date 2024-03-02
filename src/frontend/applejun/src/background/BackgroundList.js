@@ -55,9 +55,13 @@ function BackgroundList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isUploaded = BackgroundUpload(uploadFile, backgroundRequest);
+    let isUploaded = await BackgroundUpload(uploadFile, backgroundRequest);
+    console.log(isUploaded);
     if (isUploaded == 1) {
       window.location.reload();
+    } else {
+      console.log("엄준식");
+      console.log(isUploaded);
     }
   };
 

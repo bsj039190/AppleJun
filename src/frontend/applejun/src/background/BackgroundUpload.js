@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function BackgroundUpload(uploadFile, backgroundRequest) {
+const BackgroundUpload = async (uploadFile, backgroundRequest) => {
   console.log("엄준식");
 
   console.log(backgroundRequest);

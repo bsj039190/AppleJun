@@ -7,8 +7,10 @@ import com.example.applejun.repository.AccountRepository;
 import com.example.applejun.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +24,9 @@ import java.util.Optional;
 @Transactional
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -51,6 +56,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void createAccount(AccountDto accountDto) {
         AccountEntity accountEntity = AccountMapper.INSTANCE.accountDtoToEntity(accountDto);
+        accountEntity.setPwd(passwordEncoder.encode(accountDto.getPwd()));
 
         if (accountRepository.save(accountEntity) == null) {
             throw new RuntimeException("account save failed.");
@@ -67,6 +73,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountDto.setId(id);
         AccountEntity accountEntity = AccountMapper.INSTANCE.accountDtoToEntity(accountDto);
+        accountEntity.setPwd(passwordEncoder.encode(accountDto.getPwd()));
 
         accountRepository.save(accountEntity);
     }

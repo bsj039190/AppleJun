@@ -2,6 +2,8 @@ package com.example.applejun.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @Table(name = "TB_ACCOUNT")
@@ -40,4 +43,11 @@ public class AccountEntity extends BaseEntity{
 
     private String profileImage;
 
+    // Spring Security에서 제공하는 BCryptPasswordEncoder를 사용하여 비밀번호 해싱
+//    private PasswordEncoder passwordEncoder;
+//
+//    public void setPassword(String password) {
+//        // 비밀번호를 해싱하여 저장
+//        this.pwd = passwordEncoder.encode(password);
+//    }
 }

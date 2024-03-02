@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,7 @@ public class AccountController {
     }
 
     @PutMapping("/account/update/{id}")
+    @PermitAll
     public ResponseEntity<BaseResponse> updateAccount(@PathVariable("id") @NotBlank String id,
                                                       @RequestBody @Validated AccountRequest accountRequest,
                                                       BindingResult bindingResult) {

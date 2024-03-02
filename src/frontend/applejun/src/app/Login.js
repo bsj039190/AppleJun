@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
+import axios from "axios";
 import AuthWithBack from "./AuthWithBack";
 
 // 모달 스타일 설정
@@ -17,10 +18,9 @@ Modal.setAppElement("#root");
 
 function Login() {
   const history = useHistory();
-  const [login, setLogin] = useState({
-    id: 0,
-    password: "0000",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const goToHome = () => {
@@ -32,24 +32,44 @@ function Login() {
   };
 
   const loginMethod = (id) => {
-    setLogin({ ...login, id: id });
+    setUsername(id);
     setModalIsOpen(true);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLogin({
-      ...login,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setPassword({
+  //     ...login,
+  //     [name]: value,
+  //   });
+  // };
 
-  const handleSubmitLogin = async (e, login) => {
+  const handleSubmitLogin = async (e) => {
     e.preventDefault();
 
-    AuthWithBack();
+    console.log(username);
+    console.log(password);
 
-    console.log(login);
+    try {
+      const params = new URLSearchParams();
+      params.append("account", username);
+      params.append("password", password);
+
+      const response = await axios.post("/login", params.toString(), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      console.log(response.data); // 로그인 성공 시 서버에서 반환하는 데이터 처리
+      // 성공 시 필요한 동작을 수행 (예: 리다이렉트 등)
+      alert("로그인 성공!");
+      history.push("/home");
+    } catch (err) {
+      setError("Invalid username or password");
+      console.error("Login failed:", err);
+      // 실패 시 필요한 동작을 수행 (예: 에러 메시지 표시 등)
+    }
   };
 
   return (
@@ -60,8 +80,8 @@ function Login() {
       <br />
       <br />
       <br />
-      <button onClick={() => loginMethod(1)}>승준</button>
-      <button onClick={() => loginMethod(2)}>수연</button>
+      <button onClick={() => loginMethod("BSJ")}>승준</button>
+      <button onClick={() => loginMethod("LSY")}>수연</button>
       <button>Guest</button>
 
       <Modal
@@ -71,15 +91,15 @@ function Login() {
         contentLabel="Login Method"
       >
         <h2>LogIn</h2>
-        <form onSubmit={(e) => handleSubmitLogin(e, login)}>
-          <p>접속 아이디 : {login.id}</p>
+        <form onSubmit={(e) => handleSubmitLogin(e)}>
+          <p>접속 아이디 : {username}</p>
           <label>
             Password:
             <input
               type="password"
               name="password"
-              value={login.password}
-              onChange={handleInputChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
 

@@ -23,7 +23,9 @@ function MapNaver() {
   const getGpsList = async () => {
     try {
       // Pageable 파라미터를 추가하여 Axios로 데이터 가져오기
-      const response = await axios.get("http://localhost:8080/gps/get/list");
+      const response = await axios.get("http://localhost:8080/gps/get/list", {
+        withCredentials: true,
+      });
 
       // Axios로 가져온 데이터는 data 속성에 있음
       const apiResponse = response.data;

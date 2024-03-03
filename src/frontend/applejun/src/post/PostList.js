@@ -9,7 +9,10 @@ const PostList = () => {
   useEffect(() => {
     const fetchGetPostList = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/post/get/list");
+        const response = await axios.get(
+          "http://localhost:8080/post/get/list",
+          { withCredentials: true }
+        );
         setPostList(response.data.contents);
       } catch (error) {
         console.error("Error from get post list : ", error);
@@ -22,7 +25,7 @@ const PostList = () => {
   return (
     <div>
       <div>
-        <button onClick={() => history.push(`/`)}>홈으로</button>
+        <button onClick={() => history.push(`/home`)}>홈으로</button>
       </div>
       <h2>포스트 목록</h2>
       <ul>

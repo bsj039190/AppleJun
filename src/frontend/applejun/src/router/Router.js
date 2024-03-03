@@ -14,11 +14,13 @@ import ModalTest from "../map/ModalTest";
 import MapListAndUpdate from "../map/MapListAndUpdate";
 import BackgroundList from "../background/BackgroundList";
 import Login from "../app/Login";
+import Logout from "../app/Logout";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" exact render={() => <Login />} />
+      <Route path="/logout" render={() => <Logout />} />
       <Route path="/home" render={() => <Home />} />
       <Route path="/aaa" render={() => <Aaa />} />
       <Route path="/post/get/list" render={() => <PostList />} />

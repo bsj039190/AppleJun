@@ -1,5 +1,7 @@
 package com.example.applejun.config;
 
+import com.example.applejun.config.handler.LoginSuccessHandler;
+import com.example.applejun.service.serviceImpl.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -44,8 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/login", "gps/**", "map/**").permitAll()
-                .antMatchers("/post/**").hasRole("ADMIN")
+                .antMatchers("/", "/home", "/login", "gps/**", "map/**", "/account/create").permitAll()
+                .antMatchers("/background/**", "/post/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -70,13 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // 로그아웃 성공 시 동작
                     response.setStatus(HttpServletResponse.SC_OK);
                 })
-                .permitAll();
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
+                .permitAll()
+                .and()
+                .rememberMe()
+                .key("SecretKey")
+                .rememberMeParameter("remember")
+                .tokenValiditySeconds(3600)
+                .userDetailsService(customUserDetailService);
     }
 
     @Override

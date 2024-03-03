@@ -21,7 +21,9 @@ const PostUpdate = () => {
   useEffect(() => {
     const fetchPostDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/post/${id}`);
+        const response = await axios.get(`http://localhost:8080/post/${id}`, {
+          withCredentials: true,
+        });
         setPost(response.data.contents);
         console.log(response);
 
@@ -79,7 +81,9 @@ const PostUpdate = () => {
     console.log([...formData]);
 
     try {
-      await axios.put(`http://localhost:8080/post/update/${id}`, formData);
+      await axios.put(`http://localhost:8080/post/update/${id}`, formData, {
+        withCredentials: true,
+      });
 
       // 업데이트 성공 후 리다이렉션
       alert("업데이트가 완료되었습니다!");

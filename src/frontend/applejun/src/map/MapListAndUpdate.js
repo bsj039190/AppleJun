@@ -57,7 +57,9 @@ function MapListAndUpdate() {
   useEffect(() => {
     const fetchGetPostList = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/gps/get/list");
+        const response = await axios.get("http://localhost:8080/gps/get/list", {
+          withCredentials: true,
+        });
         setGpsList(response.data.contents);
       } catch (error) {
         console.error("Error from get post list : ", error);
@@ -111,7 +113,8 @@ function MapListAndUpdate() {
     try {
       const apiResponse = await axios.put(
         `http://localhost:8080/gps/update/${selectedGps.id}`, //id추가
-        gpsRequest
+        gpsRequest,
+        { withCredentials: true }
       );
 
       console.log(apiResponse.data);
@@ -154,7 +157,7 @@ function MapListAndUpdate() {
   return (
     <div>
       <div>
-        <button onClick={() => history.push("/")}>홈으로</button>
+        <button onClick={() => history.push("/home")}>홈으로</button>
         <button onClick={() => history.push("/map/list")}>지도로 보기</button>
       </div>
       <h2>좌표 목록</h2>

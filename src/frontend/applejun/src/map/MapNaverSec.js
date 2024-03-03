@@ -23,7 +23,7 @@ function MapNaverSec() {
 
   useEffect(() => {
     const response = axios
-      .get("http://localhost:8080/gps/get/list")
+      .get("http://localhost:8080/gps/get/list", { withCredentials: true })
       .then((response) => {
         console.log(response.data.contents);
 

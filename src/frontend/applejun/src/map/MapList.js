@@ -32,7 +32,7 @@ function MapList() {
 
   useEffect(() => {
     const response = axios
-      .get("http://localhost:8080/gps/get/list")
+      .get("http://localhost:8080/gps/get/list", { withCredentials: true })
       .then((response) => {
         console.log(response.data.contents);
 
@@ -96,7 +96,7 @@ function MapList() {
         </NaverMap>
       </Container>
       <div>
-        <button onClick={() => history.push(`/`)}>홈으로</button>
+        <button onClick={() => history.push(`/home`)}>홈으로</button>
         <Link to="/map/text/list">
           <button>리스트로 보기</button>
         </Link>

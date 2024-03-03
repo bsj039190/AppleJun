@@ -7,7 +7,9 @@ function BackgroundDelete(id) {
 
   if (isConfirmed) {
     try {
-      axios.delete(`http://localhost:8080/background/delete/${id}`);
+      axios.delete(`http://localhost:8080/background/delete/${id}`, {
+        withCredentials: true,
+      });
 
       alert("삭제가 완료되었습니다.");
       return 1;

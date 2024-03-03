@@ -26,7 +26,8 @@ function Home() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/background/list/${id}`
+          `http://localhost:8080/background/list/${id}`,
+          { withCredentials: true }
         );
         const imageList = response.data.contents;
 
@@ -53,13 +54,17 @@ function Home() {
         <p>홈화면</p>
 
         <div>
-          <Link to="/">
+          <Link to="/home">
             <button>메인화면</button>
           </Link>
         </div>
 
-        <Link to="/login">
+        <Link to="/">
           <button>로그인</button>
+        </Link>
+
+        <Link to="/logout">
+          <button>로그아웃</button>
         </Link>
 
         <button onClick={joinButtonHandler}>회원가입</button>
@@ -112,7 +117,11 @@ function Home() {
         <br />
 
         <p>배경화면</p>
-        <img className="background" src={`/background-image/${fileName}`} alt="background" />
+        <img
+          className="background"
+          src={`/background-image/${fileName}`}
+          alt="background"
+        />
 
         <br></br>
         <br></br>

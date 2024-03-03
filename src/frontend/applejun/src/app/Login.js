@@ -20,6 +20,7 @@ function Login() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState("on");
   const [error, setError] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -54,12 +55,18 @@ function Login() {
       const params = new URLSearchParams();
       params.append("account", username);
       params.append("password", password);
+      params.append("remember", remember); // 항상 true로 설정
 
-      const response = await axios.post("/login", params.toString(), {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/login",
+        params.toString(),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          withCredentials: true,
+        }
+      );
 
       console.log(response.data); // 로그인 성공 시 서버에서 반환하는 데이터 처리
       // 성공 시 필요한 동작을 수행 (예: 리다이렉트 등)
@@ -72,6 +79,8 @@ function Login() {
     }
   };
 
+  //8080에서는 쿠키가 들어가는데 3000에서는 쿠키가 안나옴
+
   return (
     <div>
       <div>
@@ -82,7 +91,7 @@ function Login() {
       <br />
       <button onClick={() => loginMethod("BSJ")}>승준</button>
       <button onClick={() => loginMethod("LSY")}>수연</button>
-      <button>Guest</button>
+      <button onClick={() => loginMethod("GUEST")}>Guest</button>
 
       <Modal
         isOpen={modalIsOpen}
@@ -93,6 +102,7 @@ function Login() {
         <h2>LogIn</h2>
         <form onSubmit={(e) => handleSubmitLogin(e)}>
           <p>접속 아이디 : {username}</p>
+          {username === "GUEST" && <p>게스트 비밀번호는 0000입니다.</p>}
           <label>
             Password:
             <input

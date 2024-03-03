@@ -74,7 +74,8 @@ function MapCreate() {
     try {
       const apiResponse = await axios.post(
         "http://localhost:8080/gps/create",
-        gpsRequest
+        gpsRequest,
+        { withCredentials: true }
       );
 
       console.log(apiResponse.data);
@@ -150,7 +151,7 @@ function MapCreate() {
       <br />
       <br />
       <div>
-        <button onClick={() => history.push(`/`)}>홈으로</button>
+        <button onClick={() => history.push(`/home`)}>홈으로</button>
       </div>
     </div>
   );

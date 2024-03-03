@@ -11,7 +11,9 @@ const PostDetail = () => {
 
   useEffect(() => {
     const fetchPostDetail = async () => {
-      const response = await axios.get(`http://localhost:8080/post/${id}`);
+      const response = await axios.get(`http://localhost:8080/post/${id}`, {
+        withCredentials: true,
+      });
       setPost(response.data.contents);
       console.log(response);
     };
@@ -24,7 +26,9 @@ const PostDetail = () => {
     if (isConfirmed) {
       try {
         // 삭제 요청을 보냅니다.
-        await axios.delete(`http://localhost:8080/post/delete/${id}`);
+        await axios.delete(`http://localhost:8080/post/delete/${id}`, {
+          withCredentials: true,
+        });
         // 삭제가 완료되면 리스트 페이지로 이동합니다.
         alert("삭제가 완료되었습니다.");
         history.replace("/post/get/list");

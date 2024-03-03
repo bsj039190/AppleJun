@@ -24,7 +24,8 @@ const BackgroundUpload = async (uploadFile, backgroundRequest) => {
     try {
       const response = await axios.post(
         "http://localhost:8080/background/upload",
-        formData
+        formData,
+        { withCredentials: true }
       );
 
       console.log(response.data);
@@ -38,6 +39,6 @@ const BackgroundUpload = async (uploadFile, backgroundRequest) => {
   };
 
   upload();
-}
+};
 
 export default BackgroundUpload;

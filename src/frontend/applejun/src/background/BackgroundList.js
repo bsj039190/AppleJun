@@ -34,7 +34,8 @@ function BackgroundList() {
     const fetchGetImageList = async (id) => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/background/list/${id}`
+          `http://localhost:8080/background/list/${id}`,
+          { withCredentials: true }
         );
         setImageList(response.data.contents);
       } catch (error) {
@@ -92,7 +93,7 @@ function BackgroundList() {
   return (
     <div>
       <div>
-        <button onClick={() => history.push(`/`)}>홈으로</button>
+        <button onClick={() => history.push(`/home`)}>홈으로</button>
       </div>
       <h2>배경화면 목록</h2>
       <button onClick={() => setModalIsOpen(true)}>사진 추가하기</button>

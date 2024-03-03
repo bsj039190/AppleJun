@@ -51,7 +51,8 @@ const PostWrite = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/post/create",
-        formData
+        formData,
+        { withCredentials: true }
       );
 
       console.log(response.data);

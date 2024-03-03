@@ -6,6 +6,15 @@ import "./home.css";
 function Home() {
   const [id, setId] = useState(1);
   const [fileName, setFileName] = useState();
+
+  //왼쪽에는 나, 오른쪽에는 수연이
+  const [left, setLeft] = useState({});
+  const [right, setRight] = useState({});
+
+  const [startDate, setStartDate] = useState(new Date("2023-05-21"));
+  const [endDate, setEndDate] = useState(new Date());
+  const [days, setDays] = useState(0);
+
   const joinButtonHandler = () => {
     alert("회원가입은 관리자에게 직접 문의해주세요");
   };
@@ -21,28 +30,73 @@ function Home() {
     }
   };
 
+  const daysPassedCalculator = () => {
+    // 시작 및 종료 날짜의 시간을 자정으로 설정
+    const startMidnight = new Date(startDate);
+    startMidnight.setHours(0, 0, 0, 0);
+
+    const endMidnight = new Date(endDate);
+    endMidnight.setHours(0, 0, 0, 0);
+
+    const timeDifference = endMidnight.getTime() - startMidnight.getTime();
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    console.log(endDate);
+
+    //시작일이 1일이기 때문에 +1을 함
+    setDays(days + 1);
+  };
+
   // 컴포넌트 렌더링 시 한 번만 실행
-  if (!fileName) {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/background/list/${id}`,
-          { withCredentials: true }
-        );
-        const imageList = response.data.contents;
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/background/list/${id}`,
+        { withCredentials: true }
+      );
+      const imageList = response.data.contents;
 
-        if (imageList.length > 0) {
-          const randomIndex = Math.floor(Math.random() * imageList.length);
-          const randomFilePath = imageList[randomIndex].filePath;
+      console.log("엄");
 
-          // 파일 이름만 추출하여 state에 설정
-          setFileName(extractFileNameAddPath(randomFilePath));
-        }
-      } catch (error) {
-        console.error(error);
+      if (imageList.length > 0) {
+        const randomIndex = Math.floor(Math.random() * imageList.length);
+        const randomFilePath = imageList[randomIndex].filePath;
+
+        // 파일 이름만 추출하여 state에 설정
+        setFileName(extractFileNameAddPath(randomFilePath));
       }
-    };
 
+      const joon = await axios.get(`http://localhost:8080/account/get/1`, {
+        withCredentials: true,
+      });
+      const joonData = joon.data.contents;
+
+      if (joonData != null) {
+        setLeft(joonData);
+        console.log(joonData);
+      } else {
+        console.log("Fail to get BSJ");
+      }
+
+      const soo = await axios.get(`http://localhost:8080/account/get/2`, {
+        withCredentials: true,
+      });
+      const sooData = soo.data.contents;
+
+      if (sooData != null) {
+        setRight(sooData);
+        console.log(sooData);
+
+        daysPassedCalculator();
+      } else {
+        console.log("Fail to get LSY");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (!fileName) {
     // 함수 호출
     fetchData();
   }
@@ -70,6 +124,11 @@ function Home() {
         <button onClick={joinButtonHandler}>회원가입</button>
 
         <hr />
+        <p>
+          {left.name} ❤️ {right.name}
+        </p>
+        <p>{days}</p>
+
         <h3>MENU</h3>
 
         <p>📋 게시판</p>

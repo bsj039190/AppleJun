@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "../account/UserContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 
 function Home() {
-  const [id, setId] = useState(1);
   const [fileName, setFileName] = useState();
+  const { currentUser } = useUser();
 
   //왼쪽에는 나, 오른쪽에는 수연이
   const [left, setLeft] = useState({});
   const [right, setRight] = useState({});
+
+  //const [currentId, setCurrentId] = useState(currentUser.id);
 
   const [startDate, setStartDate] = useState(new Date("2023-05-21"));
   const [endDate, setEndDate] = useState(new Date());
@@ -24,6 +27,7 @@ function Home() {
       //원래는 replace가 맞지만 에러가 나서 직접 글자수로 잘라버림
       const fileName = filePath.substr(46);
       console.log(`background : ${fileName}`);
+
       return fileName;
     } else {
       console.log("안됨");
@@ -50,13 +54,14 @@ function Home() {
   // 컴포넌트 렌더링 시 한 번만 실행
   const fetchData = async () => {
     try {
+      const id = currentUser.id;
+      console.log(id);
+
       const response = await axios.get(
         `http://localhost:8080/background/list/${id}`,
         { withCredentials: true }
       );
       const imageList = response.data.contents;
-
-      console.log("엄");
 
       if (imageList.length > 0) {
         const randomIndex = Math.floor(Math.random() * imageList.length);
@@ -96,10 +101,9 @@ function Home() {
     }
   };
 
-  if (!fileName) {
-    // 함수 호출
+  useEffect(() => {
     fetchData();
-  }
+  }, [currentUser]); // currentUser가 변경될 때마다 fetchData 실행
 
   return (
     <div className="container">

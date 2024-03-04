@@ -14,6 +14,7 @@ const PostList = () => {
           { withCredentials: true }
         );
         setPostList(response.data.contents);
+        console.log(response.data.contents);
       } catch (error) {
         console.error("Error from get post list : ", error);
       }
@@ -21,6 +22,14 @@ const PostList = () => {
 
     fetchGetPostList();
   }, []);
+
+  const extractFileNameAddPath = (filePath) => {
+    // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
+    const parts = filePath.split(/[\\/]/);
+
+    // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
+    return parts.pop();
+  };
 
   return (
     <div>
@@ -31,11 +40,18 @@ const PostList = () => {
       <ul>
         {postList.map((post) => (
           <li key={post.id}>
-            {/* Link를 사용하여 포스트 세부 정보 페이지로 이동하는 링크를 만듭니다. */}
             <p>ID: {post.id}</p>
             <Link to={`/post/get/${post.id}`}>
               <p>제목: {post.title}</p>
-              {/* 필요에 따라 더 많은 세부 정보를 추가할 수 있습니다. */}
+              {post.images.map((img, index) => (
+                <img
+                  src={`/post-image/${extractFileNameAddPath(img)}`}
+                  alt={`Image ${index + 1}`}
+                  style={{ maxWidth: "20%" }}
+                  onLoad={() => console.log("Image loaded successfully")}
+                  onError={() => console.error("Error loading image")}
+                />
+              ))}
             </Link>
           </li>
         ))}

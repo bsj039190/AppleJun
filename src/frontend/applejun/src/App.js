@@ -3,14 +3,17 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Main from "./app/Main";
 import { NavermapsProvider } from "react-naver-maps";
+import { UserProvider } from "./account/UserContext";
 
 function App() {
   return (
     <div>
       <Router>
-        <NavermapsProvider ncpClientId="f5z13y2f41">
-          <Main />
-        </NavermapsProvider>
+        <UserProvider>
+          <NavermapsProvider ncpClientId="f5z13y2f41">
+            <Main />
+          </NavermapsProvider>
+        </UserProvider>
       </Router>
       {console.log("Main Render in App.js")}
     </div>

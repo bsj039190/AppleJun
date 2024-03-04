@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
-import AuthWithBack from "./AuthWithBack";
+import { useUser } from "../account/UserContext";
 
 // 모달 스타일 설정
 const customStyles = {
@@ -20,9 +20,10 @@ function Login() {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [id, setId] = useState(0);
   const [remember, setRemember] = useState("on");
-  const [error, setError] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { setCurrentUser } = useUser();
 
   const goToHome = () => {
     history.push("/home");
@@ -32,8 +33,15 @@ function Login() {
     setModalIsOpen(false);
   };
 
-  const loginMethod = (id) => {
-    setUsername(id);
+  const loginMethod = (name) => {
+    if (name === "BSJ") {
+      setId(1);
+    } else if (name === "LSY") {
+      setId(2);
+    } else {
+      setId(3);
+    }
+    setUsername(name);
     setModalIsOpen(true);
   };
 
@@ -51,11 +59,21 @@ function Login() {
     console.log(username);
     console.log(password);
 
+    if (username === "BSJ") {
+      setId(1);
+    } else if (username === "LSY") {
+      setId(2);
+    } else {
+      setId(3);
+    }
+
+    console.log(`Login id : ${id}`);
+
     try {
       const params = new URLSearchParams();
       params.append("account", username);
       params.append("password", password);
-      params.append("remember", remember); // 항상 true로 설정
+      params.append("remember", remember); // 항상 on으로 설정
 
       const response = await axios.post(
         "http://localhost:8080/login",
@@ -71,15 +89,13 @@ function Login() {
       console.log(response.data); // 로그인 성공 시 서버에서 반환하는 데이터 처리
       // 성공 시 필요한 동작을 수행 (예: 리다이렉트 등)
       alert("로그인 성공!");
+      setCurrentUser({ username: username, id: id });
       history.push("/home");
     } catch (err) {
-      setError("Invalid username or password");
       console.error("Login failed:", err);
       // 실패 시 필요한 동작을 수행 (예: 에러 메시지 표시 등)
     }
   };
-
-  //8080에서는 쿠키가 들어가는데 3000에서는 쿠키가 안나옴
 
   return (
     <div>

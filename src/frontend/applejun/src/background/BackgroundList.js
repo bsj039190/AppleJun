@@ -30,8 +30,24 @@ function BackgroundList() {
     uploader: id,
   });
 
+  const [currentUser, setCurrentUser] = useState(0);
+
+  useEffect(() => {
+    const loadStoredUser = async () => {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        setCurrentUser(userObject.id);
+        console.log(userObject.id);
+      }
+    };
+
+    loadStoredUser();
+  }, []);
+
   useEffect(() => {
     const fetchGetImageList = async (id) => {
+      console.log(currentUser);
       try {
         const response = await axios.get(
           `http://localhost:8080/background/list/${id}`,
@@ -43,7 +59,7 @@ function BackgroundList() {
       }
     };
     fetchGetImageList(id);
-  }, []);
+  }, [currentUser]);
 
   const extractFileNameAddPath = (filePath) => {
     // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.

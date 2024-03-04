@@ -101,17 +101,6 @@ function MapList() {
           <button>리스트로 보기</button>
         </Link>
       </div>
-
-      <h2>GPS List</h2>
-      {gpsList.map((gps) => (
-        <ul key={gps.id}>
-          <p>
-            ID: {gps.id} / 이름: {gps.name} / 주소: {gps.address}{" "}
-            <button>수정</button>
-            <button onClick={MapDelete}>삭제</button>
-          </p>
-        </ul>
-      ))}
     </>
   );
 }

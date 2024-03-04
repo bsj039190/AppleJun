@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -13,6 +13,8 @@ const PostWrite = () => {
     gps3: 1,
   });
   const [fileList, setFileList] = useState([]);
+  const history = useHistory();
+  const [currentUser, setCurrentUser] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,12 +29,25 @@ const PostWrite = () => {
     setFileList(files);
   };
 
-  const history = useHistory();
+  useEffect(() => {
+    const loadStoredUser = async () => {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        setCurrentUser(userObject.id);
+        console.log(userObject.id);
+      }
+    };
+
+    loadStoredUser();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+
+    console.log(postRequest.uploader);
 
     if (fileList.length > 0) {
       for (let i = 0; i < fileList.length; i++) {
@@ -81,7 +96,7 @@ const PostWrite = () => {
         <input
           type="text"
           name="uploader"
-          value={postRequest.uploader}
+          value={currentUser}
           onChange={handleChange}
         />
       </label>

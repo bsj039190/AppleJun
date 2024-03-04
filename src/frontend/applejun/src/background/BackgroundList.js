@@ -47,18 +47,22 @@ function BackgroundList() {
 
   useEffect(() => {
     const fetchGetImageList = async (id) => {
-      console.log(currentUser);
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/background/list/${id}`,
-          { withCredentials: true }
-        );
-        setImageList(response.data.contents);
-      } catch (error) {
-        console.error(error);
+      if (id !== 0) {
+        // currentUser가 0이 아닌 경우에만 실행
+        console.log(currentUser);
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/background/list/${id}`,
+            { withCredentials: true }
+          );
+          setImageList(response.data.contents);
+        } catch (error) {
+          console.error(error);
+        }
       }
     };
-    fetchGetImageList(id);
+
+    fetchGetImageList(currentUser);
   }, [currentUser]);
 
   const extractFileNameAddPath = (filePath) => {

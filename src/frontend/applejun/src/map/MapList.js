@@ -36,7 +36,7 @@ function MapList() {
   const [gpsList, setGpsList] = useState([]);
 
   const [showOverlay, setShowOverlay] = useState(false); // 추가된 부분
-  const [selectedGps, setSelectedGps] = useState(null); // 추가된 부분
+  const [selectedGps, setSelectedGps] = useState([]); // 추가된 부분
 
   useEffect(() => {
     const response = axios
@@ -78,6 +78,10 @@ function MapList() {
       });
   }, [navermaps.Service]); // useEffect가 한 번만 실행되도록 빈 배열을 전달
 
+  const logging = () => {
+    setShowOverlay(true);
+  };
+
   // 마커를 클릭했을 때 인포윈도우를 열기 위한 함수
   const handleMarkerClick = (gps) => {
     if (gps && gps.gpsLat && gps.gpsLng) {
@@ -88,6 +92,7 @@ function MapList() {
       console.error("잘못된 GPS 데이터:", gps);
     }
   };
+
   return (
     <>
       <Container
@@ -118,9 +123,7 @@ function MapList() {
             selectedGps.gpsLat &&
             selectedGps.gpsLng && (
               <Overlay
-                position={
-                  new navermaps.LatLng(selectedGps.lat, selectedGps.lng)
-                }
+                position={new navermaps.LatLng(37.5999986, 126.9500379)}
                 onClick={() => setShowOverlay(false)}
               >
                 <div
@@ -134,7 +137,7 @@ function MapList() {
                 >
                   <h3>{selectedGps.name}</h3>
                   <p>{selectedGps.address}</p>
-                  {/* 원하는 정보를 추가할 수 있음 */}
+                  {console.log(selectedGps)}
                 </div>
               </Overlay>
             )}
@@ -145,6 +148,7 @@ function MapList() {
         <Link to="/map/text/list">
           <button>리스트로 보기</button>
         </Link>
+        <button onClick={() => logging()}>로그</button>
       </div>
     </>
   );

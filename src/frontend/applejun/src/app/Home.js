@@ -6,13 +6,14 @@ import "./home.css";
 
 function Home() {
   const [fileName, setFileName] = useState();
-  const { currentUser } = useUser();
+  //const { currentUser } = useUser();
 
   //왼쪽에는 나, 오른쪽에는 수연이
   const [left, setLeft] = useState({});
   const [right, setRight] = useState({});
 
   //const [currentId, setCurrentId] = useState(currentUser.id);
+  const [currentUser, setCurrentUser] = useState(0);
 
   const [startDate, setStartDate] = useState(new Date("2023-05-21"));
   const [endDate, setEndDate] = useState(new Date());
@@ -51,30 +52,51 @@ function Home() {
     setDays(days + 1);
   };
 
-  // 컴포넌트 렌더링 시 한 번만 실행
+  const fetchProfileImage = async () => {};
+
   const fetchData = async () => {
     try {
-      const id = currentUser.id;
-      console.log(id);
+      if (currentUser !== 3) {
+        console.log(currentUser);
 
-      const response = await axios.get(
-        `http://localhost:8080/background/list/${id}`,
-        { withCredentials: true }
-      );
-      const imageList = response.data.contents;
+        const response = await axios.get(
+          `http://localhost:8080/background/list/${currentUser}`,
+          { withCredentials: true }
+        );
+        const imageList = response.data.contents;
 
-      if (imageList.length > 0) {
-        const randomIndex = Math.floor(Math.random() * imageList.length);
-        const randomFilePath = imageList[randomIndex].filePath;
+        if (imageList.length > 0) {
+          const randomIndex = Math.floor(Math.random() * imageList.length);
+          const randomFilePath = imageList[randomIndex].filePath;
 
-        // 파일 이름만 추출하여 state에 설정
-        setFileName(extractFileNameAddPath(randomFilePath));
+          // 파일 이름만 추출하여 state에 설정
+          setFileName(extractFileNameAddPath(randomFilePath));
+        }
+      } else {
+        //currentUser가 3일때
+        console.log(currentUser);
+        alert("게스트 계정은 ADMIN의 배경이 보입니다.");
+
+        const response = await axios.get(
+          `http://localhost:8080/background/list/1`,
+          { withCredentials: true }
+        );
+        const imageList = response.data.contents;
+
+        if (imageList.length > 0) {
+          const randomIndex = Math.floor(Math.random() * imageList.length);
+          const randomFilePath = imageList[randomIndex].filePath;
+
+          // 파일 이름만 추출하여 state에 설정
+          setFileName(extractFileNameAddPath(randomFilePath));
+        }
       }
 
       const joon = await axios.get(`http://localhost:8080/account/get/1`, {
         withCredentials: true,
       });
       const joonData = joon.data.contents;
+      const joonProfile = joonData.profileImage;
 
       if (joonData != null) {
         setLeft(joonData);
@@ -102,8 +124,23 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [currentUser]); // currentUser가 변경될 때마다 fetchData 실행
+    const loadStoredUser = async () => {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        setCurrentUser(userObject.id);
+        console.log(userObject.id);
+      }
+    };
+
+    loadStoredUser();
+  }, []);
+
+  useEffect(() => {
+    if (currentUser !== 0) {
+      fetchData();
+    }
+  }, [currentUser]); // currentUser가 디폴트인 0이 아닐때만 fetchData 실행
 
   return (
     <div className="container">
@@ -129,6 +166,7 @@ function Home() {
 
         <hr />
         <p>
+          <img src="" />
           {left.name} ❤️ {right.name}
         </p>
         <p>{days}</p>

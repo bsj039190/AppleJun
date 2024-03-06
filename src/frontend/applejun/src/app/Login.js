@@ -18,9 +18,9 @@ Modal.setAppElement("#root");
 
 function Login() {
   const history = useHistory();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [id, setId] = useState(0);
+  const [username, setUsername] = useState("GUEST");
+  const [password, setPassword] = useState("0000");
+  const [id, setId] = useState(3);
   const [remember, setRemember] = useState("on");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setCurrentUser } = useUser();
@@ -36,10 +36,13 @@ function Login() {
   const loginMethod = (name) => {
     if (name === "BSJ") {
       setId(1);
+      setPassword("");
     } else if (name === "LSY") {
       setId(2);
+      setPassword("");
     } else {
       setId(3);
+      setPassword("0000");
     }
     setUsername(name);
     setModalIsOpen(true);
@@ -58,14 +61,6 @@ function Login() {
 
     console.log(username);
     console.log(password);
-
-    if (username === "BSJ") {
-      setId(1);
-    } else if (username === "LSY") {
-      setId(2);
-    } else {
-      setId(3);
-    }
 
     console.log(`Login id : ${id}`);
 
@@ -107,7 +102,7 @@ function Login() {
       <br />
       <button onClick={() => loginMethod("BSJ")}>승준</button>
       <button onClick={() => loginMethod("LSY")}>수연</button>
-      <button onClick={() => loginMethod("GUEST")}>Guest</button>
+      <button onClick={(e) => handleSubmitLogin(e)}>Guest</button>
 
       <Modal
         isOpen={modalIsOpen}

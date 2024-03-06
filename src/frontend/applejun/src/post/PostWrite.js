@@ -45,36 +45,41 @@ const PostWrite = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    if (currentUser != 3) {
+      const formData = new FormData();
 
-    console.log(postRequest.uploader);
+      console.log(postRequest.uploader);
 
-    if (fileList.length > 0) {
-      for (let i = 0; i < fileList.length; i++) {
-        formData.append("fileList", fileList[i]);
+      if (fileList.length > 0) {
+        for (let i = 0; i < fileList.length; i++) {
+          formData.append("fileList", fileList[i]);
+        }
+      } else {
+        formData.append("fileList", new Blob()); // fileList가 비어 있을 때 빈 Blob을 append
       }
-    } else {
-      formData.append("fileList", new Blob()); // fileList가 비어 있을 때 빈 Blob을 append
-    }
 
-    formData.append(
-      "postRequest",
-      new Blob([JSON.stringify(postRequest)], { type: "application/json" })
-    );
-
-    console.log([...formData]);
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/post/create",
-        formData,
-        { withCredentials: true }
+      formData.append(
+        "postRequest",
+        new Blob([JSON.stringify(postRequest)], { type: "application/json" })
       );
 
-      console.log(response.data);
-      alert("작성을 완료하였습니다!");
+      console.log([...formData]);
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/post/create",
+          formData,
+          { withCredentials: true }
+        );
+
+        console.log(response.data);
+        alert("작성을 완료하였습니다!");
+        history.push("/post/get/list");
+      } catch (error) {
+        console.error("Error creating post:", error);
+      }
+    } else {
+      alert("게스트 계정은 업로드 할 수 없습니다.");
       history.push("/post/get/list");
-    } catch (error) {
-      console.error("Error creating post:", error);
     }
   };
 
@@ -169,6 +174,7 @@ const PostWrite = () => {
       <br />
 
       <button type="submit">Submit</button>
+      {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
     </form>
   );
 };

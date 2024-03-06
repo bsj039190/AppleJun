@@ -21,13 +21,13 @@ Modal.setAppElement("#root");
 function BackgroundList() {
   const [imageList, setImageList] = useState([]);
   const history = useHistory();
-  const [id, setId] = useState(1);
+  //const [id, setId] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState();
   const [backgroundRequest, setBackgroundRequest] = useState({
     fileName: "",
     filePath: "src/frontend/applejun/public/background-image/",
-    uploader: id,
+    uploader: 1,
   });
 
   const [currentUser, setCurrentUser] = useState(0);
@@ -51,11 +51,20 @@ function BackgroundList() {
         // currentUser가 0이 아닌 경우에만 실행
         console.log(currentUser);
         try {
-          const response = await axios.get(
-            `http://localhost:8080/background/list/${id}`,
-            { withCredentials: true }
-          );
-          setImageList(response.data.contents);
+          if (id == 3) {
+            const response = await axios.get(
+              `http://localhost:8080/background/list/1`,
+              { withCredentials: true }
+            );
+            setImageList(response.data.contents);
+            alert("게스트 계정은 관리자의 배경화면으로 보입니다.");
+          } else {
+            const response = await axios.get(
+              `http://localhost:8080/background/list/${id}`,
+              { withCredentials: true }
+            );
+            setImageList(response.data.contents);
+          }
         } catch (error) {
           console.error(error);
         }
@@ -73,16 +82,21 @@ function BackgroundList() {
     return parts.pop();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    let isUploaded = await BackgroundUpload(uploadFile, backgroundRequest);
-    console.log(isUploaded);
-    if (isUploaded == 1) {
-      window.location.reload();
-    } else {
-      console.log("엄준식");
+    if (currentUser != 3) {
+      let isUploaded = BackgroundUpload(uploadFile, backgroundRequest);
       console.log(isUploaded);
+      if (isUploaded == 1) {
+        window.location.reload();
+      } else {
+        console.log("엄준식");
+        console.log(isUploaded);
+      }
+    } else {
+      alert("게스트 계정은 업로드 할 수 없습니다.");
+      closeModal();
     }
   };
 
@@ -148,6 +162,7 @@ function BackgroundList() {
         contentLabel="Gps Update Modal"
       >
         <h2>배경화면 업로드</h2>
+        {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <label>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
@@ -25,6 +25,20 @@ function MapCreate() {
   });
   const navermaps = useNavermaps();
   const history = useHistory();
+  const [currentUser, setCurrentUser] = useState(0);
+
+  useEffect(() => {
+    const loadStoredUser = async () => {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        setCurrentUser(userObject.id);
+        console.log(userObject.id);
+      }
+    };
+
+    loadStoredUser();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,18 +85,22 @@ function MapCreate() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const apiResponse = await axios.post(
-        "http://localhost:8080/gps/create",
-        gpsRequest,
-        { withCredentials: true }
-      );
+    if (currentUser != 3) {
+      try {
+        const apiResponse = await axios.post(
+          "http://localhost:8080/gps/create",
+          gpsRequest,
+          { withCredentials: true }
+        );
 
-      console.log(apiResponse.data);
-      alert("위치 정보 추가가 완료되었습니다!");
-      history.push("/map/list");
-    } catch (error) {
-      console.error(error);
+        console.log(apiResponse.data);
+        alert("위치 정보 추가가 완료되었습니다!");
+        history.push("/map/list");
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      alert("게스트 계정은 업로드 할 수 없습니다.");
     }
   };
 
@@ -142,8 +160,8 @@ function MapCreate() {
         <br />
 
         <button type="submit">위치 추가</button>
+        {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
       </form>
-      <br />
       <br />
       <a href="https://map.naver.com/p" target="_blank">
         네이버 지도 링크

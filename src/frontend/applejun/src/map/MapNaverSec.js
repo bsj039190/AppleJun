@@ -6,6 +6,7 @@ import {
   useNavermaps,
   Container,
   Overlay,
+  InfoWindow,
 } from "react-naver-maps";
 import axios from "axios";
 
@@ -20,6 +21,7 @@ class ApiResponse {
 
 function MapNaverSec() {
   const navermaps = useNavermaps();
+  const [map, setMap] = useState(null); // map 상태 추가
   const [markerPositions, setMarkerPositions] = useState([]);
 
   const [gpsList, setGpsList] = useState([]);
@@ -79,18 +81,19 @@ function MapNaverSec() {
     if (gps && gps.gpsLat && gps.gpsLng) {
       setSelectedGps(gps);
 
-      // // 동적인 정보를 표시하는 HTML 문자열을 생성
-      // const dynamicContent = `
-      //   <div style="width:200px;text-align:center;padding:10px;">
-      //     <b>${gps.name}</b><br>
-      //     주소: ${gps.address}<br>
-      //     추가 정보: ${gps.additionalInfo}
-      //   </div>
-      // `;
+      // 동적인 정보를 표시하는 HTML 문자열을 생성
+      const dynamicContent = `
+        <div style="width:200px;text-align:center;padding:10px;">
+          <b>${gps.name}</b><br>
+          주소: ${gps.address}<br>
+          추가 정보: ${gps.additionalInfo}
+        </div>
+      `;
 
-      // // InfoWindow의 content를 동적인 정보로 업데이트하고 열기
-      // infoWindow.setContent(dynamicContent);
-      // infoWindow.open();
+      // InfoWindow의 content를 동적인 정보로 업데이트하고 열기
+      infoWindow.setContent(dynamicContent);
+      // InfoWindow를 열 때 명시적으로 지도 객체를 지정
+      infoWindow.open(map, new navermaps.LatLng(gps.gpsLat, gps.gpsLng));
       console.log(gps);
     } else {
       console.error("잘못된 GPS 데이터:", gps);
@@ -108,6 +111,7 @@ function MapNaverSec() {
         id="map"
         defaultCenter={new navermaps.LatLng(37.5121391, 126.8426069)}
         defaultZoom={11}
+        onInit={(map, naver) => setMap(map)}
       >
         {/* 서버에서 가져온 Gps 목록에 대해 각각 마커를 생성 */}
         {markerPositions.map((position, index) => (

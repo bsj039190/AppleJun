@@ -161,15 +161,21 @@ function MapListAndUpdate() {
         <button onClick={() => history.push("/map/list")}>지도로 보기</button>
       </div>
       <h2>좌표 목록</h2>
-      {gpsList.map((gps) => (
-        <ul key={gps.id}>
-          <p>
-            ID: {gps.id} / 이름: {gps.name} / 주소: {gps.address}{" "}
-            <button onClick={() => openModal(gps)}>수정</button>
-            <button onClick={() => deleteMap(gps.id, gps.name)}>삭제</button>
-          </p>
-        </ul>
-      ))}
+      {gpsList.map(
+        (gps) =>
+          // gps.id가 1이 아닌 경우에만 렌더링
+          gps.id !== 1 && (
+            <ul key={gps.id}>
+              <p>
+                ID: {gps.id} / 이름: {gps.name} / 주소: {gps.address}{" "}
+                <button onClick={() => openModal(gps)}>수정</button>
+                <button onClick={() => deleteMap(gps.id, gps.name)}>
+                  삭제
+                </button>
+              </p>
+            </ul>
+          )
+      )}
 
       <Modal
         isOpen={modalIsOpen}

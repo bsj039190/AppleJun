@@ -1,61 +1,126 @@
-import React, { useState } from "react";
-import { NaverMap, Marker, InfoWindow, Container } from "react-naver-maps";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Container as MapDiv,
+  NaverMap,
+  Marker,
+  useNavermaps,
+  Container,
+} from "react-naver-maps";
 
 const MapNaver = () => {
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: 37.5665,
-    lng: 126.978,
-  });
+  const navermaps = useNavermaps();
+  const [isMounted, setIsMounted] = useState(true);
 
-  const [infoWindow, setInfoWindow] = useState({
-    position: null,
-    visible: false,
-    content: "이것은 인포윈도우입니다",
-  });
+  var markers = [],
+    infoWindows = [];
 
-  const handleMarkerClick = (marker) => {
-    console.log("마커 클릭됨");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/gps/get/list", {
+          withCredentials: true,
+        });
 
-    setInfoWindow({
-      position: marker.overlay.position,
-      visible: true,
-      content: "이것은 인포윈도우입니다",
-    });
-  };
+        console.log(isMounted);
 
-  const handleInfoWindowClose = () => {
-    setInfoWindow({
-      ...infoWindow,
-      visible: false,
-    });
-  };
+        if (!isMounted) return; // Check if the component is still mounted
 
-  return (
-    <Container style={{ width: "100%", height: "400px" }}>
-      <NaverMap defaultCenter={markerPosition} defaultZoom={13}>
-        <Marker
-          position={markerPosition}
-          onClick={(marker) => handleMarkerClick(marker)}
-        />
+        const map = new navermaps.Map("map", {
+          center: new navermaps.LatLng(37.5121391, 126.8426069),
+          zoom: 11,
+        });
 
-        {infoWindow.visible && (
-          <InfoWindow
-            position={infoWindow.position}
-            onCloseClick={() => handleInfoWindowClose()}
-            style={{
-              border: "2px solid #ccc",
-              padding: "10px",
-              backgroundColor: "white",
-              borderRadius: "5px",
-              zIndex: 1000,
-            }}
-          >
-            <div>{infoWindow.content}</div>
-          </InfoWindow>
-        )}
-      </NaverMap>
-    </Container>
-  );
+        const markers = response.data.contents.map((gps) => {
+          return {
+            position: new navermaps.LatLng(gps.gpsLat, gps.gpsLng),
+            title: gps.name,
+            map: map,
+            icon: {
+              content: (
+                <img
+                  src="/public/logo192.png"
+                  alt=""
+                  style={{
+                    margin: 0,
+                    padding: 0,
+                    border: "0px solid transparent",
+                    display: "block",
+                    maxWidth: "none",
+                    maxHeight: "none",
+                    WebkitUserSelect: "none",
+                    position: "absolute",
+                    width: "32px",
+                    height: "32px",
+                    left: "0px",
+                    top: "0px",
+                  }}
+                />
+              ),
+              size: new navermaps.Size(32, 32),
+              anchor: new navermaps.Point(16, 32),
+            },
+          };
+        });
+
+        console.log(markers);
+
+        console.log(map);
+
+        // var marker = new navermaps.Marker(markers);
+
+        // console.log(marker);
+
+        markers.forEach((marker) => {
+          // position이 유효한 경우에만 Marker를 생성하도록 검사
+          if (marker.position) {
+            console.log("엄");
+
+            const naverMarker = new navermaps.Marker({
+              ...marker,
+              marker,
+            });
+
+            console.log("준");
+
+            if (!naverMarker) {
+              console.error("Failed to create the navermaps.Marker object.");
+              return; // 중단하여 계속 진행하지 않음
+            }
+          }
+          console.log("식");
+
+          const infoWindow = new navermaps.InfoWindow({
+            content: (
+              <div
+                style={{ width: "200px", textAlign: "center", padding: "10px" }}
+              >
+                <b>서울남산타워</b>
+                <br />- 네이버 지도 -
+              </div>
+            ),
+          });
+
+          // navermaps.Event.addListener(naverMarker, "click", () => {
+          //   if (infoWindow.getMap()) {
+          //     infoWindow.close();
+          //   } else {
+          //     infoWindow.open(map, naverMarker);
+          //   }
+          // });
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function to set isMounted to false when the component unmounts
+    return () => setIsMounted(false);
+  }, [isMounted]);
+
+  return <div id="map" style={{ width: "100%", height: "500px" }}></div>;
 };
 
 export default MapNaver;

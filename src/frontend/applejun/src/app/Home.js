@@ -3,6 +3,20 @@ import { useUser } from "../account/UserContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
+import Modal from "react-modal";
+
+// 모달 스타일 설정
+const customStyles = {
+  content: {
+    width: "50%",
+    height: "50%",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+Modal.setAppElement("#root");
 
 function Home() {
   const [fileName, setFileName] = useState();
@@ -11,8 +25,9 @@ function Home() {
   //왼쪽에는 나, 오른쪽에는 수연이
   const [left, setLeft] = useState({});
   const [right, setRight] = useState({});
+  const [selectedProfile, setSelectedProfile] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  //const [currentId, setCurrentId] = useState(currentUser.id);
   const [currentUser, setCurrentUser] = useState(0);
 
   const [startDate, setStartDate] = useState(new Date("2023-05-21"));
@@ -53,6 +68,31 @@ function Home() {
   };
 
   const fetchProfileImage = async () => {};
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("엄준식");
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedProfile({
+      ...selectedProfile,
+      [name]: value,
+    });
+  };
+
+  //OpenModal
+  const profileButtonClickHandler = (profile) => {
+    setSelectedProfile(profile);
+    console.log(profile);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const fetchData = async () => {
     try {
@@ -166,8 +206,23 @@ function Home() {
 
         <hr />
         <p>
-          <img src="" />
-          {left.name} ❤️ {right.name}
+          <button onClick={() => profileButtonClickHandler(left)}>
+            <img
+              src="\profile-image\6493ba9b-02e9-4783-afb2-b7cb83fd53af_defaultProfile.jpg"
+              style={{ width: "150px", height: "150px" }}
+              alt="leftProfile"
+            />
+            {left.name}
+          </button>
+          ❤️
+          <button onClick={() => profileButtonClickHandler(right)}>
+            {right.name}
+            <img
+              src="\profile-image\643b3d5e-0d6c-42e9-a767-df03b95c2422_defaultProfile.jpg"
+              style={{ width: "150px", height: "150px" }}
+              alt="rightProfile"
+            />
+          </button>
         </p>
         <p>{days}</p>
 
@@ -247,6 +302,36 @@ function Home() {
           <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
         </div>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Profile Update Modal"
+      >
+        <h2>프로필 수정</h2>
+        <label>ID: {selectedProfile.id}</label>
+        <br />
+        <label>
+          account:
+          <input
+            type="text"
+            name="account"
+            value={selectedProfile.account}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <br />
+        <button onClick={handleProfileSubmit}>프로필 수정</button>
+
+        <br />
+        <br />
+        <br />
+        <div>
+          <button onClick={closeModal}>Close Modal</button>
+        </div>
+      </Modal>
     </div>
   );
 }

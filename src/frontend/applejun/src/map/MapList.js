@@ -1,157 +1,174 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  Container as MapDiv,
-  NaverMap,
-  Marker,
-  useNavermaps,
-  Container,
-  Overlay,
-} from "react-naver-maps";
+import { NaverMap, Marker, InfoWindow, useNavermaps } from "react-naver-maps";
 import axios from "axios";
-import MapUpdate from "./MapUpdate";
-import MapDelete from "./MapDelete";
-import ModalTest from "./ModalTest";
-import ReactDOM from "react-dom"; // ReactDOM 추가
-import Modal from "react-modal";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-//
-// 이 파일이 지도 구현 파일임!
-//
-
-// ContentsResponse 클래스의 구조와 유사한 React 응답 형식을 정의
-class ApiResponse {
-  constructor(code, msg, data) {
-    this.code = code;
-    this.msg = msg;
-    this.data = data;
-  }
-}
-
-function MapList() {
+const MapList = () => {
+  const [markers, setMarkers] = useState([]);
+  const [infoWindows, setInfoWindows] = useState([]);
+  const [map, setMap] = useState(null);
   const navermaps = useNavermaps();
+  const [apiResponse, setApiResponse] = useState(null);
   const history = useHistory();
-  const [markerPositions, setMarkerPositions] = useState([]);
-  const [gpsList, setGpsList] = useState([]);
 
-  const [showOverlay, setShowOverlay] = useState(false); // 추가된 부분
-  const [selectedGps, setSelectedGps] = useState([]); // 추가된 부분
-
-  useEffect(() => {
-    const response = axios
-      .get("http://localhost:8080/gps/get/list", { withCredentials: true })
-      .then((response) => {
-        console.log(response.data.contents);
-
-        for (const gps of response.data.contents) {
-          // gps의 아이디가 1이면 건너뛰기
-          if (gps.id === 1) {
-            continue;
-          }
-
-          setGpsList((prevGps) => [...prevGps, gps]);
-
-          navermaps.Service.geocode(
-            {
-              address: gps.address,
-            },
-            function (status, response) {
-              if (status !== navermaps.Service.Status.OK) {
-                console.log("error");
-                return alert("Something wrong!");
-              }
-
-              console.log(response.result);
-
-              const result = response.result;
-              const items = result.items;
-
-              // 좌표를 state에 저장
-              setMarkerPositions((prevPositions) => [
-                ...prevPositions,
-                new navermaps.LatLng(items[0].point.y, items[0].point.x),
-              ]);
-            }
-          );
-        }
-      });
-  }, [navermaps.Service]); // useEffect가 한 번만 실행되도록 빈 배열을 전달
-
-  const logging = () => {
-    setShowOverlay(true);
-  };
-
-  // 마커를 클릭했을 때 인포윈도우를 열기 위한 함수
-  const handleMarkerClick = (gps) => {
-    if (gps && gps.gpsLat && gps.gpsLng) {
-      setSelectedGps(gps);
-      setShowOverlay(true);
-      console.log(gps);
-    } else {
-      console.error("잘못된 GPS 데이터:", gps);
+  const fetchData = async () => {
+    if (apiResponse === null) {
+      try {
+        const response = await axios.get("http://localhost:8080/gps/get/list", {
+          withCredentials: true,
+        });
+        console.log(response);
+        setApiResponse(response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 
+  useEffect(() => {
+    fetchData(); // 함수 호출
+
+    if (apiResponse !== null) {
+      console.log(apiResponse);
+
+      // map 변수 선언
+      const mapInstance = new navermaps.Map("map", {
+        center: new navermaps.LatLng(37.5121391, 126.8426069),
+        zoom: 10,
+      });
+
+      // map 상태 업데이트
+      setMap(mapInstance);
+
+      const newMarkers = [];
+      const newInfoWindows = [];
+
+      const locations = apiResponse.data.contents;
+      console.log(locations);
+
+      locations.forEach((location, index) => {
+        if (location.id !== 1) {
+          const position = new navermaps.LatLng(
+            location.gpsLat,
+            location.gpsLng
+          );
+
+          const marker = new navermaps.Marker({
+            map: mapInstance,
+            position,
+            title: `Marker ${index + 1}`,
+            zIndex: 100,
+          });
+
+          const infoWindow = new navermaps.InfoWindow({
+            content: `<div style="width:150px;text-align:center;padding:10px;">${location.name} <br /> ${location.subject}</div>`,
+            url: location.url,
+          });
+
+          newMarkers.push(marker);
+          newInfoWindows.push(infoWindow);
+        }
+      });
+
+      setMarkers(newMarkers);
+      setInfoWindows(newInfoWindows);
+
+      navermaps.Event.addListener(mapInstance, "idle", function () {
+        updateMarkers(mapInstance, newMarkers);
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiResponse]);
+
+  function updateMarkers(mapInstance, markers) {
+    const mapBounds = mapInstance.getBounds();
+    markers.forEach((marker) => {
+      const position = marker.getPosition();
+      if (mapBounds.hasLatLng(position)) {
+        showMarker(mapInstance, marker);
+      } else {
+        hideMarker(mapInstance, marker);
+      }
+    });
+  }
+
+  function showMarker(mapInstance, marker) {
+    if (marker.setMap()) return;
+    marker.setMap(mapInstance);
+  }
+
+  function hideMarker(mapInstance, marker) {
+    if (!marker.setMap()) return;
+    marker.setMap(null);
+  }
+
+  function getMouseOverHandler(seq, mapInstance) {
+    return function (e) {
+      const overedMarker = markers[seq];
+      const infoWindow = infoWindows[seq];
+
+      if (infoWindow.getMap()) {
+        infoWindow.close();
+      } else {
+        infoWindow.open(mapInstance, overedMarker);
+      }
+    };
+  }
+
+  function getMouseOutHandler(seq, mapInstance) {
+    return function (e) {
+      const infoWindow = infoWindows[seq];
+      if (infoWindow.getMap()) {
+        infoWindow.close();
+      }
+    };
+  }
+
+  function getMouseClickHandler(seq, mapInstance) {
+    return function (e) {
+      console.log(infoWindows[seq].url);
+      const url = infoWindows[seq].url;
+      alert("해당 url로 이동합니다");
+      window.open(url, "_blank");
+    };
+  }
+
+  useEffect(() => {
+    markers.forEach((marker, index) => {
+      navermaps.Event.addListener(
+        marker,
+        "mouseover",
+        getMouseOverHandler(index, map)
+      );
+
+      navermaps.Event.addListener(
+        marker,
+        "mouseout",
+        getMouseOutHandler(index, map)
+      );
+
+      navermaps.Event.addListener(
+        marker,
+        "click",
+        getMouseClickHandler(index, map) // map 대신 map 상태를 전달
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markers, navermaps, map]);
+
   return (
     <>
-      <Container
-        style={{
-          width: "80%",
-          height: "700px",
-        }}
-      >
-        {/* <Headers /> */}
-
-        <NaverMap
-          id="map" //중심점은 그냥 눈대중으로 함
-          defaultCenter={new navermaps.LatLng(37.5121391, 126.8426069)}
-          defaultZoom={11}
-        >
-          {/* 서버에서 가져온 Gps 목록에 대해 각각 마커를 생성 */}
-          {markerPositions.map((position, index) => (
-            <Marker
-              key={index}
-              position={position}
-              animation={0}
-              onClick={() => handleMarkerClick(gpsList[index])}
-            />
-          ))}
-          {/* Overlay 추가 */}
-          {showOverlay &&
-            selectedGps &&
-            selectedGps.gpsLat &&
-            selectedGps.gpsLng && (
-              <Overlay
-                position={new navermaps.LatLng(37.5999986, 126.9500379)}
-                onClick={() => setShowOverlay(false)}
-              >
-                <div
-                  style={{
-                    background: "white",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-                    zIndex: 10,
-                  }}
-                >
-                  <h3>{selectedGps.name}</h3>
-                  <p>{selectedGps.address}</p>
-                  {console.log(selectedGps)}
-                </div>
-              </Overlay>
-            )}
-        </NaverMap>
-      </Container>
+      <div id="map" style={{ width: "100%", height: "500px" }} />
       <div>
         <button onClick={() => history.push(`/home`)}>홈으로</button>
         <Link to="/map/text/list">
           <button>리스트로 보기</button>
         </Link>
-        <button onClick={() => logging()}>로그</button>
       </div>
     </>
   );
-}
+};
 
 export default MapList;

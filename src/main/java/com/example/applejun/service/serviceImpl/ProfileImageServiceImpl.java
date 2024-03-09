@@ -173,6 +173,11 @@ public class ProfileImageServiceImpl implements ProfileImageService {
             profileImageDto.setFilePath(filePath);
             ProfileImageEntity profileImageEntity = ProfileImageMapper.INSTANCE.profileImageDtoToEntity(profileImageDto);
 
+            //Account Entity에서 검색 후 프로필 이미지 셋
+            AccountEntity accountEntity = accountRepository.findById(profileImageDto.getAccount())
+                    .orElseThrow(() -> new RuntimeException("No value present"));
+            accountEntity.setProfileImage(profileImageDto.getFilePath());
+
 
             //기존 사진 삭제
             Path existingFilePath = Paths.get(existingProfileImage.getFilePath());

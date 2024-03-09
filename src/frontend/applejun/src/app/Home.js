@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 import Modal from "react-modal";
+import UpdateAccont from "../account/UpdateAccount";
 
 // 모달 스타일 설정
 const customStyles = {
@@ -25,8 +26,12 @@ function Home() {
   //왼쪽에는 나, 오른쪽에는 수연이
   const [left, setLeft] = useState({});
   const [right, setRight] = useState({});
+  const [leftProfileImage, setLeftProfileImage] = useState("");
+  const [rightProfileImage, setRightProfileImage] = useState("");
   const [selectedProfile, setSelectedProfile] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [uploadFile, setUploadFile] = useState();
+  const [previewImage, setPreviewImage] = useState("");
 
   const [currentUser, setCurrentUser] = useState(0);
 
@@ -50,6 +55,14 @@ function Home() {
     }
   };
 
+  const extractProfileImageName = (filePath) => {
+    // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
+    const parts = filePath.split(/[\\/]/);
+
+    // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
+    return parts.pop();
+  };
+
   const daysPassedCalculator = () => {
     // 시작 및 종료 날짜의 시간을 자정으로 설정
     const startMidnight = new Date(startDate);
@@ -69,8 +82,10 @@ function Home() {
 
   const fetchProfileImage = async () => {};
 
-  const handleProfileSubmit = async (e) => {
+  const handleProfileSubmit = async (e, selectedProfile) => {
     e.preventDefault();
+
+    const isUpdated = UpdateAccont(selectedProfile, uploadFile);
 
     console.log("엄준식");
   };
@@ -83,8 +98,25 @@ function Home() {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+
+      setUploadFile(file);
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   //OpenModal
   const profileButtonClickHandler = (profile) => {
+    console.log(profile.profileImage);
     setSelectedProfile(profile);
     console.log(profile);
     setModalIsOpen(true);
@@ -136,7 +168,7 @@ function Home() {
         withCredentials: true,
       });
       const joonData = joon.data.contents;
-      const joonProfile = joonData.profileImage;
+      setLeftProfileImage(joonData.profileImage);
 
       if (joonData != null) {
         setLeft(joonData);
@@ -149,6 +181,7 @@ function Home() {
         withCredentials: true,
       });
       const sooData = soo.data.contents;
+      setRightProfileImage(sooData.profileImage);
 
       if (sooData != null) {
         setRight(sooData);
@@ -208,7 +241,9 @@ function Home() {
         <p>
           <button onClick={() => profileButtonClickHandler(left)}>
             <img
-              src="\profile-image\6493ba9b-02e9-4783-afb2-b7cb83fd53af_defaultProfile.jpg"
+              src={`/profile-image/${extractProfileImageName(
+                leftProfileImage
+              )}`}
               style={{ width: "150px", height: "150px" }}
               alt="leftProfile"
             />
@@ -218,7 +253,9 @@ function Home() {
           <button onClick={() => profileButtonClickHandler(right)}>
             {right.name}
             <img
-              src="\profile-image\643b3d5e-0d6c-42e9-a767-df03b95c2422_defaultProfile.jpg"
+              src={`/profile-image/${extractProfileImageName(
+                rightProfileImage
+              )}`}
               style={{ width: "150px", height: "150px" }}
               alt="rightProfile"
             />
@@ -313,18 +350,52 @@ function Home() {
         <label>ID: {selectedProfile.id}</label>
         <br />
         <label>
-          account:
+          Name:
           <input
             type="text"
-            name="account"
-            value={selectedProfile.account}
+            name="name"
+            value={selectedProfile.name}
             onChange={handleInputChange}
           />
         </label>
+        <br />
+        <label>
+          Email:
+          <input
+            type="text"
+            name="email"
+            value={selectedProfile.email}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <label>
+          File:
+          <input type="file" name="profileImage" onChange={handleFileChange} />
+        </label>
+
+        {/* 이미지 미리보기 */}
+        {selectedProfile.profileImage && (
+          <div>
+            <label>프로필 이미지:</label>
+            <img
+              src={
+                previewImage ||
+                `/profile-image/${extractProfileImageName(
+                  selectedProfile.profileImage
+                )}`
+              }
+              alt="prevProfileImage"
+              style={{ maxWidth: "100%", maxHeight: "200px" }}
+              onError={() => console.log("Preview Profile Image Error!")}
+            />
+          </div>
+        )}
 
         <br />
-        <button onClick={handleProfileSubmit}>프로필 수정</button>
-
+        <button onClick={(e) => handleProfileSubmit(e, selectedProfile)}>
+          프로필 수정
+        </button>
         <br />
         <br />
         <br />

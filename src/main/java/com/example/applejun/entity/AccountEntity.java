@@ -41,6 +41,7 @@ public class AccountEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate birthday;
 
+    @Column(length = 500)
     private String profileImage;
 
     // Spring Security에서 제공하는 BCryptPasswordEncoder를 사용하여 비밀번호 해싱

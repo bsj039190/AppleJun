@@ -141,7 +141,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     }
 
     @Override
-    public void updateProfile(Long accountId, MultipartFile file, ProfileImageDto profileImageDto) {
+    public String updateProfile(Long accountId, MultipartFile file, ProfileImageDto profileImageDto) {
         log.debug("start update profile, id = {}", accountId);
 
         try {
@@ -168,6 +168,8 @@ public class ProfileImageServiceImpl implements ProfileImageService {
             String filePath = UPLOAD_DIR + uuid + "_" + file.getOriginalFilename();
             File newFile = new File(filePath);
 
+
+
             // 파일 복사
             FileCopyUtils.copy(file.getBytes(), newFile);
 
@@ -177,17 +179,28 @@ public class ProfileImageServiceImpl implements ProfileImageService {
             ProfileImageEntity profileImageEntity = ProfileImageMapper.INSTANCE.profileImageDtoToEntity(profileImageDto);
 
             //Account Entity 프로필 이미지 셋
-            accountEntity.setProfileImage(profileImageDto.getFilePath());
+            log.debug(filePath);
+            log.debug("UmJunSik");
+
 
 
             //기존 사진 삭제
             Path existingFilePath = Paths.get(existingProfileImage.getFilePath());
             Files.delete(existingFilePath);
 
-            profileImageRepository.save(profileImageEntity);
+            profileImageRepository.deleteByAccount(accountEntity);
+            ProfileImageEntity newProfileImageEntity = profileImageRepository.save(profileImageEntity);
+
+            log.debug(newProfileImageEntity.getFilePath());
+
+            //accountEntity.setProfileImage(newProfileImageEntity.getId().toString());
+
+
 
             log.debug("Profile image updated successfully, id = {}", accountId);
 
+
+            return uuid + "_" + file.getOriginalFilename();
 
         } catch (IOException e) {
             e.printStackTrace();

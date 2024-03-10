@@ -53,12 +53,12 @@ public class ProfileImageController {
         ProfileImageDto profileImageDto = ProfileImageMapper.INSTANCE.profileImageRequestToDto(profileImageRequest);
 
         //id는 업데이트한 어카운트의 Id임
-        profileImageService.updateProfile(Long.parseLong(id), file, profileImageDto);
+        String uuidAndName = profileImageService.updateProfile(Long.parseLong(id), file, profileImageDto);
 
         log.debug("end update profile image.");
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new BaseResponse(HttpStatus.OK.value(), file.getOriginalFilename()));
+                .body(new BaseResponse(HttpStatus.OK.value(), uuidAndName));
     }
 
     /*@PostMapping(value = "/image/upload/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

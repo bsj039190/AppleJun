@@ -73,7 +73,10 @@ public class AccountServiceImpl implements AccountService {
 
         accountDto.setId(id);
         AccountEntity accountEntity = AccountMapper.INSTANCE.accountDtoToEntity(accountDto);
-        accountEntity.setPwd(passwordEncoder.encode(accountDto.getPwd()));
+
+        if (accountDto.getPwd() != null) {
+            accountEntity.setPwd(passwordEncoder.encode(accountDto.getPwd()));
+        }
 
         accountRepository.save(accountEntity);
     }

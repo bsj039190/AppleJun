@@ -90,7 +90,9 @@ function Home() {
     if (isUpdated == 0) {
       alert("업로드 실패!");
     }
-    window.location.reload();
+    //window.location.reload();
+
+    alert("업로드!");
 
     console.log("엄준식");
   };

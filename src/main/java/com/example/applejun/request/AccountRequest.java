@@ -19,4 +19,5 @@ public class AccountRequest {
     private String connection;
     private LocalDate birthday;
     private String profileImage;
+
 }

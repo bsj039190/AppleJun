@@ -85,7 +85,12 @@ function Home() {
   const handleProfileSubmit = async (e, selectedProfile) => {
     e.preventDefault();
 
-    const isUpdated = UpdateAccont(selectedProfile, uploadFile);
+    const isUpdated = await UpdateAccont(selectedProfile, uploadFile);
+
+    if (isUpdated == 0) {
+      alert("업로드 실패!");
+    }
+    window.location.reload();
 
     console.log("엄준식");
   };

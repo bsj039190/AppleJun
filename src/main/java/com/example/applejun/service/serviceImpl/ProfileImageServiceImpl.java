@@ -141,13 +141,16 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     }
 
     @Override
-    public void updateProfile(Long profileImageId, MultipartFile file, ProfileImageDto profileImageDto) {
-        log.debug("start update profile, id = {}", profileImageId);
+    public void updateProfile(Long accountId, MultipartFile file, ProfileImageDto profileImageDto) {
+        log.debug("start update profile, id = {}", accountId);
 
         try {
+            //AccountId로 AccountEntity 검색
+            AccountEntity accountEntity = accountRepository.findById(accountId)
+                    .orElseThrow(() -> new RuntimeException("No value present"));
 
             //기존의 이미지 검색
-            Optional<ProfileImageEntity> existingProfileImageOptional = profileImageRepository.findById(profileImageId);
+            Optional<ProfileImageEntity> existingProfileImageOptional = profileImageRepository.findByAccount(accountEntity);
             if (!existingProfileImageOptional.isPresent()) {
                 throw new RuntimeException("profile image not found.");
             }
@@ -169,13 +172,11 @@ public class ProfileImageServiceImpl implements ProfileImageService {
             FileCopyUtils.copy(file.getBytes(), newFile);
 
             // 프로필 이미지 정보 업데이트
-            profileImageDto.setId(profileImageId);
+            //profileImageDto.setId(profileImageId);
             profileImageDto.setFilePath(filePath);
             ProfileImageEntity profileImageEntity = ProfileImageMapper.INSTANCE.profileImageDtoToEntity(profileImageDto);
 
-            //Account Entity에서 검색 후 프로필 이미지 셋
-            AccountEntity accountEntity = accountRepository.findById(profileImageDto.getAccount())
-                    .orElseThrow(() -> new RuntimeException("No value present"));
+            //Account Entity 프로필 이미지 셋
             accountEntity.setProfileImage(profileImageDto.getFilePath());
 
 
@@ -185,7 +186,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
             profileImageRepository.save(profileImageEntity);
 
-            log.debug("Profile image updated successfully, id = {}", profileImageId);
+            log.debug("Profile image updated successfully, id = {}", accountId);
 
 
         } catch (IOException e) {

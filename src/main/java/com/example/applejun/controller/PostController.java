@@ -167,7 +167,9 @@ public class PostController {
 
         postService.updatePost(Long.parseLong(id), postDto);
 
-        postImageService.updatePostImage(fileList, Long.parseLong(id));
+        if (!"blob".equals(fileList.get(0).getOriginalFilename())) {
+            postImageService.updatePostImage(fileList, Long.parseLong(id));
+        }
 
         log.debug("end update post.");
 

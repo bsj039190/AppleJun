@@ -167,7 +167,8 @@ function MapListAndUpdate() {
           gps.id !== 1 && (
             <ul key={gps.id}>
               <p>
-                ID: {gps.id} / 이름: {gps.name} / 주소: {gps.address}{" "}
+                ID: {gps.id} / 이름: {gps.name} / {gps.subject} / 주소:
+                {gps.address}
                 <button onClick={() => openModal(gps)}>수정</button>
                 <button onClick={() => deleteMap(gps.id, gps.name)}>
                   삭제

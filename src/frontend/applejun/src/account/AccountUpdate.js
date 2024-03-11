@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-async function UpdateAccount(selectedProfile, uploadFile) {
+async function AccountUpdate(selectedProfile, uploadFile) {
   try {
     //프사 업데이트 로직
     const profileUpdateRequest = {
@@ -70,4 +70,4 @@ async function UpdateAccount(selectedProfile, uploadFile) {
   }
 }
 
-export default UpdateAccount;
+export default AccountUpdate;

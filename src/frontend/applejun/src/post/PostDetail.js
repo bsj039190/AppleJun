@@ -2,23 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
+  const [gpsList, setGpsList] = useState();
 
   const history = useHistory();
-
-  useEffect(() => {
-    const fetchPostDetail = async () => {
-      const response = await axios.get(`http://localhost:8080/post/${id}`, {
-        withCredentials: true,
-      });
-      setPost(response.data.contents);
-      console.log(response);
-    };
-    fetchPostDetail();
-  }, [id]);
 
   const handleDelete = async () => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
@@ -38,6 +29,7 @@ const PostDetail = () => {
     }
   };
 
+  //사진정보에서 이름부분만 추출
   const extractFileNameAddPath = (filePath) => {
     // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
     const parts = filePath.split(/[\\/]/);
@@ -46,17 +38,85 @@ const PostDetail = () => {
     return parts.pop();
   };
 
+  useEffect(() => {
+    const fetchPostDetail = async () => {
+      const response = await axios.get(`http://localhost:8080/post/${id}`, {
+        withCredentials: true,
+      });
+      setPost(response.data.contents);
+      console.log(response.data.contents);
+
+      console.log(post.gps1);
+    };
+    fetchPostDetail();
+  }, [id]);
+
+  useEffect(() => {
+    const getGps = async () => {
+      const gpsResponse = await axios.get(
+        `http://localhost:8080/gps/get/list`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      // post.gps1, post.gps2, post.gps3 값과 일치하는 항목만 필터링
+      const filteredGpsList = gpsResponse.data.contents.filter((gpsItem) => {
+        return (
+          gpsItem.id === post.gps1 ||
+          gpsItem.id === post.gps2 ||
+          gpsItem.id === post.gps3
+        );
+      });
+
+      setGpsList(filteredGpsList);
+      console.log(filteredGpsList);
+    };
+    getGps();
+  }, [post]);
+
   return (
     <div>
       <h2>포스트 세부 정보</h2>
       <p>ID: {post.id}</p>
       <p>제목: {post.title}</p>
       <p>업로더: {post.uploader}</p>
-      <p>날짜: {post.date}</p>
+      <p>
+        날짜:{" "}
+        {post.date?.[0]
+          ? `${post.date[0]}년 ${post.date[1]}월 ${post.date[2]}일`
+          : "0"}
+      </p>
       <p>내용: {post.content}</p>
-      <p>gps1: {post.gps1}</p>
-      <p>gps2: {post.gps2}</p>
-      <p>gps3: {post.gps3}</p>
+
+      <h3>GPS 목록</h3>
+      {gpsList && gpsList.length > 0 ? (
+        // 모든 항목의 id가 1인 경우에만 "No GPS data available"을 출력
+        gpsList.every((gpsItem) => gpsItem.id === 1) ? (
+          <p>No GPS data available</p>
+        ) : (
+          <ul>
+            {gpsList.map(
+              (gpsItem) =>
+                // id가 1인 경우는 출력하지 않음
+                gpsItem.id !== 1 && (
+                  <li key={gpsItem.id}>
+                    <a
+                      href={gpsItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {gpsItem.name}
+                    </a>
+                    {/* 다른 GPS 속성들을 여기에 출력 */}
+                  </li>
+                )
+            )}
+          </ul>
+        )
+      ) : (
+        <p>No GPS data available</p>
+      )}
 
       <button onClick={() => history.push(`/post/update/${id}`)}>
         수정하기

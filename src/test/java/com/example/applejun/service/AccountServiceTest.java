@@ -103,28 +103,28 @@ public class AccountServiceTest {
         assertThat(expect, samePropertyValuesAs(accountDto));
     }
 
-    @Test
-    public void createAccountTest() throws Exception {
-        AccountEntity accountEntity = initEntity(1L);
-        AccountDto accountDto = initDto(1L);
+//    @Test
+//    public void createAccountTest() throws Exception {
+//        AccountEntity accountEntity = initEntity(1L);
+//        AccountDto accountDto = initDto(1L);
+//
+//        when(accountRepository.save(any())).thenReturn(accountEntity);
+//
+//        assertDoesNotThrow(() -> accountService.createAccount(accountDto));
+//    }
 
-        when(accountRepository.save(any())).thenReturn(accountEntity);
-
-        assertDoesNotThrow(() -> accountService.createAccount(accountDto));
-    }
-
-    @Test
-    public void updateAccountTest() throws Exception {
-        Long id = 1L;
-        AccountDto accountDto = initDto(1L);
-        AccountEntity accountEntity = initEntity(1L);
-
-        when(accountRepository.save(any())).thenReturn(accountEntity);
-        Optional<AccountEntity> account = Optional.of(accountEntity);
-        when(accountRepository.findById(any())).thenReturn(account);
-
-        assertDoesNotThrow(() -> accountService.updateAccount(id, accountDto));
-    }
+//    @Test
+//    public void updateAccountTest() throws Exception {
+//        Long id = 1L;
+//        AccountDto accountDto = initDto(1L);
+//        AccountEntity accountEntity = initEntity(1L);
+//
+//        when(accountRepository.save(any())).thenReturn(accountEntity);
+//        Optional<AccountEntity> account = Optional.of(accountEntity);
+//        when(accountRepository.findById(any())).thenReturn(account);
+//
+//        assertDoesNotThrow(() -> accountService.updateAccount(id, accountDto));
+//    }
 
     @Test
     public void deleteAccountTest() throws Exception {

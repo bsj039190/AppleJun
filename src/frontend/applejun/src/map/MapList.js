@@ -4,6 +4,18 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
+import Modal from "react-modal";
+// 모달 스타일 설정
+const customStyles = {
+  content: {
+    width: "50%",
+    height: "50%",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 const MapList = () => {
   const [markers, setMarkers] = useState([]);
   const [infoWindows, setInfoWindows] = useState([]);
@@ -11,6 +23,8 @@ const MapList = () => {
   const navermaps = useNavermaps();
   const [apiResponse, setApiResponse] = useState(null);
   const history = useHistory();
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const fetchData = async () => {
     if (apiResponse === null) {
@@ -131,7 +145,8 @@ const MapList = () => {
       console.log(infoWindows[seq].url);
       const url = infoWindows[seq].url;
       alert("해당 url로 이동합니다");
-      window.open(url, "_blank");
+      // window.open(url, "_blank");
+      setModalIsOpen(true);
     };
   }
 
@@ -158,6 +173,15 @@ const MapList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markers, navermaps, map]);
 
+  //OpenModal
+  const profileButtonClickHandler = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <>
       <div id="map" style={{ width: "100%", height: "500px" }} />
@@ -166,7 +190,16 @@ const MapList = () => {
         <Link to="/map/text/list">
           <button>리스트로 보기</button>
         </Link>
+        <button onClick={() => profileButtonClickHandler()}>Modal</button>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Profile Update Modal"
+      >
+        <h2>엄준식</h2>
+      </Modal>
     </>
   );
 };

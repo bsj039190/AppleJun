@@ -141,6 +141,7 @@ public class PostController {
          /*if (fileList != null && !fileList.isEmpty()) {
             postImageService.uploadPostImage(fileList, postId);
         }*/
+        //비어있는 blob을 받으면 서비스를 하지 않음
          if (!"blob".equals(fileList.get(0).getOriginalFilename())) {
              postImageService.uploadPostImage(fileList, postId);
          }

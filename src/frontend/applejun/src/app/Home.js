@@ -26,8 +26,12 @@ function Home() {
   //왼쪽에는 나, 오른쪽에는 수연이
   const [left, setLeft] = useState({});
   const [right, setRight] = useState({});
-  const [leftProfileImage, setLeftProfileImage] = useState("");
-  const [rightProfileImage, setRightProfileImage] = useState("");
+  const [leftProfileImage, setLeftProfileImage] = useState(
+    "src/frontend/applejun/public/profile-image/7296f7ea-bc04-4029-a3cc-0cef5c7521c7_DSC01076.JPG"
+  );
+  const [rightProfileImage, setRightProfileImage] = useState(
+    "src/frontend/applejun/public/profile-image/643b3d5e-0d6c-42e9-a767-df03b95c2422_defaultProfile.jpg"
+  );
   const [selectedProfile, setSelectedProfile] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState();
@@ -174,7 +178,10 @@ function Home() {
         withCredentials: true,
       });
       const joonData = joon.data.contents;
-      setLeftProfileImage(joonData.profileImage);
+      if (joonData !== null) {
+        console.log(joonData.profileImage);
+        setLeftProfileImage(joonData.profileImage);
+      }
 
       if (joonData != null) {
         setLeft(joonData);
@@ -187,7 +194,10 @@ function Home() {
         withCredentials: true,
       });
       const sooData = soo.data.contents;
-      setRightProfileImage(sooData.profileImage);
+
+      if (sooData !== null) {
+        setRightProfileImage(sooData.profileImage);
+      }
 
       if (sooData != null) {
         setRight(sooData);

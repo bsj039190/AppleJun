@@ -138,8 +138,8 @@ function MapListAndUpdate() {
   };
 
   const deleteMap = (id, name) => {
-    const isConfirmed = MapDelete(id, name);
-    if (isConfirmed == 1) {
+    const isDeleted = MapDelete(id, name);
+    if (isDeleted == 1) {
       history.push("/map/list");
     }
   };

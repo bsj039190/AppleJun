@@ -178,7 +178,7 @@ function Home() {
         withCredentials: true,
       });
       const joonData = joon.data.contents;
-      if (joonData !== null) {
+      if (joonData.profileImage !== null) {
         console.log(joonData.profileImage);
         setLeftProfileImage(joonData.profileImage);
       }

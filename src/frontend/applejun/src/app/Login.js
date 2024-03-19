@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
 import { useUser } from "../account/UserContext";
+import "../css/app/Login.css";
 
 // 모달 스타일 설정
 const customStyles = {
@@ -24,6 +25,17 @@ function Login() {
   const [remember, setRemember] = useState("on");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setCurrentUser } = useUser();
+
+  const [left, setLeft] = useState({});
+  const [right, setRight] = useState({});
+
+  const extractProfileImageName = (filePath) => {
+    // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
+    const parts = filePath.split(/[\\/]/);
+
+    // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
+    return parts.pop();
+  };
 
   const goToHome = () => {
     history.push("/home");
@@ -47,14 +59,6 @@ function Login() {
     setUsername(name);
     setModalIsOpen(true);
   };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPassword({
-  //     ...login,
-  //     [name]: value,
-  //   });
-  // };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
@@ -92,17 +96,61 @@ function Login() {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      const apiResponse = await axios.get(
+        "http://localhost:8080/account/get/list"
+      );
+      console.log(apiResponse);
+
+      for (let i = 0; i < apiResponse.data.contents.length; i++) {
+        const data = apiResponse.data.contents[i];
+        if (data.id === 1) {
+          const joon = data.profileImage;
+          setLeft(joon);
+        } else if (data.id === 2) {
+          const soo = data.profileImage;
+          setRight(soo);
+          console.log("Soo:", soo);
+        }
+      }
+    } catch (error) {
+      console.log("um");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <div>
-        <button onClick={() => goToHome()}>홈으로</button>
+      <div className="container">
+        <button class="button" onClick={() => loginMethod("BSJ")}>
+          <img
+            src={`/profile-image/${extractProfileImageName(left)}`}
+            style={{ width: "150px", height: "150px" }}
+            alt="leftProfile"
+          />
+          승준
+        </button>
+        <button class="button" onClick={() => loginMethod("LSY")}>
+          <img
+            src={`/profile-image/${extractProfileImageName(right)}`}
+            style={{ width: "150px", height: "150px" }}
+            alt="rightProfile"
+          />
+          수연
+        </button>
+        <button class="button" onClick={(e) => handleSubmitLogin(e)}>
+          <img
+            src={`/profile-image/defaultProfile.jpg`}
+            style={{ width: "150px", height: "150px" }}
+            alt="guestProfile"
+          />
+          Guest
+        </button>
       </div>
-      <br />
-      <br />
-      <br />
-      <button onClick={() => loginMethod("BSJ")}>승준</button>
-      <button onClick={() => loginMethod("LSY")}>수연</button>
-      <button onClick={(e) => handleSubmitLogin(e)}>Guest</button>
 
       <Modal
         isOpen={modalIsOpen}

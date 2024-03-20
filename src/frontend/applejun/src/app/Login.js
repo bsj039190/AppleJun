@@ -106,10 +106,10 @@ function Login() {
       for (let i = 0; i < apiResponse.data.contents.length; i++) {
         const data = apiResponse.data.contents[i];
         if (data.id === 1) {
-          const joon = data.profileImage;
+          const joon = extractProfileImageName(data.profileImage);
           setLeft(joon);
         } else if (data.id === 2) {
-          const soo = data.profileImage;
+          const soo = extractProfileImageName(data.profileImage);
           setRight(soo);
           console.log("Soo:", soo);
         }
@@ -125,24 +125,25 @@ function Login() {
 
   return (
     <div>
-      <div className="container">
-        <button class="button" onClick={() => loginMethod("BSJ")}>
+      <p className="loginTextContainer">프로필을 선택하세요</p>
+      <div className="loginContainer">
+        <button class="loginButton" onClick={() => loginMethod("BSJ")}>
           <img
-            src={`/profile-image/${extractProfileImageName(left)}`}
+            src={`/profile-image/${left}`}
             style={{ width: "150px", height: "150px" }}
             alt="leftProfile"
           />
           승준
         </button>
-        <button class="button" onClick={() => loginMethod("LSY")}>
+        <button class="loginButton" onClick={() => loginMethod("LSY")}>
           <img
-            src={`/profile-image/${extractProfileImageName(right)}`}
+            src={`/profile-image/${right}`}
             style={{ width: "150px", height: "150px" }}
             alt="rightProfile"
           />
           수연
         </button>
-        <button class="button" onClick={(e) => handleSubmitLogin(e)}>
+        <button class="loginButton" onClick={(e) => handleSubmitLogin(e)}>
           <img
             src={`/profile-image/defaultProfile.jpg`}
             style={{ width: "150px", height: "150px" }}

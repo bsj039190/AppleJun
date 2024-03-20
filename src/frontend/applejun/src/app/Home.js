@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../account/UserContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./home.css";
+import "../css/app/Home.css";
 import Modal from "react-modal";
 import AccountUpdate from "../account/AccountUpdate";
 
@@ -232,7 +232,7 @@ function Home() {
   }, [currentUser]); // currentUser가 디폴트인 0이 아닐때만 fetchData 실행
 
   return (
-    <div className="container">
+    <div className="homeContainer">
       <div>
         <h1>Welcome to AppleJun's Board!</h1>
         <p>홈화면</p>
@@ -327,7 +327,7 @@ function Home() {
 
         <p>배경화면</p>
         <img
-          className="background"
+          className="homeBackground"
           src={`/background-image/${fileName}`}
           alt="background"
         />

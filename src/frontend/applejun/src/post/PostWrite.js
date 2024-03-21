@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+//import DatePicker from "react-datepicker";
+//import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 
 const PostWrite = () => {
@@ -148,11 +148,11 @@ const PostWrite = () => {
 
       <label>
         Date:
-        <DatePicker
+        {/* <DatePicker
           selected={postRequest.date}
           onChange={handleDateChange}
           dateFormat="yyyy-MM-dd"
-        />
+        /> */}
       </label>
       <br />
 

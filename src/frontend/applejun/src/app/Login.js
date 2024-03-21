@@ -5,16 +5,16 @@ import axios from "axios";
 import { useUser } from "../account/UserContext";
 import "../css/app/Login.css";
 
-// 모달 스타일 설정
-const customStyles = {
-  content: {
-    width: "50%",
-    height: "50%",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+// // 모달 스타일 설정
+// const customStyles = {
+//   content: {
+//     width: "50%",
+//     height: "50%",
+//     top: "50%",
+//     left: "50%",
+//     transform: "translate(-50%, -50%)",
+//   },
+// };
 Modal.setAppElement("#root");
 
 function Login() {
@@ -124,27 +124,33 @@ function Login() {
   }, []);
 
   return (
-    <div>
-      <p className="loginTextContainer">프로필을 선택하세요</p>
-      <div className="loginContainer">
-        <button class="loginButton" onClick={() => loginMethod("BSJ")}>
+    <div class="items-center">
+      <div class="relative mt-32 mb-[-32px]">
+        <p class="text-center">프로필을 선택하세요</p>
+        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-px bg-black"></div>
+      </div>
+      <div class="flex justify-center items-center ">
+        <button class="p-4 m-5" onClick={() => loginMethod("BSJ")}>
           <img
+            class="rounded-full"
             src={`/profile-image/${left}`}
             style={{ width: "150px", height: "150px" }}
             alt="leftProfile"
           />
           승준
         </button>
-        <button class="loginButton" onClick={() => loginMethod("LSY")}>
+        <button class="p-4 m-5" onClick={() => loginMethod("LSY")}>
           <img
+            class="rounded-full"
             src={`/profile-image/${right}`}
             style={{ width: "150px", height: "150px" }}
             alt="rightProfile"
           />
           수연
         </button>
-        <button class="loginButton" onClick={(e) => handleSubmitLogin(e)}>
+        <button class="p-4 m-5" onClick={(e) => handleSubmitLogin(e)}>
           <img
+            class="rounded-full"
             src={`/profile-image/defaultProfile.jpg`}
             style={{ width: "150px", height: "150px" }}
             alt="guestProfile"
@@ -156,7 +162,7 @@ function Login() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        //style={customStyles}
         contentLabel="Login Method"
       >
         <h2>LogIn</h2>

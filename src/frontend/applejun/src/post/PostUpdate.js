@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+//import DatePicker from "react-datepicker";
+//import "react-datepicker/dist/react-datepicker.css";
 
 const PostUpdate = () => {
   const { id } = useParams();
@@ -177,11 +177,11 @@ const PostUpdate = () => {
 
       <label>
         Date:
-        <DatePicker
+        {/* <DatePicker
           selected={updatedPost.date}
           onChange={handleDateChange}
           dateFormat="yyyy-MM-dd"
-        />
+        /> */}
       </label>
       <br />
 

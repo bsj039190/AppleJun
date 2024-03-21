@@ -125,34 +125,37 @@ function Login() {
 
   return (
     <div class="items-center">
-      <div class="relative mt-32 mb-[-32px]">
-        <p class="text-center">프로필을 선택하세요</p>
-        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-px bg-black"></div>
+      <div class="relative align-text-bottom mt-32 ">
+        <p class="text-center text-4xl mb-4 text-[#FFA8BC]">
+          프로필을 선택하세요
+        </p>
+        {/* <div class="justify-center -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-px bg-black"></div> */}
+        <hr class="mx-auto w-2/5 border-t-2 border-[#FFA8BC]" />
       </div>
-      <div class="flex justify-center items-center ">
+      <div class="flex justify-center mt-10 ">
         <button class="p-4 m-5" onClick={() => loginMethod("BSJ")}>
           <img
-            class="rounded-full"
+            class="rounded-full m-7"
             src={`/profile-image/${left}`}
-            style={{ width: "150px", height: "150px" }}
+            style={{ width: "180px", height: "180px" }}
             alt="leftProfile"
           />
           승준
         </button>
         <button class="p-4 m-5" onClick={() => loginMethod("LSY")}>
           <img
-            class="rounded-full"
+            class="rounded-full m-7"
             src={`/profile-image/${right}`}
-            style={{ width: "150px", height: "150px" }}
+            style={{ width: "180px", height: "180px" }}
             alt="rightProfile"
           />
           수연
         </button>
         <button class="p-4 m-5" onClick={(e) => handleSubmitLogin(e)}>
           <img
-            class="rounded-full"
+            class="rounded-full m-7"
             src={`/profile-image/defaultProfile.jpg`}
-            style={{ width: "150px", height: "150px" }}
+            style={{ width: "180px", height: "180px" }}
             alt="guestProfile"
           />
           Guest

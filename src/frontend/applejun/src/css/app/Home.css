@@ -5,14 +5,15 @@ body {
   align-items: center;
   height: 100vh; /* 100% viewport height */
   margin: 0; /* Remove default body margin */
-  /* overflow: hidden; 이미지가 화면을 넘치지 않도록 설정 */
 }
 
 .homeBackground {
-  width: 100%;
-  height: 100%;
-  max-width: 50%;
-  max-height: 50%;
+  z-index: -2;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
   object-fit: cover; /* 이미지가 부모 요소에 맞게 늘어나도록 설정 */
   filter: brightness(70%); /* 명도를 70%로 설정 (30% 낮춤) */
 }

@@ -254,105 +254,110 @@ function Home() {
         <button onClick={joinButtonHandler}>회원가입</button>
 
         <hr />
-        <p>
-          <button onClick={() => profileButtonClickHandler(left)}>
-            <img
-              src={`/profile-image/${extractProfileImageName(
-                leftProfileImage
-              )}`}
-              style={{ width: "150px", height: "150px" }}
-              alt="leftProfile"
-            />
-            {left.name}
-          </button>
-          ❤️
-          <button onClick={() => profileButtonClickHandler(right)}>
-            {right.name}
-            <img
-              src={`/profile-image/${extractProfileImageName(
-                rightProfileImage
-              )}`}
-              style={{ width: "150px", height: "150px" }}
-              alt="rightProfile"
-            />
-          </button>
-        </p>
-        <p>{days}</p>
+        <div
+          className="homeBackground"
+          style={{ backgroundImage: `url(/background-image/${fileName})` }}
+        >
+          <p>
+            <button onClick={() => profileButtonClickHandler(left)}>
+              <img
+                src={`/profile-image/${extractProfileImageName(
+                  leftProfileImage
+                )}`}
+                style={{ width: "150px", height: "150px" }}
+                alt="leftProfile"
+              />
+              {left.name}
+            </button>
+            ❤️
+            <button onClick={() => profileButtonClickHandler(right)}>
+              {right.name}
+              <img
+                src={`/profile-image/${extractProfileImageName(
+                  rightProfileImage
+                )}`}
+                style={{ width: "150px", height: "150px" }}
+                alt="rightProfile"
+              />
+            </button>
+          </p>
+          <p>{days}</p>
 
-        <h3>MENU</h3>
+          <h3>MENU</h3>
 
-        <p>📋 게시판</p>
-        <div>
-          <Link to="/post/get/list">
-            <button>Go to Board List</button>
-          </Link>
-        </div>
+          <p>📋 게시판</p>
+          <div>
+            <Link to="/post/get/list">
+              <button>Go to Board List</button>
+            </Link>
+          </div>
 
-        <div>
-          <Link to="/post/write">
-            <button>Go to Write Post</button>
-          </Link>
-        </div>
+          <div>
+            <Link to="/post/write">
+              <button>Go to Write Post</button>
+            </Link>
+          </div>
 
-        <br />
+          <br />
 
-        <p>🗺️ 지도</p>
-        <div>
-          <Link to="/map/list">
-            <button>Go to Map</button>
-          </Link>
-        </div>
+          <p>🗺️ 지도</p>
+          <div>
+            <Link to="/map/list">
+              <button>Go to Map</button>
+            </Link>
+          </div>
 
-        <div>
-          <Link to="/map/text/list">
-            <button>Go to Map List</button>
-          </Link>
-        </div>
+          <div>
+            <Link to="/map/text/list">
+              <button>Go to Map List</button>
+            </Link>
+          </div>
 
-        <div>
-          <Link to="/map/create">
-            <button>Create Map Point</button>
-          </Link>
-        </div>
+          <div>
+            <Link to="/map/create">
+              <button>Create Map Point</button>
+            </Link>
+          </div>
 
-        <p>🎞️ 배경화면</p>
-        <div>
-          <Link to="/background/list">
-            <button>Background</button>
-          </Link>
-        </div>
+          <p>🎞️ 배경화면</p>
+          <div>
+            <Link to="/background/list">
+              <button>Background</button>
+            </Link>
+          </div>
 
-        <br />
-        <br />
+          <br />
+          <br />
 
-        <p>배경화면</p>
+          {/* <p>배경화면</p>
         <img
           className="homeBackground"
           src={`/background-image/${fileName}`}
           alt="background"
-        />
+        /> */}
 
-        <br></br>
-        <br></br>
-        <div>
-          <h3>🖥️Source code on GitHub:</h3>
-          <ul>
-            <li>
-              - &nbsp;
-              <a
-                href="https://github.com/bsj039190/AppleJun"
-                target="_blank"
-                rel="relrlerel"
-              >
-                AppleJun Repository
-              </a>
-            </li>
-          </ul>
-        </div>
-        <br></br>
-        <div>
-          <h5>📧Contact me email</h5>- &nbsp;
-          <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+          <br></br>
+          <br></br>
+          <div>
+            <h3>🖥️Source code on GitHub:</h3>
+            <ul>
+              <li>
+                - &nbsp;
+                <a
+                  href="https://github.com/bsj039190/AppleJun"
+                  target="_blank"
+                  rel="relrlerel"
+                >
+                  AppleJun Repository
+                </a>
+              </li>
+            </ul>
+          </div>
+          <br></br>
+          <div>
+            <h5>📧Contact me email</h5>- &nbsp;
+            <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+          </div>
         </div>
       </div>
 

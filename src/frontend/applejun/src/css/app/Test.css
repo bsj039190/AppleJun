@@ -83,4 +83,5 @@
   height: 100%;
   pointer-events: none; /* 마우스 이벤트 허용으로 변경 */
   z-index: 1;
+  overflow: hidden; /* 스크롤 막기 */
 }

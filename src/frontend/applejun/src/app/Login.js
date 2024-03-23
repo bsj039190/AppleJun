@@ -48,7 +48,6 @@ function Login() {
   };
 
   const loginMethod = (name) => {
-    console.log("엄");
     if (name === "BSJ") {
       setId(1);
       setPassword("");
@@ -61,6 +60,7 @@ function Login() {
     }
     setUsername(name);
     setModalIsOpen(true);
+    console.log(modalIsOpen);
   };
 
   const handleSubmitLogin = async (e) => {
@@ -127,7 +127,7 @@ function Login() {
   }, []);
 
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
       <div id="n_1920__10" className="gradient-background">
         <svg className="n_27_t">
           <linearGradient
@@ -147,8 +147,8 @@ function Login() {
             ry="0"
             x="0"
             y="0"
-            width="1920"
-            height="1080"
+            width="100%"
+            height="100%"
           ></rect>
         </svg>
         <svg className="n_57_v">
@@ -177,46 +177,51 @@ function Login() {
         </svg>
       </div>
 
-      <div className="loginTextContainer">
-        <p>프로필을 선택하세요</p>
-      </div>
-      <div className="loginContainer">
-        <button className="loginButton" onClick={() => loginMethod("BSJ")}>
-          <img src={`/profile-image/${left}`} alt="leftProfile" />
-          승준
-        </button>
-        <button className="loginButton" onClick={() => loginMethod("LSY")}>
-          <img src={`/profile-image/${right}`} alt="rightProfile" />
-          수연
-        </button>
-        <button className="loginButton" onClick={(e) => handleSubmitLogin(e)}>
-          <img src={`/profile-image/defaultProfile.jpg`} alt="guestProfile" />
-          Guest
-        </button>
+      <div style={{ overflow: "hidden" }}>
+        <div className="loginTextContainer">
+          <p>프로필을 선택하세요</p>
+        </div>
+        <div className="loginContainer">
+          <button className="loginButton" onClick={() => loginMethod("BSJ")}>
+            <img src={`/profile-image/${left}`} alt="leftProfile" />
+            승준
+          </button>
+          <button className="loginButton" onClick={() => loginMethod("LSY")}>
+            <img src={`/profile-image/${right}`} alt="rightProfile" />
+            수연
+          </button>
+          <button className="loginButton" onClick={(e) => handleSubmitLogin(e)}>
+            <img src={`/profile-image/defaultProfile.jpg`} alt="guestProfile" />
+            Guest
+          </button>
+        </div>
       </div>
 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        className="modal"
+        overlayClassName="overlay"
         contentLabel="Login Method"
       >
-        <h2>LogIn</h2>
-        <form onSubmit={(e) => handleSubmitLogin(e)}>
-          <p>접속 아이디 : {username}</p>
-          {username === "GUEST" && <p>게스트 비밀번호는 0000입니다.</p>}
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
+        <div className="modal-content">
+          <h2>Login</h2>
+          <form onSubmit={(e) => handleSubmitLogin(e)}>
+            <p>접속 아이디 : {username}</p>
+            {username === "GUEST" && <p>게스트 비밀번호는 0000입니다.</p>}
+            <p>Password</p>
+            <label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
 
-          <button type="submit">로그인</button>
-        </form>
+            <button type="submit">로그인</button>
+          </form>
+        </div>
       </Modal>
     </div>
   );

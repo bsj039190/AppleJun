@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useUser } from "../account/UserContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/app/Home.css";
@@ -232,199 +231,233 @@ function Home() {
   }, [currentUser]); // currentUser가 디폴트인 0이 아닐때만 fetchData 실행
 
   return (
-    <div className="homeContainer">
-      <div>
-        <h1>Welcome to AppleJun's Board!</h1>
-        <p>홈화면</p>
-
+    <>
+      <div
+        id="n_1920__10"
+        className="gradient-background"
+        style={{ zIndex: -2 }}
+      >
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+          ></rect>
+        </svg>
+      </div>
+      <div className="homeContainer">
         <div>
-          <Link to="/home">
-            <button>메인화면</button>
-          </Link>
-        </div>
+          <div className="upperBar">
+            <img src="logos/HomeButton.png" style={{ marginLeft: "376px" }} />
+            <p>메인홈</p>
 
-        <Link to="/">
-          <button>로그인</button>
-        </Link>
+            <Link to="/">
+              <button>로그인</button>
+            </Link>
 
-        <Link to="/logout">
-          <button>로그아웃</button>
-        </Link>
+            <Link to="/logout">
+              <button>로그아웃</button>
+            </Link>
 
-        <button onClick={joinButtonHandler}>회원가입</button>
-
-        <hr />
-        <div
-          className="homeBackground"
-          style={{ backgroundImage: `url(/background-image/${fileName})` }}
-        >
-          <p>
-            <button onClick={() => profileButtonClickHandler(left)}>
-              <img
-                src={`/profile-image/${extractProfileImageName(
-                  leftProfileImage
-                )}`}
-                style={{ width: "150px", height: "150px" }}
-                alt="leftProfile"
-              />
-              {left.name}
+            <button
+              onClick={joinButtonHandler}
+              style={{ marginRight: "376px" }}
+            >
+              회원가입
             </button>
-            ❤️
-            <button onClick={() => profileButtonClickHandler(right)}>
-              {right.name}
-              <img
-                src={`/profile-image/${extractProfileImageName(
-                  rightProfileImage
-                )}`}
-                style={{ width: "150px", height: "150px" }}
-                alt="rightProfile"
-              />
-            </button>
-          </p>
-          <p>{days}</p>
-
-          <h3>MENU</h3>
-
-          <p>📋 게시판</p>
-          <div>
-            <Link to="/post/get/list">
-              <button>Go to Board List</button>
-            </Link>
           </div>
 
-          <div>
-            <Link to="/post/write">
-              <button>Go to Write Post</button>
-            </Link>
-          </div>
+          <div
+            className="homeBackground"
+            style={{ backgroundImage: `url(/background-image/${fileName})` }}
+          >
+            <p>
+              <button onClick={() => profileButtonClickHandler(left)}>
+                <img
+                  src={`/profile-image/${extractProfileImageName(
+                    leftProfileImage
+                  )}`}
+                  style={{ width: "150px", height: "150px" }}
+                  alt="leftProfile"
+                />
+                {left.name}
+              </button>
+              ❤️
+              <button onClick={() => profileButtonClickHandler(right)}>
+                {right.name}
+                <img
+                  src={`/profile-image/${extractProfileImageName(
+                    rightProfileImage
+                  )}`}
+                  style={{ width: "150px", height: "150px" }}
+                  alt="rightProfile"
+                />
+              </button>
+            </p>
+            <p>{days}</p>
 
-          <br />
+            <h3>MENU</h3>
 
-          <p>🗺️ 지도</p>
-          <div>
-            <Link to="/map/list">
-              <button>Go to Map</button>
-            </Link>
-          </div>
+            <p>📋 게시판</p>
+            <div>
+              <Link to="/post/get/list">
+                <button>Go to Board List</button>
+              </Link>
+            </div>
 
-          <div>
-            <Link to="/map/text/list">
-              <button>Go to Map List</button>
-            </Link>
-          </div>
+            <div>
+              <Link to="/post/write">
+                <button>Go to Write Post</button>
+              </Link>
+            </div>
 
-          <div>
-            <Link to="/map/create">
-              <button>Create Map Point</button>
-            </Link>
-          </div>
+            <br />
 
-          <p>🎞️ 배경화면</p>
-          <div>
-            <Link to="/background/list">
-              <button>Background</button>
-            </Link>
-          </div>
+            <p>🗺️ 지도</p>
+            <div>
+              <Link to="/map/list">
+                <button>Go to Map</button>
+              </Link>
+            </div>
 
-          <br />
-          <br />
+            <div>
+              <Link to="/map/text/list">
+                <button>Go to Map List</button>
+              </Link>
+            </div>
 
-          {/* <p>배경화면</p>
+            <div>
+              <Link to="/map/create">
+                <button>Create Map Point</button>
+              </Link>
+            </div>
+
+            <p>🎞️ 배경화면</p>
+            <div>
+              <Link to="/background/list">
+                <button>Background</button>
+              </Link>
+            </div>
+
+            <br />
+            <br />
+
+            {/* <p>배경화면</p>
         <img
           className="homeBackground"
           src={`/background-image/${fileName}`}
           alt="background"
         /> */}
 
-          <br></br>
-          <br></br>
-          <div>
-            <h3>🖥️Source code on GitHub:</h3>
-            <ul>
-              <li>
-                - &nbsp;
-                <a
-                  href="https://github.com/bsj039190/AppleJun"
-                  target="_blank"
-                  rel="relrlerel"
-                >
-                  AppleJun Repository
-                </a>
-              </li>
-            </ul>
-          </div>
-          <br></br>
-          <div>
-            <h5>📧Contact me email</h5>- &nbsp;
-            <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+            <br></br>
+            <br></br>
+            <div>
+              <h3>🖥️Source code on GitHub:</h3>
+              <ul>
+                <li>
+                  - &nbsp;
+                  <a
+                    href="https://github.com/bsj039190/AppleJun"
+                    target="_blank"
+                    rel="relrlerel"
+                  >
+                    AppleJun Repository
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <br></br>
+            <div>
+              <h5>📧Contact me email</h5>- &nbsp;
+              <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Profile Update Modal"
-      >
-        <h2>프로필 수정</h2>
-        <label>ID: {selectedProfile.id}</label>
-        <br />
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={selectedProfile.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="text"
-            name="email"
-            value={selectedProfile.email}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          File:
-          <input type="file" name="profileImage" onChange={handleFileChange} />
-        </label>
-
-        {/* 이미지 미리보기 */}
-        {selectedProfile.profileImage && (
-          <div>
-            <label>프로필 이미지:</label>
-            <img
-              src={
-                previewImage ||
-                `/profile-image/${extractProfileImageName(
-                  selectedProfile.profileImage
-                )}`
-              }
-              alt="prevProfileImage"
-              style={{ maxWidth: "100%", maxHeight: "200px" }}
-              onError={() => console.log("Preview Profile Image Error!")}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Profile Update Modal"
+        >
+          <h2>프로필 수정</h2>
+          <label>ID: {selectedProfile.id}</label>
+          <br />
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              value={selectedProfile.name}
+              onChange={handleInputChange}
             />
-          </div>
-        )}
+          </label>
+          <br />
+          <label>
+            Email:
+            <input
+              type="text"
+              name="email"
+              value={selectedProfile.email}
+              onChange={handleInputChange}
+            />
+          </label>
+          <br />
+          <label>
+            File:
+            <input
+              type="file"
+              name="profileImage"
+              onChange={handleFileChange}
+            />
+          </label>
 
-        <br />
-        <button onClick={(e) => handleProfileSubmit(e, selectedProfile)}>
-          프로필 수정
-        </button>
-        <br />
-        <br />
-        <br />
-        <div>
-          <button onClick={closeModal}>Close Modal</button>
-        </div>
-      </Modal>
-    </div>
+          {/* 이미지 미리보기 */}
+          {selectedProfile.profileImage && (
+            <div>
+              <label>프로필 이미지:</label>
+              <img
+                src={
+                  previewImage ||
+                  `/profile-image/${extractProfileImageName(
+                    selectedProfile.profileImage
+                  )}`
+                }
+                alt="prevProfileImage"
+                style={{ maxWidth: "100%", maxHeight: "200px" }}
+                onError={() => console.log("Preview Profile Image Error!")}
+              />
+            </div>
+          )}
+
+          <br />
+          <button onClick={(e) => handleProfileSubmit(e, selectedProfile)}>
+            프로필 수정
+          </button>
+          <br />
+          <br />
+          <br />
+          <div>
+            <button onClick={closeModal}>Close Modal</button>
+          </div>
+        </Modal>
+      </div>
+    </>
   );
 }
 

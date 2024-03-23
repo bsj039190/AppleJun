@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import { useUser } from "../account/UserContext";
 import "../css/app/Login.css";
-import "../css/app/Test.css";
+import "../css/app/Background.css";
 
 // 모달 스타일 설정
 const customStyles = {

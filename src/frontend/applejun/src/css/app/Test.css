@@ -1,0 +1,86 @@
+#n_1920__10 {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  background-color: rgba(255, 255, 255, 1);
+  overflow: hidden;
+  z-index: -1;
+}
+
+.n_27_t {
+  position: absolute;
+  overflow: visible;
+  width: 1920px;
+  height: 1080px;
+  left: 0px;
+  top: 1px;
+  z-index: -1;
+}
+#n_27_t {
+  fill: url(#n_27_t);
+}
+
+.n_57_v {
+  width: 811px;
+  height: 1174px;
+  position: absolute;
+  overflow: visible;
+  transform: matrix(1, 0, 0, 1, 557.5, -181.5) rotate(90deg);
+  transform-origin: center;
+  z-index: -1;
+}
+
+#n_57_v {
+  opacity: 0.83;
+  fill: url(#n_57_v);
+}
+
+.n_19 {
+  overflow: visible;
+  position: absolute;
+  width: 98.065px;
+  height: 93.188px;
+  left: 1158px;
+  top: 402px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  z-index: -1;
+}
+
+#n__9 {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: 624px;
+  top: 352px;
+  overflow: visible;
+  z-index: -1;
+}
+
+#n__10 {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: 878px;
+  top: 352px;
+  overflow: visible;
+  z-index: -1;
+}
+
+.n_40 {
+  overflow: visible;
+  position: absolute;
+  width: 673px;
+  height: 2px;
+  left: 624px;
+  top: 275px;
+  z-index: -1;
+}
+
+.gradient-background,
+.pattern-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 마우스 이벤트 허용으로 변경 */
+  z-index: 1;
+}

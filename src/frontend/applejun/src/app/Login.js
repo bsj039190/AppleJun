@@ -4,17 +4,19 @@ import Modal from "react-modal";
 import axios from "axios";
 import { useUser } from "../account/UserContext";
 import "../css/app/Login.css";
+import "../css/app/Test.css";
 
-// // 모달 스타일 설정
-// const customStyles = {
-//   content: {
-//     width: "50%",
-//     height: "50%",
-//     top: "50%",
-//     left: "50%",
-//     transform: "translate(-50%, -50%)",
-//   },
-// };
+// 모달 스타일 설정
+const customStyles = {
+  content: {
+    width: "50%",
+    height: "50%",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zindex: 3,
+  },
+};
 Modal.setAppElement("#root");
 
 function Login() {
@@ -46,6 +48,7 @@ function Login() {
   };
 
   const loginMethod = (name) => {
+    console.log("엄");
     if (name === "BSJ") {
       setId(1);
       setPassword("");
@@ -124,40 +127,70 @@ function Login() {
   }, []);
 
   return (
-    <div class="items-center">
-      <div class="relative align-text-bottom mt-32 ">
-        <p class="text-center text-4xl mb-4 text-[#FFA8BC]">
-          프로필을 선택하세요
-        </p>
-        {/* <div class="justify-center -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-px bg-black"></div> */}
-        <hr class="mx-auto w-2/5 border-t-2 border-[#FFA8BC]" />
+    <div>
+      <div id="n_1920__10" className="gradient-background">
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="1920"
+            height="1080"
+          ></rect>
+        </svg>
+        <svg className="n_57_v">
+          <linearGradient
+            id="n_57_v"
+            spreadMethod="pad"
+            x1="-0.007"
+            x2="1"
+            y1="0.618"
+            y2="0.622"
+          >
+            <stop offset="0" stopColor="#fff" stopOpacity="1"></stop>
+            <stop offset="0.364" stopColor="#fff" stopOpacity="0.871"></stop>
+            <stop offset="0.6694" stopColor="#fff" stopOpacity="0.584"></stop>
+            <stop offset="1" stopColor="#fff" stopOpacity="0"></stop>
+          </linearGradient>
+          <rect
+            id="n_57_v"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="811"
+            height="1174"
+          ></rect>
+        </svg>
       </div>
-      <div class="flex justify-center mt-10 ">
-        <button class="p-4 m-5" onClick={() => loginMethod("BSJ")}>
-          <img
-            class="rounded-full m-7"
-            src={`/profile-image/${left}`}
-            style={{ width: "180px", height: "180px" }}
-            alt="leftProfile"
-          />
+
+      <div className="loginTextContainer">
+        <p>프로필을 선택하세요</p>
+      </div>
+      <div className="loginContainer">
+        <button className="loginButton" onClick={() => loginMethod("BSJ")}>
+          <img src={`/profile-image/${left}`} alt="leftProfile" />
           승준
         </button>
-        <button class="p-4 m-5" onClick={() => loginMethod("LSY")}>
-          <img
-            class="rounded-full m-7"
-            src={`/profile-image/${right}`}
-            style={{ width: "180px", height: "180px" }}
-            alt="rightProfile"
-          />
+        <button className="loginButton" onClick={() => loginMethod("LSY")}>
+          <img src={`/profile-image/${right}`} alt="rightProfile" />
           수연
         </button>
-        <button class="p-4 m-5" onClick={(e) => handleSubmitLogin(e)}>
-          <img
-            class="rounded-full m-7"
-            src={`/profile-image/defaultProfile.jpg`}
-            style={{ width: "180px", height: "180px" }}
-            alt="guestProfile"
-          />
+        <button className="loginButton" onClick={(e) => handleSubmitLogin(e)}>
+          <img src={`/profile-image/defaultProfile.jpg`} alt="guestProfile" />
           Guest
         </button>
       </div>
@@ -165,7 +198,7 @@ function Login() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        //style={customStyles}
+        style={customStyles}
         contentLabel="Login Method"
       >
         <h2>LogIn</h2>

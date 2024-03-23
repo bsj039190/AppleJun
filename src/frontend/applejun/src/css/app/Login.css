@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  z-index: 1;
 }
 
 .loginTextContainer {
@@ -11,14 +12,16 @@
   align-items: center;
   justify-content: center; /* 수평 중앙 정렬 */
   position: relative; /* 선을 위한 기준점으로 설정 */
-  margin-top: 200px; /* 위쪽 간격 조절 */
+  margin-top: 180px; /* 위쪽 간격 조절 */
   margin-bottom: -200px; /* 아래쪽 간격 조절 */
+  font-size: 30px;
+  z-index: 1;
 }
 
 .loginTextContainer::after {
   content: "";
   position: absolute;
-  bottom: -5px; /* 선이 텍스트 아래에 위치하도록 설정합니다. */
+  bottom: -13px; /* 선이 텍스트 아래에 위치하도록 설정합니다. */
   left: 50%; /* 가운데 정렬 */
   transform: translateX(-50%); /* 가운데 정렬 */
   width: 50%; /* 가운데에서부터 좌우로 뻗어나오도록 설정합니다. */
@@ -31,20 +34,57 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  margin: 0 40px; /* 버튼 사이의 간격을 조정합니다. */
+  margin: 0 60px; /* 버튼 사이의 간격을 조정합니다. */
   background: none; /* 배경을 투명하게 설정합니다. */
   border: none; /* 테두리를 없앱니다. */
   cursor: pointer; /* 마우스 커서를 포인터로 변경합니다. */
+  z-index: 2;
 }
 
 .loginButton img {
-  width: 150px;
-  height: 150px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
   object-fit: cover; /* 이미지를 원형에 맞게 보여줍니다. */
   margin-bottom: 10px;
 }
 
-.loginButton span {
-  text-align: center;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경은 반투명한 검은색 */
+  z-index: 9999; /* 다른 요소 위에 레이어 표시 */
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 스크롤 막기 */
+}
+
+#n_1920__10 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* 다른 콘텐츠와 같은 레벨로 배치 */
+}
+
+.gradient-background,
+.pattern-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 마우스 이벤트 허용으로 변경 */
+  z-index: 1;
 }

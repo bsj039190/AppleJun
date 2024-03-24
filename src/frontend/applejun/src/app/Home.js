@@ -320,7 +320,7 @@ function Home() {
             <div className="homeContent">
               <br />
               <br />
-              <h3 style={{ color: "#FFFFFF", fontSize: "30px" }}>
+              <h3 style={{ color: "#FFFFFF", fontSize: "21px" }}>
                 이키노피오와 사과승준
               </h3>
               <div className="profileContainer">
@@ -443,38 +443,74 @@ function Home() {
         </div>
       </div>
 
-      <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Profile Update Modal"
-        >
-          <h2>프로필 수정</h2>
-          <label>ID: {selectedProfile.id}</label>
-          <br />
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={selectedProfile.name}
-              onChange={handleInputChange}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Profile Update Modal"
+        className="customProfileModal"
+      >
+        <div style={{ display: "flex", alignItems: "left" }}>
+          <p
+            style={{
+              marginTop: "-50px",
+              marginLeft: "0",
+              color: "#55A6FF",
+              fontSize: "21px",
+            }}
+          >
+            프로필 수정
+          </p>
+        </div>
+
+        {/* 이미지 미리보기 */}
+        {selectedProfile.profileImage && (
+          <div className="imageUploadContainer">
+            <img
+              src={
+                previewImage ||
+                `/profile-image/${extractProfileImageName(
+                  selectedProfile.profileImage
+                )}`
+              }
+              alt="prevProfileImage"
+              className="imageUploadStyle"
+              onError={() => console.log("Preview Profile Image Error!")}
             />
-          </label>
-          <br />
-          <label>
-            Email:
-            <input
-              type="text"
-              name="email"
-              value={selectedProfile.email}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
-          <label>
-            File:
+          </div>
+        )}
+
+        <label>ID: {selectedProfile.id}</label>
+        <br />
+        <br />
+        <label style={{ fontSize: "18px" }}>
+          이름 <br />
+          <input
+            type="text"
+            name="name"
+            value={selectedProfile.name}
+            onChange={handleInputChange}
+            className="modalInput"
+          />
+        </label>
+        <br />
+        <label style={{ fontSize: "18px" }}>
+          E-mail <br />
+          <input
+            type="text"
+            name="email"
+            value={selectedProfile.email}
+            onChange={handleInputChange}
+            className="modalInput"
+          />
+        </label>
+        <br />
+
+        <div>
+          <label
+            className="customProfileButton"
+            style={{ marginRight: "40px" }}
+          >
+            사진 변경
             <input
               type="file"
               name="profileImage"
@@ -482,36 +518,15 @@ function Home() {
             />
           </label>
 
-          {/* 이미지 미리보기 */}
-          {selectedProfile.profileImage && (
-            <div>
-              <label>프로필 이미지:</label>
-              <img
-                src={
-                  previewImage ||
-                  `/profile-image/${extractProfileImageName(
-                    selectedProfile.profileImage
-                  )}`
-                }
-                alt="prevProfileImage"
-                style={{ maxWidth: "100%", maxHeight: "200px" }}
-                onError={() => console.log("Preview Profile Image Error!")}
-              />
-            </div>
-          )}
-
-          <br />
-          <button onClick={(e) => handleProfileSubmit(e, selectedProfile)}>
-            프로필 수정
+          <button
+            onClick={(e) => handleProfileSubmit(e, selectedProfile)}
+            className="customProfileButton"
+            style={{ marginLeft: "45px" }}
+          >
+            저장
           </button>
-          <br />
-          <br />
-          <br />
-          <div>
-            <button onClick={closeModal}>Close Modal</button>
-          </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     </>
   );
 }

@@ -73,8 +73,8 @@ body {
 }
 
 .profileImage {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%; /* 이미지를 동그랗게 만듭니다 */
 }
 
@@ -130,4 +130,58 @@ body {
   color: white;
   font-size: 20px;
   margin-bottom: 120px;
+}
+
+.customProfileModal {
+  transform: translate(195%, 25%);
+  justify-content: center;
+
+  background-color: white;
+  width: 350px;
+  height: 600px;
+  border-radius: 10px; /* 모달의 모서리를 둥글게 만듭니다. */
+  padding: 20px; /* 내부 여백을 추가합니다. */
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 모달에 그림자 효과를 추가합니다. */
+
+  display: flex; /* Flexbox 레이아웃 적용 */
+  flex-direction: column; /* 세로 방향으로 아이템 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+}
+
+.imageUploadContainer {
+  width: 240px;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imageUploadStyle {
+  width: auto;
+  height: 100%;
+  max-width: 260px;
+  max-height: 260px;
+}
+
+.customProfileButton {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 2px 6px;
+  cursor: pointer;
+  background-color: #94c8ff;
+  color: white;
+  border-radius: 8px;
+}
+
+.customProfileButton input[type="file"] {
+  display: none;
+}
+
+.modalInput {
+  width: 200px;
+  height: 45px;
+  border: #ccd9e6;
+  background-color: #ccd9e6;
+
+  font-size: 17px;
 }

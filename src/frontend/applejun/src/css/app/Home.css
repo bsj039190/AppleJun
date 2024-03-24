@@ -14,18 +14,24 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 0px;
-
+  /* filter: brightness(70%); 다른것들까지 다같이 어두워짐 뭔가 조치가 필요함 */
   object-fit: cover; /* 이미지가 부모 요소에 맞게 늘어나도록 설정 */
-  filter: brightness(70%); /* 명도를 70%로 설정 (30% 낮춤) */
+}
+
+.homeContent {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* 그림자 효과 추가 */
+  position: relative; /* 요소의 위치를 조정하기 위해 position 속성 추가 */
+  /* 다른 요소 위에 표시하기 위해 z-index 추가 */
 }
 
 .homeContainer {
   text-align: center;
 }
 
+/* 상단바 css */
 .upperBar {
-  margin-top: 80px;
-  margin-bottom: -30px;
+  margin-top: 60px;
+  margin-bottom: -14px;
   display: flex;
   align-items: baseline;
   height: 100%;
@@ -39,4 +45,89 @@ body {
 .upperBar button {
   margin-left: 3px;
   height: min-content;
+}
+
+/* 프로필 css */
+.profileContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px; /* 좌우 여백 조정 */
+  color: #fb92ab;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.profileGroup button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+}
+
+.profileImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* 이미지를 동그랗게 만듭니다 */
+}
+
+/* 메뉴 css */
+.menuText {
+  color: #fb92ab;
+  position: relative;
+}
+
+.menuText::after {
+  content: "";
+  position: absolute;
+  bottom: -13px; /* 선이 텍스트 아래에 위치하도록 설정합니다. */
+  left: 50%; /* 가운데 정렬 */
+  transform: translateX(-50%); /* 가운데 정렬 */
+  width: 50%; /* 가운데에서부터 좌우로 뻗어나오도록 설정합니다. */
+  height: 3px;
+  background-color: #fb92ab;
+}
+
+.menuContainer {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.menuGroup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 60px 80px; /* 좌우 여백 조정 */
+}
+
+.menuGroup img {
+  margin-bottom: 10px;
+}
+
+.menuGroup button {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 15px;
+}
+
+/* 디데이, 오늘날짜 Text */
+.daysText {
+  font-size: 55px;
+  color: #fb92ab;
+  margin-bottom: 30px;
+}
+
+.todayText {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 120px;
 }

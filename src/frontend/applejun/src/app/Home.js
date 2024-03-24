@@ -13,6 +13,7 @@ const customStyles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    zIndex: 6,
   },
 };
 
@@ -41,6 +42,7 @@ function Home() {
   const [startDate, setStartDate] = useState(new Date("2023-05-21"));
   const [endDate, setEndDate] = useState(new Date());
   const [days, setDays] = useState(0);
+  const [today, setToday] = useState({});
 
   const joinButtonHandler = () => {
     alert("회원가입은 관리자에게 직접 문의해주세요");
@@ -78,6 +80,12 @@ function Home() {
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
     console.log(endDate);
+
+    setToday({
+      year: endDate.getFullYear(),
+      month: endDate.getMonth(),
+      numDate: endDate.getDate(),
+    });
 
     //시작일이 1일이기 때문에 +1을 함
     setDays(days + 1);
@@ -267,16 +275,37 @@ function Home() {
             <p>메인홈</p>
 
             <Link to="/">
-              <button>로그인</button>
+              <button
+                style={{
+                  backgroundColor: "white",
+                  color: "#fb92ab",
+                  border: "none",
+                }}
+              >
+                로그인
+              </button>
             </Link>
 
             <Link to="/logout">
-              <button>로그아웃</button>
+              <button
+                style={{
+                  backgroundColor: "white",
+                  color: "#fb92ab",
+                  border: "none",
+                }}
+              >
+                로그아웃
+              </button>
             </Link>
 
             <button
               onClick={joinButtonHandler}
-              style={{ marginRight: "376px" }}
+              style={{
+                marginRight: "376px",
+                backgroundColor: "white",
+                color: "#fb92ab",
+                border: "none",
+              }}
             >
               회원가입
             </button>
@@ -284,111 +313,137 @@ function Home() {
 
           <div
             className="homeBackground"
-            style={{ backgroundImage: `url(/background-image/${fileName})` }}
+            style={{
+              backgroundImage: `url(/background-image/${fileName})`,
+            }}
           >
-            <p>
-              <button onClick={() => profileButtonClickHandler(left)}>
-                <img
-                  src={`/profile-image/${extractProfileImageName(
-                    leftProfileImage
-                  )}`}
-                  style={{ width: "150px", height: "150px" }}
-                  alt="leftProfile"
-                />
-                {left.name}
-              </button>
-              ❤️
-              <button onClick={() => profileButtonClickHandler(right)}>
-                {right.name}
-                <img
-                  src={`/profile-image/${extractProfileImageName(
-                    rightProfileImage
-                  )}`}
-                  style={{ width: "150px", height: "150px" }}
-                  alt="rightProfile"
-                />
-              </button>
-            </p>
-            <p>{days}</p>
+            <div className="homeContent">
+              <br />
+              <br />
+              <h3 style={{ color: "#FFFFFF", fontSize: "30px" }}>
+                이키노피오와 사과승준
+              </h3>
+              <div className="profileContainer">
+                <div className="profileGroup">{left.name}</div>
+                <div className="profileGroup">
+                  <button onClick={() => profileButtonClickHandler(left)}>
+                    <img
+                      src={`/profile-image/${extractProfileImageName(
+                        leftProfileImage
+                      )}`}
+                      alt="leftProfile"
+                      className="profileImage"
+                    />
+                  </button>
+                </div>
+                <img src="/logos/Heart.png" />
+                <div className="profileGroup">
+                  <button onClick={() => profileButtonClickHandler(right)}>
+                    <img
+                      src={`/profile-image/${extractProfileImageName(
+                        rightProfileImage
+                      )}`}
+                      alt="rightProfile"
+                      className="profileImage"
+                    />
+                  </button>
+                </div>
+                <div className="profileGroup">{right.name}</div>
+              </div>
 
-            <h3>MENU</h3>
+              <p className="daysText">{days}일</p>
 
-            <p>📋 게시판</p>
-            <div>
-              <Link to="/post/get/list">
-                <button>Go to Board List</button>
-              </Link>
-            </div>
+              <p className="todayText">
+                {today.year}.{today.month}.{today.numDate}
+              </p>
 
-            <div>
-              <Link to="/post/write">
-                <button>Go to Write Post</button>
-              </Link>
-            </div>
+              <div className="menuText">
+                <h3>MENU</h3>
+              </div>
 
-            <br />
+              <div className="menuContainer">
+                <div className="menuGroup">
+                  <Link to="/post/get/list">
+                    <img src="/logos/StoryList.png" />
+                    <br />
+                    <button>스토리 목록</button>
+                  </Link>
+                </div>
 
-            <p>🗺️ 지도</p>
-            <div>
-              <Link to="/map/list">
-                <button>Go to Map</button>
-              </Link>
-            </div>
+                <div className="menuGroup">
+                  <Link to="/post/write">
+                    <img src="/logos/StoryWrite.png" />
+                    <br />
+                    <button>스토리 작성</button>
+                  </Link>
+                </div>
 
-            <div>
-              <Link to="/map/text/list">
-                <button>Go to Map List</button>
-              </Link>
-            </div>
+                <div className="menuGroup">
+                  <Link to="/map/list">
+                    <img src="/logos/Map.png" />
+                    <br />
+                    <button style={{ marginBottom: "5px" }}>지도</button>
+                  </Link>
+                  <Link to="/map/text/list">
+                    <button
+                      style={{
+                        backgroundColor: "white",
+                        color: "#fb92ab",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      지도리스트
+                    </button>
+                  </Link>
+                  <Link to="/map/create">
+                    <button
+                      style={{ backgroundColor: "white", color: "#fb92ab" }}
+                    >
+                      새로운 장소
+                    </button>
+                  </Link>
+                </div>
 
-            <div>
-              <Link to="/map/create">
-                <button>Create Map Point</button>
-              </Link>
-            </div>
+                <div className="menuGroup">
+                  <Link to="/background/list">
+                    <img src="/logos/Background.png" />
+                    <br />
+                    <button>배경화면</button>
+                  </Link>
+                </div>
 
-            <p>🎞️ 배경화면</p>
-            <div>
-              <Link to="/background/list">
-                <button>Background</button>
-              </Link>
-            </div>
+                <br />
+                <br />
+              </div>
 
-            <br />
-            <br />
-
-            {/* <p>배경화면</p>
-        <img
-          className="homeBackground"
-          src={`/background-image/${fileName}`}
-          alt="background"
-        /> */}
-
-            <br></br>
-            <br></br>
-            <div>
-              <h3>🖥️Source code on GitHub:</h3>
-              <ul>
-                <li>
-                  - &nbsp;
-                  <a
-                    href="https://github.com/bsj039190/AppleJun"
-                    target="_blank"
-                    rel="relrlerel"
-                  >
-                    AppleJun Repository
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <br></br>
-            <div>
-              <h5>📧Contact me email</h5>- &nbsp;
-              <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+              <br></br>
+              <br></br>
+              {/* <div>
+                <h3>🖥️Source code on GitHub:</h3>
+                <ul>
+                  <li>
+                    - &nbsp;
+                    <a
+                      href="https://github.com/bsj039190/AppleJun"
+                      target="_blank"
+                      rel="relrlerel"
+                    >
+                      AppleJun Repository
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <br></br>
+              <div>
+                <h5>📧Contact me email</h5>- &nbsp;
+                <a href="mailto:bsj039190@gmail.com">bsj039190@gmail.com</a>
+              </div> */}
             </div>
           </div>
         </div>
+      </div>
 
+      <div>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}

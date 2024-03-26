@@ -189,7 +189,7 @@ function MapCreate() {
   }, [gps]);
 
   return (
-    <>
+    <div style={{ overflow: "hidden" }}>
       <div
         id="n_1920__10"
         className="gradient-background"
@@ -220,14 +220,16 @@ function MapCreate() {
       </div>
 
       <div className="upperbarLeftSubject">
-        <img
-          src="/logos/Map.png"
-          style={{ maxWidth: "120px", maxHeight: "120px" }}
-        />
-        <p>새로운 장소</p>
+        <img src="/logos/Map.png" style={{ width: "40px", height: "auto" }} />
+        <p
+          className="customTextColorAndShadow"
+          style={{ display: "flex", marginLeft: "0px" }}
+        >
+          새로운 장소
+        </p>
       </div>
 
-      <div className="upperbarProfileGruop">
+      <div className="upperbarProfileGruop customTextColorAndShadow">
         <p>{left.name}</p>
         <img
           src={`/profile-image/${left.profileImage}`}
@@ -235,7 +237,11 @@ function MapCreate() {
           className="upperbarProfileGruopImg"
         />
 
-        <img src="/logos/Heart.png" alt="Heart" />
+        <img
+          src="/logos/Heart.png"
+          alt="Heart"
+          style={{ width: "50px", height: "50px" }}
+        />
 
         <img
           src={`/profile-image/${right.profileImage}`}
@@ -249,12 +255,16 @@ function MapCreate() {
         <img
           src="/logos/HomeButton.png"
           onClick={() => history.push(`/home`)}
+          style={{ width: "36px", height: "36px" }}
         />
       </div>
 
       <div className="mapGroup">
-        <form onSubmit={handleSubmit}>
-          <h2>새로운 장소 저장하기</h2>
+        <form
+          onSubmit={handleSubmit}
+          style={{ marginLeft: "100px", color: "#FFA8BC" }}
+        >
+          <p style={{ fontSize: "30px" }}>새로운 장소 저장하기</p>
           <div className="mapGroupLabel">
             <label>
               이름
@@ -263,6 +273,7 @@ function MapCreate() {
                 name="name"
                 value={gpsRequest.name}
                 onChange={handleChange}
+                style={{ width: "223px" }}
               />
             </label>
           </div>
@@ -275,6 +286,7 @@ function MapCreate() {
                 name="address"
                 value={gpsRequest.address}
                 onChange={handleChange}
+                style={{ width: "330px" }}
               />
               <button onClick={(e) => onClickAddress(e, gpsRequest.address)}>
                 GPS 변환
@@ -296,6 +308,7 @@ function MapCreate() {
                 name="subject"
                 value={gpsRequest.subject}
                 onChange={handleChange}
+                style={{ width: "95px" }}
               />
             </label>
           </div>
@@ -308,6 +321,7 @@ function MapCreate() {
                 name="url"
                 value={gpsRequest.url}
                 onChange={handleChange}
+                style={{ width: "330px" }}
               />
             </label>
             <button>
@@ -322,7 +336,7 @@ function MapCreate() {
           </div>
 
           <div className="mapGroupLabel">
-            <button type="submit">위치 추가</button>
+            <button type="submit">저장하기</button>
             {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
           </div>
         </form>
@@ -330,14 +344,15 @@ function MapCreate() {
         <div
           id="map"
           style={{
-            width: "500px",
-            height: "500px",
-            margin: "20px",
-            marginTop: "40px",
+            width: "550px",
+            height: "550px",
+            marginLeft: "60px",
+            marginTop: "100px",
+            boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
           }}
         />
       </div>
-    </>
+    </div>
   );
 }
 

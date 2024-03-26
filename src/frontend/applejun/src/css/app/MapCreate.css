@@ -1,0 +1,32 @@
+.mapGroup {
+  background-color: white;
+  min-height: calc(100vh - 240px);
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.mapGroupLabel {
+  font-size: 17px;
+}
+
+.mapGroupLabel input {
+  width: auto;
+  height: 45px;
+  border: none;
+  background-color: #fb92ab;
+
+  font-size: 17px;
+  margin: 10px;
+}
+
+.mapGroupLabel button {
+  width: auto;
+  height: 45px;
+  border-radius: 20%;
+  border: none;
+  background-color: #ccd9e6;
+  color: white;
+}

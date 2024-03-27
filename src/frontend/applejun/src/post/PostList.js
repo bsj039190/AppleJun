@@ -1,72 +1,75 @@
-// import React, { useEffect, useState } from "react";
-// import { Link, useHistory } from "react-router-dom";
-// import axios from "axios";
+/* import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
-// const PostList = () => {
-//   const [postList, setPostList] = useState([]);
-//   const history = useHistory();
+const PostList = () => {
+  const [postList, setPostList] = useState([]);
+  const history = useHistory();
 
-//   useEffect(() => {
-//     const fetchGetPostList = async () => {
-//       try {
-//         const response = await axios.get(
-//           "http://localhost:8080/post/get/list",
-//           { withCredentials: true }
-//         );
-//         setPostList(response.data.contents);
-//         console.log(response.data.contents);
-//       } catch (error) {
-//         console.error("Error from get post list : ", error);
-//       }
-//     };
+  useEffect(() => {
+    const fetchGetPostList = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/post/get/list",
+          { withCredentials: true }
+        );
+        setPostList(response.data.contents);
+        console.log(response.data.contents);
+      } catch (error) {
+        console.error("Error from get post list : ", error);
+      }
+    };
 
-//     fetchGetPostList();
-//   }, []);
+    fetchGetPostList();
+  }, []);
 
-//   const extractFileNameAddPath = (filePath) => {
-//     // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
-//     const parts = filePath.split(/[\\/]/);
+  const extractFileNameAddPath = (filePath) => {
+    // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
+    const parts = filePath.split(/[\\/]/);
 
-//     // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
-//     return parts.pop();
-//   };
+    // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
+    return parts.pop();
+  };
 
-//   return (
-//     <div>
-//       <div>
-//         <button onClick={() => history.push(`/home`)}>홈으로</button>
-//       </div>
-//       <h2>포스트 목록</h2>
-//       <ul>
-//         {postList.map((post) => (
-//           <li key={post.id}>
-//             <p>ID: {post.id}</p>
-//             <Link to={`/post/get/${post.id}`}>
-//               <p>제목: {post.title}</p>
-//               {post.images.map((img, index) => (
-//                 <img
-//                   src={`/post-image/${extractFileNameAddPath(img)}`}
-//                   alt={`Image ${index + 1}`}
-//                   style={{ maxWidth: "20%" }}
-//                   onLoad={() => console.log("Image loaded successfully")}
-//                   onError={() => console.error("Error loading image")}
-//                 />
-//               ))}
-//             </Link>
-//           </li>
-//         ))}
-//       </ul>
+  return (
+    <div>
+      <div>
+        <button onClick={() => history.push(`/home`)}>홈으로</button>
+      </div>
+      <h2>포스트 목록</h2>
+      <ul>
+        {postList.map((post) => (
+          <li key={post.id}>
+            <p>ID: {post.id}</p>
+            <Link to={`/post/get/${post.id}`}>
+              <p>제목: {post.title}</p>
+              {post.images.map((img, index) => (
+                <img
+                  src={`/post-image/${extractFileNameAddPath(img)}`}
+                  alt={`Image ${index + 1}`}
+                  style={{ maxWidth: "20%" }}
+                  onLoad={() => console.log("Image loaded successfully")}
+                  onError={() => console.error("Error loading image")}
+                />
+              ))}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
-//       <button>더보기</button>
-//     </div>
-//   );
-// };
+      <button>더보기</button>
+    </div>
+  );
+};
 
-// export default PostList;
+export default PostList; */
 
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import "../css/app/UpperbarProfile.css";
+import "../css/app/PostList.css";
+import "../css/app/Background.css";
 
 const PostList = () => {
   const [postList, setPostList] = useState([]);
@@ -74,6 +77,16 @@ const PostList = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
   const history = useHistory();
+
+  const [left, setLeft] = useState({
+    name: "",
+    profileImage: "",
+  });
+
+  const [right, setRight] = useState({
+    name: "",
+    profileImage: "",
+  });
 
   const extractFileNameAddPath = (filePath) => {
     const parts = filePath.split(/[\\/]/);
@@ -106,46 +119,176 @@ const PostList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchMorePosts();
-  }, []); // 최초 렌더링 시 1회 호출
+  const fetchProfile = async (e) => {
+    const joon = await axios.get(`http://localhost:8080/account/get/1`, {
+      withCredentials: true,
+    });
+
+    const joonData = joon.data.contents;
+    if (joonData !== null) {
+      console.log(joonData);
+      setLeft({
+        name: joonData.name,
+        profileImage: extractFileNameAddPath(joonData.profileImage),
+      });
+    }
+
+    const soo = await axios.get(`http://localhost:8080/account/get/2`, {
+      withCredentials: true,
+    });
+
+    const sooData = soo.data.contents;
+    if (sooData !== null) {
+      console.log(sooData);
+      setRight({
+        name: sooData.name,
+        profileImage: extractFileNameAddPath(sooData.profileImage),
+      });
+    }
+  };
 
   const handleMoreButtonClick = () => {
     fetchMorePosts();
   };
 
+  useEffect(() => {
+    fetchMorePosts();
+    fetchProfile();
+  }, []); // 최초 렌더링 시 1회 호출
+
   return (
     <div>
-      <div>
-        <button onClick={() => history.push(`/home`)}>홈으로</button>
+      <div
+        id="n_1920__10"
+        className="gradient-background"
+        style={{ zIndex: -2 }}
+      >
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+          ></rect>
+        </svg>
       </div>
-      <h2>포스트 목록</h2>
-      <ul>
-        {postList.map((post) => (
-          <li key={post.id}>
-            <p>ID: {post.id}</p>
-            <Link to={`/post/get/${post.id}`}>
-              <p>제목: {post.title}</p>
-              {post.images.map((img, index) => (
-                <img
-                  key={index}
-                  src={`/post-image/${extractFileNameAddPath(img)}`}
-                  alt={`Image ${index + 1}`}
-                  style={{ maxWidth: "20%" }}
-                  onLoad={() => console.log("Image loaded successfully")}
-                  onError={() => console.error("Error loading image")}
-                />
-              ))}
-            </Link>
-          </li>
-        ))}
-      </ul>
 
-      {hasMore && (
-        <button onClick={handleMoreButtonClick} disabled={loading}>
-          {loading ? "로딩 중..." : "더보기"}
-        </button>
-      )}
+      <div className="upperbarLeftSubject">
+        <img
+          src="/logos/StoryList.png"
+          style={{ width: "40px", height: "auto" }}
+        />
+        <p
+          className="customTextColorAndShadow"
+          style={{ display: "flex", marginLeft: "10px" }}
+        >
+          스토리 목록
+        </p>
+      </div>
+
+      <div className="upperbarProfileGruop customTextColorAndShadow">
+        <p>{left.name}</p>
+        <img
+          src={`/profile-image/${left.profileImage}`}
+          alt="leftProfile"
+          className="upperbarProfileGruopImg"
+        />
+
+        <img
+          src="/logos/Heart.png"
+          alt="Heart"
+          style={{ width: "50px", height: "50px" }}
+        />
+
+        <img
+          src={`/profile-image/${right.profileImage}`}
+          alt="rightProfile"
+          className="upperbarProfileGruopImg"
+        />
+        <p>{right.name}</p>
+      </div>
+
+      <div className="postListHomeButton">
+        <img
+          src="/logos/HomeButton.png"
+          onClick={() => history.push(`/home`)}
+          style={{ width: "36px", height: "36px" }}
+        />
+      </div>
+
+      <div className="whiteCircle">
+        <div className="textContainer">
+          <p
+            style={{
+              fontSize: "16px",
+              marginBottom: "-30px",
+              marginTop: "-20px",
+              lineHeight: "0",
+            }}
+          >
+            TODAY
+          </p>
+          <p style={{ fontSize: "80px", lineHeight: "0px" }}>200</p>
+        </div>
+      </div>
+
+      <div className="postGroup">
+        {postList.map((post) => (
+          <div key={post.id} className="postDivide">
+            <p className="postDate">
+              {post.date[0]}.{post.date[1]}.{post.date[2]}
+            </p>
+            <Link to={`/post/get/${post.id}`} className="postLink">
+              <p className="postTitle">{post.title}</p>
+              <p className="postContents">{post.content}</p>
+              <div className="postImageContainer">
+                {(() => {
+                  const images = [];
+                  for (let i = 0; i < 3; i++) {
+                    const imgSrc = post.images[i]
+                      ? `/post-image/${extractFileNameAddPath(post.images[i])}`
+                      : "/logos/PostNoneBox.png";
+                    images.push(
+                      <img
+                        key={i}
+                        src={imgSrc}
+                        alt={`Image ${i + 1}`}
+                        className="postImage"
+                        onLoad={() => console.log("Image loaded successfully")}
+                        onError={() => console.error("Error loading image")}
+                      />
+                    );
+                  }
+                  return images;
+                })()}
+              </div>
+            </Link>
+          </div>
+        ))}
+        {hasMore && (
+          <button
+            onClick={handleMoreButtonClick}
+            disabled={loading}
+            className="postMoreButton"
+          >
+            {loading ? "로딩 중..." : "더 보 기"}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

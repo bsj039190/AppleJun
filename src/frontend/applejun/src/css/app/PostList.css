@@ -1,0 +1,109 @@
+.postListHomeButton {
+  display: flex;
+  justify-content: flex-end;
+  filter: brightness(500%);
+  margin-right: 730px;
+  margin-top: 90px;
+  margin-bottom: -108px;
+  cursor: pointer;
+}
+
+.whiteCircle {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* position 값을 추가하고 원하는 값으로 설정합니다. */
+  transform: translate(267%, 0%);
+  z-index: -1; /* 다른 요소들보다 아래로 가도록 작은 값을 설정합니다. */
+}
+
+.textContainer {
+  text-align: center;
+  margin-bottom: 100px;
+  color: #ffa8bc;
+}
+
+.postGroup {
+  background-color: white;
+  min-height: calc(100vh - 160px);
+  min-width: 150vh;
+  margin-top: -190px;
+
+  padding-top: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.postDivide {
+  border: 1px solid #94c8ff;
+  padding-top: 28px;
+  padding-bottom: 20px;
+  padding-left: 74px;
+  padding-right: 74px;
+
+  margin-bottom: 30px;
+}
+
+.postLink {
+  text-decoration: none; /* 언더라인 제거 */
+}
+
+.postDate {
+  font-size: 14px;
+  color: #94c8ff;
+  margin-left: 10px;
+  text-decoration-line: underline;
+}
+
+.postTitle {
+  font-size: 30px;
+  margin-left: 8px;
+  color: black;
+}
+
+.postContents {
+  font-size: 16px;
+  color: black;
+  margin-left: 10px;
+  max-width: 1024px;
+  max-height: 655px;
+  overflow: hidden; /* 넘치는 내용을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 내용을 생략 부호로 처리 */
+  line-height: 28px;
+}
+
+.postImage {
+  display: flex;
+  flex-direction: row;
+  margin: 0 16px; /* 이미지 사이의 간격을 조정합니다. */
+  width: 320px;
+  height: 320px;
+  flex-shrink: 0; /* 이미지가 줄어들지 않도록 설정합니다. */
+  object-fit: cover;
+}
+
+.postImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postMoreButton {
+  width: 127vh;
+  font-size: 18px;
+  color: #94c8ff;
+  background-color: white;
+  border-color: #94c8ff;
+  margin-bottom: 10px;
+}
+
+.postMoreButton:hover {
+  background-color: #e9f4ff;
+}

@@ -104,6 +104,8 @@ const PostList = () => {
         { withCredentials: true }
       );
 
+      console.log(response.data.contents);
+
       if (response.data.contents.length === 0) {
         setHasMore(false); // 불러올 데이터가 없다면 hasMore를 false로 설정
         alert("더 이상의 포스트가 없습니다.");
@@ -126,7 +128,6 @@ const PostList = () => {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -139,7 +140,6 @@ const PostList = () => {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -256,6 +256,8 @@ const PostList = () => {
               <p className="postTitle">{post.title}</p>
               <p className="postContents">{post.content}</p>
               <div className="postImageContainer">
+                {console.log(post.id)}
+                {console.log(post.images)}
                 {(() => {
                   const images = [];
                   for (let i = 0; i < 3; i++) {

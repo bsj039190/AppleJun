@@ -2,10 +2,11 @@
   display: flex;
   justify-content: flex-end;
   filter: brightness(500%);
-  margin-right: 730px;
+  margin-right: 35%;
   margin-top: 90px;
   margin-bottom: -108px;
   cursor: pointer;
+  /* 730px */
 }
 
 .whiteCircle {

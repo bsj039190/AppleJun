@@ -91,6 +91,8 @@ const PostDetail = () => {
     };
     fetchPostDetail();
     fetchProfile();
+
+    window.scrollTo(0, 0);
   }, [id]);
 
   useEffect(() => {
@@ -169,11 +171,13 @@ const PostDetail = () => {
           className="upperbarProfileGruopImg"
         />
 
-        <img
-          src="/logos/Heart.png"
-          alt="Heart"
-          style={{ width: "50px", height: "50px" }}
-        />
+        <a href="/home">
+          <img
+            src="/logos/Heart.png"
+            alt="Heart"
+            style={{ width: "50px", height: "50px" }}
+          />
+        </a>
 
         <img
           src={`/profile-image/${right.profileImage}`}
@@ -208,104 +212,113 @@ const PostDetail = () => {
             </p>
           </div>
 
-          <p style={{ fontSize: "30px" }}>
-            <a
-              href="/post/get/list"
+          <div className="postWrapperUnderDate">
+            <p
               style={{
-                fontWeight: "bold",
-                color: "black",
-                textDecoration: "none",
+                fontSize: "30px",
+                marginLeft: "50px",
               }}
             >
-              &lt;
-            </a>
-            {post.title}
-          </p>
+              <a
+                href="/post/get/list"
+                style={{
+                  fontWeight: "bold",
+                  color: "black",
+                  textDecoration: "none",
+                }}
+              >
+                &lt;
+              </a>
+              {post.title}
+            </p>
 
-          {/* <div className="postDetailImageWrapper">
-            {post.images && post.images.length > 0 ? (
-              post.images.map((image, index) => (
-                <div key={index}>
-                  <img
-                    src={`/post-image/${extractFileNameAddPath(image)}`}
-                    alt={`Image ${index + 1}`}
-                    style={{ flexDirection: "row" }}
-                    onLoad={() => console.log("Image loaded successfully")}
-                    onError={() => console.error("Error loading image")}
-                  />
-                </div>
-              ))
-            ) : (
-              <p>No images available</p>
-            )}
-          </div> */}
-
-          <div className="postDetailImageWrapper">
-            {(() => {
-              //Trouble Shooting 처음 렌더링 할때 null인 상태가 되어서 오류가 터져서 if문으로 오류가 터지지 않도록 방지함
-              if (post.images == null) {
-                return "No images available";
-              } else {
-                const imageList = [];
-                for (let i = 0; i < 3; i++) {
-                  const imgSrc = post.images[i]
-                    ? `/post-image/${extractFileNameAddPath(post.images[i])}`
-                    : "/logos/PostNoneBox.png";
-
-                  imageList.push(
+            {/* <div className="postDetailImageWrapper">
+              {post.images && post.images.length > 0 ? (
+                post.images.map((image, index) => (
+                  <div key={index}>
                     <img
-                      src={imgSrc}
+                      src={`/post-image/${extractFileNameAddPath(image)}`}
+                      alt={`Image ${index + 1}`}
+                      style={{ flexDirection: "row" }}
                       onLoad={() => console.log("Image loaded successfully")}
                       onError={() => console.error("Error loading image")}
                     />
-                  );
-                }
-                return imageList;
-              }
-            })()}
-          </div>
-
-          <div className="postDetailGpsContainer">
-            {gpsList && gpsList.length > 0 ? (
-              // 모든 항목의 id가 1인 경우에만 "No GPS data available"을 출력
-              gpsList.every((gpsItem) => gpsItem.id === 1) ? (
-                <p>No GPS data available</p>
+                  </div>
+                ))
               ) : (
-                <p>
-                  {gpsList.map(
-                    (gpsItem) =>
-                      // id가 1인 경우는 출력하지 않음
-                      gpsItem.id !== 1 && (
-                        <li key={gpsItem.id}>
-                          <img
-                            src="/logos/Map.png"
-                            className="postDetailGpsContainerImg"
-                          />
-                          <a href={gpsItem.url} target="_blank">
-                            {gpsItem.name}
-                          </a>
-                        </li>
-                      )
-                  )}
-                </p>
-              )
-            ) : (
-              <p>No GPS data available</p>
-            )}
+                <p>No images available</p>
+              )}
+            </div> */}
+
+            <div className="postDetailImageWrapper">
+              {(() => {
+                //Trouble Shooting 처음 렌더링 할때 null인 상태가 되어서 오류가 터져서 if문으로 오류가 터지지 않도록 방지함
+                if (post.images == null) {
+                  return "No images available";
+                } else {
+                  const imageList = [];
+                  for (let i = 0; i < 3; i++) {
+                    const imgSrc = post.images[i]
+                      ? `/post-image/${extractFileNameAddPath(post.images[i])}`
+                      : "/logos/PostNoneBox.png";
+
+                    imageList.push(
+                      <img
+                        src={imgSrc}
+                        onLoad={() => console.log("Image loaded successfully")}
+                        onError={() => console.error("Error loading image")}
+                      />
+                    );
+                  }
+                  return imageList;
+                }
+              })()}
+            </div>
+
+            <div className="postDetailGpsContainer">
+              {gpsList && gpsList.length > 0 ? (
+                // 모든 항목의 id가 1인 경우에만 "No GPS data available"을 출력
+                gpsList.every((gpsItem) => gpsItem.id === 1) ? (
+                  <p>No GPS data available</p>
+                ) : (
+                  <p>
+                    {gpsList.map(
+                      (gpsItem) =>
+                        // id가 1인 경우는 출력하지 않음
+                        gpsItem.id !== 1 && (
+                          <li key={gpsItem.id}>
+                            <img
+                              src="/logos/MapBlue.png"
+                              className="postDetailGpsContainerImg"
+                            />
+                            <a href={gpsItem.url} target="_blank">
+                              {gpsItem.name}
+                            </a>
+                          </li>
+                        )
+                    )}
+                  </p>
+                )
+              ) : (
+                <p>No GPS data available</p>
+              )}
+            </div>
+            <p className="postDetailContent">{post.content}</p>
+
+            <div style={{ marginLeft: "73px", marginBottom: "15px" }}>
+              <button
+                onClick={() => history.push(`/post/update/${id}`)}
+                className="postDetailButton"
+                style={{ marginLeft: "0px" }}
+              >
+                수정하기
+              </button>
+
+              <button onClick={handleDelete} className="postDetailButton">
+                삭제
+              </button>
+            </div>
           </div>
-          <p>{post.content}</p>
-
-          <button
-            onClick={() => history.push(`/post/update/${id}`)}
-            className="postDetailButton"
-            style={{ marginLeft: "0px" }}
-          >
-            수정하기
-          </button>
-
-          <button onClick={handleDelete} className="postDetailButton">
-            삭제
-          </button>
         </div>
       </div>
     </div>

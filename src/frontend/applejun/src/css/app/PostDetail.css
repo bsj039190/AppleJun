@@ -3,7 +3,8 @@
   min-height: calc(100vh - 120px);
   min-width: 150vh;
 
-  margin-top: 10px;
+  margin-top: 32px;
+  padding-bottom: 50px;
 
   display: flex;
   flex-direction: column;
@@ -22,28 +23,34 @@
 }
 
 .postSmallContainer {
-  padding-top: 5%;
-  width: 1200px; /* 여기 조절해야됨 */
+  padding-top: 1%;
+  width: 1170px;
 }
 
 .postDetailImageWrapper {
   display: flex;
   flex-direction: row;
+
+  justify-content: center;
+
+  margin-bottom: 40px;
 }
 
 .postDetailDate {
-  font-size: 20px;
+  font-size: 30px;
   color: #ffa8bc;
 }
 
-.postDetailDate::after {
+/* .postDetailDate::after {
   justify-content: center;
   content: "";
   display: block;
-  width: 100%; /* 선의 길이를 조정합니다. */
-  height: 1px; /* 선의 두께를 조정합니다. */
-  background-color: #ffa8bc; /* 선의 색상을 설정합니다. */
-}
+  width: 100%; 
+  height: 1px; 
+  background-color: #ffa8bc; 
+
+  margin-top: 13px;
+} */
 
 .postDetailGpsContainer a {
   text-decoration: none;
@@ -51,6 +58,11 @@
 
   display: flex;
   flex-direction: row;
+}
+
+.postDetailGpsContainer {
+  margin-left: 73px;
+  padding-left: 0px;
 }
 
 .postDetailGpsContainer li {
@@ -64,10 +76,9 @@
 .postDetailGpsContainerImg {
   display: flex;
 
-  max-width: 23px;
-  max-height: 31px;
+  max-width: 24px;
+  max-height: 32px;
   object-fit: contain;
-  filter: brightness(0%);
 }
 
 .postDetailButton {
@@ -81,6 +92,16 @@
   color: white;
 }
 
+.postDetailContent {
+  width: 1024px;
+
+  margin-left: 73px;
+}
+
 .postDetailButton:hover {
   background-color: #58a9ff;
+}
+
+.postWrapperUnderDate {
+  border: 1px solid #ffa8bc;
 }

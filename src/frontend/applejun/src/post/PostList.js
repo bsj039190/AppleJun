@@ -154,6 +154,8 @@ const PostList = () => {
   useEffect(() => {
     fetchMorePosts();
     fetchProfile();
+
+    window.scrollTo(0, 0);
   }, []); // 최초 렌더링 시 1회 호출
 
   return (

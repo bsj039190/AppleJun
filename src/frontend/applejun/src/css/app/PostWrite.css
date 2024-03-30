@@ -11,19 +11,20 @@
 
 .postWriteBoder {
   border: 1px solid #ffa8bc;
+  width: 1180px;
   height: 80vh;
 }
 
 .postWriteTitle input {
-  margin: 10px 50px;
-  width: 600px;
-  height: 30px;
+  margin: 10px 20px;
+  width: 1135px;
+  height: 50px;
 }
 
-.postWriteContent input {
-  margin: 10px 50px;
-  width: 600px;
-  height: 300px;
+.postWriteContent textarea {
+  margin: 10px 20px;
+  width: 1135px;
+  height: 480px;
   /*이거 이상함*/
 }
 
@@ -33,7 +34,9 @@
 
   border: 1px solid lightgray;
   padding: 10px;
-  margin: 10px 50px;
+  margin: 10px 20px;
+
+  width: 950px;
 }
 
 .postWriteGpsLogo {
@@ -44,9 +47,10 @@
 }
 
 .postWriteFileDateContainer {
-  margin: 10px 50px;
+  margin: 10px 20px;
   padding: 10px;
-  width: 500px;
+  width: 950px; /*950이 맞는데 그렇게 나오지 않음 고쳐야함*/
+  height: 50px;
 
   border: 1px solid lightgray;
 }
@@ -63,9 +67,13 @@
 .postWriteImagePreview {
   border: 1px solid lightgray;
   margin: 10px 50px;
+  display: flex;
+  justify-content: center;
 }
 
 .postWriteImagePreview img {
+  flex-direction: row;
+
   width: 200px;
   height: 200px;
   margin: 10px;

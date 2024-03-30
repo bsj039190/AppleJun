@@ -12,7 +12,7 @@ const PostWrite = () => {
     title: "",
     uploader: 1,
     date: "2024-03-12",
-    content: "",
+    content: "Default Content",
     gps1: 1,
     gps2: 1,
     gps3: 1,
@@ -84,6 +84,7 @@ const PostWrite = () => {
       ...postRequest,
       [name]: value,
     });
+    console.log(name, ":", value);
   };
 
   const handleFileChange = (e) => {
@@ -106,6 +107,11 @@ const PostWrite = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const updatedPostRequest = {
+      ...postRequest,
+      // 필요한 경우 다른 필드도 업데이트 가능
+    };
+
     if (currentUser != 3) {
       const formData = new FormData();
 
@@ -126,7 +132,9 @@ const PostWrite = () => {
 
       formData.append(
         "postRequest",
-        new Blob([JSON.stringify(postRequest)], { type: "application/json" })
+        new Blob([JSON.stringify(updatedPostRequest)], {
+          type: "application/json",
+        })
       );
 
       console.log([...formData]);
@@ -162,6 +170,16 @@ const PostWrite = () => {
     loadStoredUser();
     getGps();
     fetchProfile();
+
+    setPostRequest({
+      title: "",
+      uploader: 1,
+      date: "2024-03-12",
+      content: "Default Content",
+      gps1: 1,
+      gps2: 1,
+      gps3: 1,
+    });
   }, []);
 
   return (
@@ -279,8 +297,7 @@ const PostWrite = () => {
 
             <label className="postWriteContent">
               {/* Content: */}
-              <input
-                type="text"
+              <textarea
                 name="content"
                 value={postRequest.content}
                 onChange={handleChange}
@@ -366,19 +383,13 @@ const PostWrite = () => {
                   className="postWriteCustomFile"
                   style={{ marginRight: "20px" }}
                 >
-                  <button
-                    onClick={() =>
-                      document.querySelector('input[type="file"]').click()
-                    }
-                  >
-                    사진 업로드
-                    <input
-                      type="file"
-                      name="fileList"
-                      multiple
-                      onChange={handleFileChange}
-                    />
-                  </button>
+                  사진 업로드
+                  <input
+                    type="file"
+                    name="fileList"
+                    multiple
+                    onChange={handleFileChange}
+                  />
                 </label>
 
                 <label>작성자: {postRequest.uploader}</label>
@@ -392,12 +403,12 @@ const PostWrite = () => {
                   />
                 </label>
               </div>
-              <button type="submit">저장하기</button>
+              <div>
+                <button type="submit">저장하기</button>
+              </div>
             </div>
 
             {/* <div className="postWriteImagePreview">
-              
-
               {imagePreviews.length > 0 ? (
                 imagePreviews.map((preview, index) => (
                   <img key={index} src={preview} alt={`Preview ${index + 1}`} />
@@ -407,12 +418,34 @@ const PostWrite = () => {
                   <img src="/logos/PostNoneBox.png" />
                   <img src="/logos/PostNoneBox.png" />
                   <img src="/logos/PostNoneBox.png" />
-                </div>
+                </div> 
               )}
             </div> */}
 
             <div className="postWriteImagePreview">
               {/* 이미지 미리보기 */}
+              {imagePreviews.length === 1 ? (
+                <>
+                  <img src={imagePreviews[0]} alt={`Preview 1`} />
+                  <div>
+                    <img src="/logos/PostNoneBox.png" alt={`Empty Preview 1`} />
+                    <img src="/logos/PostNoneBox.png" alt={`Empty Preview 2`} />
+                  </div>
+                </>
+              ) : imagePreviews.length === 2 ? (
+                <>
+                  <img src={imagePreviews[0]} alt={`Preview 1`} />
+                  <img src={imagePreviews[1]} alt={`Preview 2`} />
+                  <img src="/logos/PostNoneBox.png" alt={`Empty Preview 3`} />
+                </>
+              ) : (
+                imagePreviews.map((preview, index) => (
+                  <img key={index} src={preview} alt={`Preview ${index + 1}`} />
+                ))
+              )}
+            </div>
+
+            {/* <div className="postWriteImagePreview">
 
               <p>엄준식</p>
               {(() => {
@@ -452,7 +485,7 @@ const PostWrite = () => {
                 }
                 return images;
               })()}
-            </div>
+            </div> */}
 
             {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
           </form>

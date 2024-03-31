@@ -6,6 +6,11 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 import Modal from "react-modal";
 import MapDelete from "./MapDelete";
+import "../css/app/UpperbarProfile.css";
+import "../css/app/Background.css";
+import "../css/app/MapList.css";
+import DatePicker from "react-datepicker";
+
 // 모달 스타일 설정
 const customStyles = {
   content: {
@@ -14,6 +19,7 @@ const customStyles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    zIndex: "1000",
   },
 };
 
@@ -25,12 +31,22 @@ const MapList = () => {
   const [apiResponse, setApiResponse] = useState(null);
   const history = useHistory();
 
+  const [left, setLeft] = useState({
+    name: "",
+    profileImage: "",
+  });
+
+  const [right, setRight] = useState({
+    name: "",
+    profileImage: "",
+  });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedGps, setSelectedGps] = useState({
     id: "2",
     name: "Default Name",
     address: "장승남로 70-30",
-    date: "2000-01-01",
+    date: "2024-04-01",
     gpsLat: 37.4436635,
     gpsLng: 126.7390452,
     subject: "Default Subject",
@@ -49,6 +65,39 @@ const MapList = () => {
         console.error("Error fetching data:", error);
       }
     }
+  };
+
+  const fetchProfile = async (e) => {
+    const joon = await axios.get(`http://localhost:8080/account/get/1`, {
+      withCredentials: true,
+    });
+
+    const joonData = joon.data.contents;
+    if (joonData !== null) {
+      console.log(joonData);
+      setLeft({
+        name: joonData.name,
+        profileImage: extractFileNameAddPath(joonData.profileImage),
+      });
+    }
+
+    const soo = await axios.get(`http://localhost:8080/account/get/2`, {
+      withCredentials: true,
+    });
+
+    const sooData = soo.data.contents;
+    if (sooData !== null) {
+      console.log(sooData);
+      setRight({
+        name: sooData.name,
+        profileImage: extractFileNameAddPath(sooData.profileImage),
+      });
+    }
+  };
+
+  const extractFileNameAddPath = (filePath) => {
+    const parts = filePath.split(/[\\/]/);
+    return parts.pop();
   };
 
   function updateMarkers(mapInstance, markers) {
@@ -103,7 +152,7 @@ const MapList = () => {
 
       setSelectedGps(markers[seq].content);
 
-      setModalIsOpen(true);
+      // setModalIsOpen(true);
     };
   }
 
@@ -116,13 +165,20 @@ const MapList = () => {
   }
 
   //모달 함수들
-  const markerClickHandler = () => {
+  const updateClickHandler = () => {
     setModalIsOpen(true);
     console.log(map);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedGps({
+      ...selectedGps,
+      date,
+    });
   };
 
   //업데이트, 삭제 함수들
@@ -198,6 +254,7 @@ const MapList = () => {
 
   useEffect(() => {
     fetchData(); // 함수 호출
+    fetchProfile();
 
     if (apiResponse !== null) {
       console.log(apiResponse);
@@ -284,92 +341,249 @@ const MapList = () => {
 
   return (
     <>
-      <div id="map" style={{ width: "100%", height: "500px" }} />
-      <div>
-        <button onClick={() => history.push(`/home`)}>홈으로</button>
-        <Link to="/map/text/list">
-          <button>리스트로 보기</button>
-        </Link>
-        <button onClick={() => markerClickHandler()}>Modal</button>
+      <div
+        id="n_1920__10"
+        className="gradient-background"
+        style={{ zIndex: -2 }}
+      >
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+          ></rect>
+        </svg>
+      </div>
+
+      <div className="upperbarLeftSubject">
+        <img src="/logos/Map.png" style={{ width: "40px", height: "auto" }} />
+        <p
+          className="customTextColorAndShadow"
+          style={{ display: "flex", marginLeft: "10px" }}
+        >
+          지도
+        </p>
+      </div>
+
+      <div className="upperbarProfileGruop customTextColorAndShadow">
+        <p>{left.name}</p>
+        <img
+          src={`/profile-image/${left.profileImage}`}
+          alt="leftProfile"
+          className="upperbarProfileGruopImg"
+        />
+
+        <a href="/home">
+          <img
+            src="/logos/Heart.png"
+            alt="Heart"
+            style={{ width: "50px", height: "50px" }}
+          />
+        </a>
+
+        <img
+          src={`/profile-image/${right.profileImage}`}
+          alt="rightProfile"
+          className="upperbarProfileGruopImg"
+        />
+        <p>{right.name}</p>
+      </div>
+
+      <div className="mapListBigContainer">
+        <div>
+          <div id="map" className="mapListNaverMap" />
+          {/* <div>
+          <button onClick={() => history.push(`/home`)}>홈으로</button>
+          <Link to="/map/text/list">
+            <button>리스트로 보기</button>
+          </Link>
+          <button onClick={() => markerClickHandler()}>Modal</button>
+        </div> */}
+
+          <div className="mapListButton">
+            <h4>장소 상세정보</h4>
+            <Link to="/map/text/list">
+              <button>리스트로 보기</button>
+            </Link>
+          </div>
+
+          <div className="mapListInfoContainer">
+            <div className="mapListInfoRow" style={{ marginTop: "10px" }}>
+              <div className="mapListInfoItem">
+                <label>
+                  ID <p>{selectedGps.id}</p>
+                </label>
+              </div>
+              <div className="mapListInfoItem">
+                <label>
+                  카테고리 <p>{selectedGps.subject}</p>
+                </label>
+              </div>
+            </div>
+            <div className="mapListInfoRow">
+              <div className="mapListInfoItem">
+                <label>
+                  이름 <p>{selectedGps.name}</p>
+                </label>
+              </div>
+              <div className="mapListInfoItem">
+                <label>
+                  주소 <p>{selectedGps.address}</p>
+                </label>
+              </div>
+            </div>
+            <div className="mapListInfoRow">
+              <div className="mapListInfoItem">
+                <label>
+                  날짜{" "}
+                  <p>
+                    {selectedGps.date[0] +
+                      "년 " +
+                      selectedGps.date[1] +
+                      "월 " +
+                      selectedGps.date[2] +
+                      "일"}
+                  </p>
+                </label>
+              </div>
+              <div
+                className="mapListInfoItem"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <label>
+                  <button
+                    onClick={() => window.open(selectedGps.url, "_blank")}
+                    className="urlButton"
+                  >
+                    URL 이동
+                  </button>
+                  <button
+                    onClick={() => updateClickHandler()}
+                    className="updateButton"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleDelete(selectedGps.id, selectedGps.name)
+                    }
+                    className="deleteButton"
+                  >
+                    삭제
+                  </button>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
         contentLabel="GPS Update Modal"
+        className="mapUpdateModal"
       >
-        <h2>좌표 상세정보</h2>
-        <label>ID: {selectedGps.id}</label>
-        <br />
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={selectedGps.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Address:
-          <input
-            type="text"
-            name="address"
-            value={selectedGps.address}
-            onChange={handleInputChange}
-          />
-          <button onClick={(e) => onClickAddress(e, selectedGps.address)}>
-            GPS 변환
+        <div className="mapUpdateCenter">
+          <h2
+            style={{
+              fontSize: "30px",
+              fontWeight: "lighter",
+              color: "#FFA8BC",
+            }}
+          >
+            장소 수정
+          </h2>
+        </div>
+
+        <div className="mapUpdateLabel">
+          <label htmlFor="name">
+            이름
+            <input
+              type="text"
+              name="name"
+              autocomplete="off"
+              value={selectedGps.name}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          <label htmlFor="address">
+            주소
+            <input
+              type="text"
+              name="address"
+              autocomplete="off"
+              value={selectedGps.address}
+              onChange={handleInputChange}
+              style={{ width: "200px" }}
+            />
+            <button
+              onClick={(e) => onClickAddress(e, selectedGps.address)}
+              className="mapUpdateGpsButton"
+            >
+              GPS 변환
+            </button>
+          </label>
+
+          <label>
+            위도: {selectedGps.gpsLat}, 경도: {selectedGps.gpsLng}
+          </label>
+
+          <label>
+            날짜
+            <DatePicker
+              value={selectedGps.date}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+            />
+            {/* 아니 바뀌지가 않음, 배열 => 텍스트 가 안되는거같음 handleDateChange 함수 손봐야 할것같음 */}
+          </label>
+
+          <label htmlFor="subject">
+            카테고리
+            <input
+              type="text"
+              name="subject"
+              value={selectedGps.subject}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          <label htmlFor="url">
+            URL
+            <input
+              type="text"
+              name="url"
+              value={selectedGps.url}
+              onChange={handleInputChange}
+              style={{ width: "200px" }}
+            />
+          </label>
+        </div>
+
+        <div className="mapUpdateCenter">
+          <button onClick={(e) => handleSubmit(e)} className="updateButton">
+            위치 수정
           </button>
-        </label>
-        <br />
-
-        <label>
-          위도: {selectedGps.gpsLat}, 경도: {selectedGps.gpsLng}
-        </label>
-        <br />
-
-        <label>
-          Date:
-          <input
-            type="text"
-            name="date"
-            value={selectedGps.date}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Subject:
-          <input
-            type="text"
-            name="subject"
-            value={selectedGps.subject}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Url:
-          <input
-            type="text"
-            name="url"
-            value={selectedGps.url}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <button onClick={(e) => handleSubmit(e)}>위치 수정</button>
-        <button onClick={() => handleDelete(selectedGps.id, selectedGps.name)}>
-          삭제하기
-        </button>
-
-        <br />
-        <br />
-        <br />
-        <div>
-          <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
     </>

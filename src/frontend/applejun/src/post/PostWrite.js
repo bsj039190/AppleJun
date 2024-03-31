@@ -98,6 +98,7 @@ const PostWrite = () => {
   };
 
   const handleDateChange = (date) => {
+    console.log(date);
     setPostRequest({
       ...postRequest,
       date,
@@ -175,7 +176,7 @@ const PostWrite = () => {
       title: "",
       uploader: 1,
       date: "2024-03-12",
-      content: "Default Content",
+      content: "",
       gps1: 1,
       gps2: 1,
       gps3: 1,
@@ -263,6 +264,9 @@ const PostWrite = () => {
           style={{
             fontSize: "30px",
             marginLeft: "50px",
+            display: "flex",
+            alignSelf: "flex-start",
+            marginLeft: "360px",
           }}
         >
           <a
@@ -377,7 +381,7 @@ const PostWrite = () => {
               </label>
             </div>
 
-            <div className="postWriteSummitButton">
+            <div className="postWriteFileDateButtonContainer">
               <div className="postWriteFileDateContainer">
                 <label
                   className="postWriteCustomFile"
@@ -394,7 +398,7 @@ const PostWrite = () => {
 
                 <label>작성자: {postRequest.uploader}</label>
 
-                <label>
+                <label style={{ marginRight: "200px" }}>
                   날짜:
                   <DatePicker
                     selected={postRequest.date}
@@ -403,7 +407,7 @@ const PostWrite = () => {
                   />
                 </label>
               </div>
-              <div>
+              <div className="postWriteSummitButton">
                 <button type="submit">저장하기</button>
               </div>
             </div>
@@ -438,10 +442,16 @@ const PostWrite = () => {
                   <img src={imagePreviews[1]} alt={`Preview 2`} />
                   <img src="/logos/PostNoneBox.png" alt={`Empty Preview 3`} />
                 </>
-              ) : (
+              ) : imagePreviews.length === 3 ? (
                 imagePreviews.map((preview, index) => (
                   <img key={index} src={preview} alt={`Preview ${index + 1}`} />
                 ))
+              ) : (
+                <div>
+                  <img src="/logos/PostNoneBox.png" alt={`Empty Preview 1`} />
+                  <img src="/logos/PostNoneBox.png" alt={`Empty Preview 2`} />
+                  <img src="/logos/PostNoneBox.png" alt={`Empty Preview 3`} />
+                </div>
               )}
             </div>
 

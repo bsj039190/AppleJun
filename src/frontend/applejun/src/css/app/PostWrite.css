@@ -1,18 +1,19 @@
 .postWriteBigWrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 
   background-color: white;
 
-  height: 100vh;
+  margin-top: 32px;
+
+  height: 150vh;
 }
 
 .postWriteBoder {
   border: 1px solid #ffa8bc;
   width: 1180px;
-  height: 80vh;
+  height: 110vh;
 }
 
 .postWriteTitle input {
@@ -25,7 +26,6 @@
   margin: 10px 20px;
   width: 1135px;
   height: 480px;
-  /*이거 이상함*/
 }
 
 .postWriteGpsContainer {
@@ -36,7 +36,7 @@
   padding: 10px;
   margin: 10px 20px;
 
-  width: 950px;
+  width: 940px;
 }
 
 .postWriteGpsLogo {
@@ -48,34 +48,54 @@
 
 .postWriteFileDateContainer {
   margin: 10px 20px;
-  padding: 10px;
-  width: 950px; /*950이 맞는데 그렇게 나오지 않음 고쳐야함*/
+
+  padding: 0px;
+  min-width: 960px; /*950이 맞는데 그렇게 나오지 않음 고쳐야함*/
   height: 50px;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   border: 1px solid lightgray;
+}
+
+.postWriteFileDateContainer label {
+  margin: 0px 20px;
 }
 
 .postWriteCustomFile input[type="file"] {
   display: none;
 }
 
+.postWriteFileDateButtonContainer {
+  display: flex; /* 내부 요소들을 행으로 정렬 */
+  justify-content: space-between; /* 내부 요소들을 좌우로 정렬 */
+}
+
 .postWriteSummitButton {
-  display: flex;
-  flex-direction: row;
+  margin: 10px 0px;
+}
+
+.postWriteSummitButton button {
+  min-width: 160px;
+  height: 50px;
 }
 
 .postWriteImagePreview {
   border: 1px solid lightgray;
-  margin: 10px 50px;
+  margin: 10px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
+
+  width: 960px;
 }
 
 .postWriteImagePreview img {
   flex-direction: row;
 
-  width: 200px;
-  height: 200px;
-  margin: 10px;
+  width: 250px;
+  height: 250px;
+  margin: 10px 30px;
   object-fit: cover;
 }

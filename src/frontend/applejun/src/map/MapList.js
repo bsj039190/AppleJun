@@ -46,7 +46,7 @@ const MapList = () => {
     id: "2",
     name: "Default Name",
     address: "장승남로 70-30",
-    date: "2024-04-01",
+    date: [2024, 1, 1],
     gpsLat: 37.4436635,
     gpsLng: 126.7390452,
     subject: "Default Subject",
@@ -174,10 +174,15 @@ const MapList = () => {
     setModalIsOpen(false);
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (gpsDate) => {
+    const year = gpsDate.getFullYear();
+    const month = ("0" + (gpsDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
+    const day = ("0" + gpsDate.getDate()).slice(-2); // 일도 두 자리로 만듭니다.
+    const formattedDate = `${year}-${month}-${day}`;
+
     setSelectedGps({
       ...selectedGps,
-      date,
+      date: formattedDate,
     });
   };
 

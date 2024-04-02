@@ -9,6 +9,7 @@ import MapDelete from "./MapDelete";
 import "../css/app/UpperbarProfile.css";
 import "../css/app/Background.css";
 import "../css/app/MapList.css";
+import "../css/app/Modal.css";
 import DatePicker from "react-datepicker";
 
 // 모달 스타일 설정
@@ -22,6 +23,8 @@ const customStyles = {
     zIndex: "1000",
   },
 };
+
+Modal.setAppElement("#root");
 
 const MapList = () => {
   const [markers, setMarkers] = useState([]);

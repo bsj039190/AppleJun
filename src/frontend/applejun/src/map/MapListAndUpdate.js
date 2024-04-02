@@ -11,6 +11,11 @@ import {
 
 import Modal from "react-modal";
 import MapDelete from "./MapDelete";
+import "../css/app/UpperbarProfile.css";
+import "../css/app/Background.css";
+import "../css/app/Modal.css";
+import "../css/app/MapListAndUpdate.css";
+import DatePicker from "react-datepicker";
 
 // 모달 스타일 설정
 const customStyles = {
@@ -54,20 +59,48 @@ function MapListAndUpdate() {
     url: "http://www.naver.com",
   });
 
-  useEffect(() => {
-    const fetchGetPostList = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/gps/get/list", {
-          withCredentials: true,
-        });
-        setGpsList(response.data.contents);
-      } catch (error) {
-        console.error("Error from get post list : ", error);
-      }
-    };
+  const [left, setLeft] = useState({
+    name: "",
+    profileImage: "",
+  });
 
-    fetchGetPostList();
-  }, []);
+  const [right, setRight] = useState({
+    name: "",
+    profileImage: "",
+  });
+
+  const fetchProfile = async (e) => {
+    const joon = await axios.get(`http://localhost:8080/account/get/1`, {
+      withCredentials: true,
+    });
+
+    const joonData = joon.data.contents;
+    if (joonData !== null) {
+      console.log(joonData);
+      setLeft({
+        name: joonData.name,
+        profileImage: extractFileNameAddPath(joonData.profileImage),
+      });
+    }
+
+    const soo = await axios.get(`http://localhost:8080/account/get/2`, {
+      withCredentials: true,
+    });
+
+    const sooData = soo.data.contents;
+    if (sooData !== null) {
+      console.log(sooData);
+      setRight({
+        name: sooData.name,
+        profileImage: extractFileNameAddPath(sooData.profileImage),
+      });
+    }
+  };
+
+  const extractFileNameAddPath = (filePath) => {
+    const parts = filePath.split(/[\\/]/);
+    return parts.pop();
+  };
 
   const onClickAddress = (e, gps) => {
     e.preventDefault();
@@ -126,6 +159,18 @@ function MapListAndUpdate() {
     }
   };
 
+  const handleDateChange = (gpsDate) => {
+    const year = gpsDate.getFullYear();
+    const month = ("0" + (gpsDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
+    const day = ("0" + gpsDate.getDate()).slice(-2); // 일도 두 자리로 만듭니다.
+    const formattedDate = `${year}-${month}-${day}`;
+
+    setSelectedGps({
+      ...selectedGps,
+      date: formattedDate,
+    });
+  };
+
   const handleInputChange = (e) => {
     setSelectedGps((prevSelectedGps) => {
       const updatedGps = {
@@ -154,105 +199,205 @@ function MapListAndUpdate() {
     setModalIsOpen(false);
   };
 
+  useEffect(() => {
+    const fetchGetPostList = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/gps/get/list", {
+          withCredentials: true,
+        });
+        setGpsList(response.data.contents);
+      } catch (error) {
+        console.error("Error from get post list : ", error);
+      }
+    };
+
+    fetchGetPostList();
+    fetchProfile();
+  }, []);
+
   return (
     <div>
-      <div>
-        <button onClick={() => history.push("/home")}>홈으로</button>
-        <button onClick={() => history.push("/map/list")}>지도로 보기</button>
+      <div
+        id="n_1920__10"
+        className="gradient-background"
+        style={{ zIndex: -2 }}
+      >
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+          ></rect>
+        </svg>
       </div>
-      <h2>좌표 목록</h2>
-      {gpsList.map(
-        (gps) =>
-          // gps.id가 1이 아닌 경우에만 렌더링
-          gps.id !== 1 && (
-            <ul key={gps.id}>
-              <p>
-                ID: {gps.id} / 이름: {gps.name} / {gps.subject} / 주소:
-                {gps.address}
-                <button onClick={() => openModal(gps)}>수정</button>
-                <button onClick={() => deleteMap(gps.id, gps.name)}>
-                  삭제
-                </button>
-              </p>
-            </ul>
-          )
-      )}
 
+      <div className="upperbarLeftSubject">
+        <img src="/logos/Map.png" style={{ width: "40px", height: "auto" }} />
+        <p
+          className="customTextColorAndShadow"
+          style={{ display: "flex", marginLeft: "10px" }}
+        >
+          지도
+        </p>
+      </div>
+
+      <div className="upperbarProfileGruop customTextColorAndShadow">
+        <p>{left.name}</p>
+        <img
+          src={`/profile-image/${left.profileImage}`}
+          alt="leftProfile"
+          className="upperbarProfileGruopImg"
+        />
+
+        <a href="/home">
+          <img
+            src="/logos/Heart.png"
+            alt="Heart"
+            style={{ width: "50px", height: "50px" }}
+          />
+        </a>
+
+        <img
+          src={`/profile-image/${right.profileImage}`}
+          alt="rightProfile"
+          className="upperbarProfileGruopImg"
+        />
+        <p>{right.name}</p>
+      </div>
+
+      <div className="mapListWhiteBaord">
+        <div className="mapListWrapper">
+          <div style={{ color: "#FFA8BC" }} className="mapListTitle">
+            <h2 style={{ fontWeight: "initial" }}>좌표 리스트</h2>
+          </div>
+
+          <div>
+            {gpsList.map(
+              (gps) =>
+                // gps.id가 1이 아닌 경우에만 렌더링
+                gps.id !== 1 && (
+                  <ul key={gps.id}>
+                    <div className="mapListName">
+                      <li>{gps.name}</li>
+                    </div>
+                    <div className="mapListAddress">
+                      <p>
+                        {gps.subject} / {gps.address} &nbsp;&nbsp;
+                        <button onClick={() => openModal(gps)}>수정</button>
+                        <button onClick={() => deleteMap(gps.id, gps.name)}>
+                          삭제
+                        </button>
+                      </p>
+                    </div>
+                  </ul>
+                )
+            )}
+          </div>
+        </div>
+      </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        className={"mapUpdateModal"}
         contentLabel="Gps Update Modal"
       >
-        <h2>좌표 수정</h2>
-        <label>ID: {selectedGps.id}</label>
-        <br />
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={selectedGps.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Address:
-          <input
-            type="text"
-            name="address"
-            value={selectedGps.address}
-            onChange={handleInputChange}
-          />
-          <button onClick={(e) => onClickAddress(e, selectedGps.address)}>
-            GPS 변환
+        <div className="mapUpdateCenter">
+          <h2
+            style={{
+              fontSize: "30px",
+              fontWeight: "lighter",
+              color: "#FFA8BC",
+            }}
+          >
+            장소 수정
+          </h2>
+        </div>
+
+        <div className="mapUpdateLabel">
+          <label htmlFor="name">
+            이름
+            <input
+              type="text"
+              name="name"
+              autocomplete="off"
+              value={selectedGps.name}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          <label htmlFor="address">
+            주소
+            <input
+              type="text"
+              name="address"
+              autocomplete="off"
+              value={selectedGps.address}
+              onChange={handleInputChange}
+              style={{ width: "200px" }}
+            />
+            <button
+              onClick={(e) => onClickAddress(e, selectedGps.address)}
+              className="mapUpdateGpsButton"
+            >
+              GPS 변환
+            </button>
+          </label>
+
+          <label>
+            위도: {selectedGps.gpsLat}, 경도: {selectedGps.gpsLng}
+          </label>
+
+          <label>
+            날짜
+            <DatePicker
+              value={selectedGps.date}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+            />
+            {/* 아니 바뀌지가 않음, 배열 => 텍스트 가 안되는거같음 handleDateChange 함수 손봐야 할것같음 */}
+          </label>
+
+          <label htmlFor="subject">
+            카테고리
+            <input
+              type="text"
+              name="subject"
+              value={selectedGps.subject}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          <label htmlFor="url">
+            URL
+            <input
+              type="text"
+              name="url"
+              value={selectedGps.url}
+              onChange={handleInputChange}
+              style={{ width: "200px" }}
+            />
+          </label>
+        </div>
+
+        <div className="mapUpdateCenter">
+          <button onClick={(e) => handleSubmit(e)} className="updateButton">
+            위치 수정
           </button>
-        </label>
-        <br />
-
-        <label>
-          위도: {selectedGps.gpsLat}, 경도: {selectedGps.gpsLng}
-        </label>
-        <br />
-
-        <label>
-          Date:
-          <input
-            type="text"
-            name="date"
-            value={selectedGps.date}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Subject:
-          <input
-            type="text"
-            name="subject"
-            value={selectedGps.subject}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Url:
-          <input
-            type="text"
-            name="url"
-            value={selectedGps.url}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <button onClick={handleSubmit}>위치 수정</button>
-
-        <br />
-        <br />
-        <br />
-        <div>
-          <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
     </div>

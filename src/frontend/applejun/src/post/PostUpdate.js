@@ -3,9 +3,9 @@ import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../css/app/UpperbarProfile.css";
-import "../css/app/Background.css";
-import "../css/app/PostWrite.css";
+import "../css/UpperbarProfile.css";
+import "../css/Background.css";
+import "../css/PostWrite.css";
 
 const PostUpdate = () => {
   const { id } = useParams();

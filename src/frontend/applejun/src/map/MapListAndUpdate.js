@@ -11,10 +11,10 @@ import {
 
 import Modal from "react-modal";
 import MapDelete from "./MapDelete";
-import "../css/app/UpperbarProfile.css";
-import "../css/app/Background.css";
-import "../css/app/Modal.css";
-import "../css/app/MapListAndUpdate.css";
+import "../css/UpperbarProfile.css";
+import "../css/Background.css";
+import "../css/Modal.css";
+import "../css/MapListAndUpdate.css";
 import DatePicker from "react-datepicker";
 
 // 모달 스타일 설정

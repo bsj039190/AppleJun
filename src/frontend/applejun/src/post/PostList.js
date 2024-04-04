@@ -67,9 +67,9 @@ export default PostList; */
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import "../css/app/UpperbarProfile.css";
-import "../css/app/PostList.css";
-import "../css/app/Background.css";
+import "../css/UpperbarProfile.css";
+import "../css/PostList.css";
+import "../css/Background.css";
 
 const PostList = () => {
   const [postList, setPostList] = useState([]);

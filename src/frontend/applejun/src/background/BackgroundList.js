@@ -4,17 +4,10 @@ import axios from "axios";
 import Modal from "react-modal";
 import BackgroundDelete from "./BackgroundDelete";
 import BackgroundUpload from "./BackgroundUpload";
-
-// 모달 스타일 설정
-const customStyles = {
-  content: {
-    width: "50%",
-    height: "50%",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+import "../css/Background.css";
+import "../css/UpperbarProfile.css";
+import "../css/BackgroundList.css";
+import "../css/Modal.css";
 
 Modal.setAppElement("#root");
 
@@ -30,55 +23,20 @@ function BackgroundList() {
     uploader: 1,
   });
 
+  const [left, setLeft] = useState({
+    name: "",
+    profileImage: "",
+  });
+
+  const [right, setRight] = useState({
+    name: "",
+    profileImage: "",
+  });
+
   const [currentUser, setCurrentUser] = useState(0);
 
-  useEffect(() => {
-    const loadStoredUser = async () => {
-      const storedUser = localStorage.getItem("currentUser");
-      if (storedUser) {
-        const userObject = JSON.parse(storedUser);
-        setCurrentUser(userObject.id);
-        console.log(userObject.id);
-      }
-    };
-
-    loadStoredUser();
-  }, []);
-
-  useEffect(() => {
-    const fetchGetImageList = async (id) => {
-      if (id !== 0) {
-        // currentUser가 0이 아닌 경우에만 실행
-        console.log(currentUser);
-        try {
-          if (id == 3) {
-            const response = await axios.get(
-              `http://localhost:8080/background/list/1`,
-              { withCredentials: true }
-            );
-            setImageList(response.data.contents);
-            alert("게스트 계정은 관리자의 배경화면으로 보입니다.");
-          } else {
-            const response = await axios.get(
-              `http://localhost:8080/background/list/${id}`,
-              { withCredentials: true }
-            );
-            setImageList(response.data.contents);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    fetchGetImageList(currentUser);
-  }, [currentUser]);
-
   const extractFileNameAddPath = (filePath) => {
-    // filePath를 backslash(\) 또는 forward slash(/)를 기준으로 나눕니다.
     const parts = filePath.split(/[\\/]/);
-
-    // 배열의 마지막 요소를 제거하고 반환합니다. 이것이 파일 이름입니다.
     return parts.pop();
   };
 
@@ -91,7 +49,6 @@ function BackgroundList() {
       if (isUploaded == 1) {
         window.location.reload();
       } else {
-        console.log("엄준식");
         console.log(isUploaded);
       }
     } else {
@@ -124,72 +81,228 @@ function BackgroundList() {
     }
   };
 
+  const fetchProfile = async (e) => {
+    const joon = await axios.get(`http://localhost:8080/account/get/1`, {
+      withCredentials: true,
+    });
+
+    const joonData = joon.data.contents;
+    if (joonData !== null) {
+      console.log(joonData);
+      setLeft({
+        name: joonData.name,
+        profileImage: extractFileNameAddPath(joonData.profileImage),
+      });
+    }
+
+    const soo = await axios.get(`http://localhost:8080/account/get/2`, {
+      withCredentials: true,
+    });
+
+    const sooData = soo.data.contents;
+    if (sooData !== null) {
+      console.log(sooData);
+      setRight({
+        name: sooData.name,
+        profileImage: extractFileNameAddPath(sooData.profileImage),
+      });
+    }
+  };
+
+  useEffect(() => {
+    const loadStoredUser = async () => {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        const userObject = JSON.parse(storedUser);
+        setCurrentUser(userObject.id);
+        console.log(userObject.id);
+      }
+    };
+
+    loadStoredUser();
+    fetchProfile();
+  }, []);
+
+  useEffect(() => {
+    const fetchGetImageList = async (id) => {
+      if (id !== 0) {
+        // currentUser가 0이 아닌 경우에만 실행
+        console.log(currentUser);
+        try {
+          if (id == 3) {
+            const response = await axios.get(
+              `http://localhost:8080/background/list/1`,
+              { withCredentials: true }
+            );
+            setImageList(response.data.contents);
+            alert("게스트 계정은 관리자의 배경화면으로 보입니다.");
+          } else {
+            const response = await axios.get(
+              `http://localhost:8080/background/list/${id}`,
+              { withCredentials: true }
+            );
+            setImageList(response.data.contents);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchGetImageList(currentUser);
+  }, [currentUser]);
+
   return (
     <div>
-      <div>
-        <button onClick={() => history.push(`/home`)}>홈으로</button>
+      <div
+        id="n_1920__10"
+        className="gradient-background"
+        style={{ zIndex: -2 }}
+      >
+        <svg className="n_27_t">
+          <linearGradient
+            id="n_27_t"
+            spreadMethod="pad"
+            x1="0"
+            x2="1"
+            y1="0.5"
+            y2="0.5"
+          >
+            <stop offset="0" stopColor="#ffe0e7" stopOpacity="1"></stop>
+            <stop offset="1" stopColor="#d6eaff" stopOpacity="1"></stop>
+          </linearGradient>
+          <rect
+            id="n_27_t"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+          ></rect>
+        </svg>
       </div>
-      <h2>배경화면 목록</h2>
-      <button onClick={() => setModalIsOpen(true)}>사진 추가하기</button>
-      <ul>
-        {imageList && imageList.length > 0 ? (
-          imageList.map((image, index) => (
-            <li key={image.id}>
-              <p>ID: {image.id}</p>
-              <img
-                src={`/background-image/${extractFileNameAddPath(
-                  image.filePath
-                )}`}
-                alt={`Image ${index}`}
-                style={{ maxWidth: "100%" }}
-                onLoad={() => console.log("Image loaded successfully")}
-                onError={() => console.error("Error loading image")}
-              />
-              <button onClick={() => deleteBackgroundImage(image.id)}>
-                삭제
-              </button>
-            </li>
-          ))
-        ) : (
-          <p>No images available</p>
-        )}
-      </ul>
+
+      <div className="upperbarLeftSubject">
+        <img
+          src="/logos/Background.png"
+          style={{ width: "50px", height: "auto" }}
+        />
+        <p
+          className="customTextColorAndShadow"
+          style={{ display: "flex", marginLeft: "10px" }}
+        >
+          배경화면
+        </p>
+      </div>
+
+      <div className="upperbarProfileGruop customTextColorAndShadow">
+        <p>{left.name}</p>
+        <img
+          src={`/profile-image/${left.profileImage}`}
+          alt="leftProfile"
+          className="upperbarProfileGruopImg"
+        />
+
+        <a href="/home">
+          <img
+            src="/logos/Heart.png"
+            alt="Heart"
+            style={{ width: "50px", height: "50px" }}
+          />
+        </a>
+
+        <img
+          src={`/profile-image/${right.profileImage}`}
+          alt="rightProfile"
+          className="upperbarProfileGruopImg"
+        />
+        <p>{right.name}</p>
+      </div>
+
+      <div className="backListWhiteBoard">
+        <div className="backListSubject">
+          <h2>배경화면 목록</h2>
+          <button onClick={() => setModalIsOpen(true)}>사진 추가하기</button>
+        </div>
+
+        <div className="backListImageWrapper">
+          <div className="backListImageContainer">
+            {imageList && imageList.length > 0 ? (
+              imageList.map((image, index) => (
+                <div>
+                  <img
+                    src={`/background-image/${extractFileNameAddPath(
+                      image.filePath
+                    )}`}
+                    alt={`Image ${index}`}
+                    onLoad={() => console.log("Image loaded successfully")}
+                    onError={() => console.error("Error loading image")}
+                  />
+                  <button onClick={() => deleteBackgroundImage(image.id)}>
+                    삭&nbsp;&nbsp;&nbsp;제
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No images available</p>
+            )}
+          </div>
+        </div>
+      </div>
 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Gps Update Modal"
+        className="backgroundUpdateModal"
+        contentLabel="Background Modal"
       >
-        <h2>배경화면 업로드</h2>
-        {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
+        <div className="backgroundModalH2">
+          <h2>배경화면 업로드</h2>
+          {currentUser === 3 && <p>게스트 계정은 업로드 할 수 없습니다.</p>}
+        </div>
+        <div className="backgroundModalWrapper">
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <label>
+              이름: &nbsp;
+              <input
+                type="text"
+                name="fileName"
+                value={backgroundRequest.fileName}
+                onChange={handleInputChange}
+              />
+            </label>
+            <br />
+            <br />
 
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="fileName"
-              value={backgroundRequest.fileName}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
+            <label className="backgroundModalCustomFile">
+              사진선택
+              <input type="file" name="file" onChange={handleFileChange} />
+            </label>
+            <br />
+            <br />
 
-          <label>
-            File:
-            <input type="file" name="file" onChange={handleFileChange} />
-          </label>
-          <br />
-          <br />
-          <button type="submit">업로드</button>
-        </form>
+            {/* 이미지 미리보기 추가 */}
 
-        <br />
-        <br />
-        <br />
-        <div>
-          <button onClick={closeModal}>Close Modal</button>
+            {uploadFile ? (
+              <div className="imagePreviewContainer">
+                <img
+                  src={URL.createObjectURL(uploadFile[0])}
+                  alt="Image preview"
+                  className="backgroundImagePreview"
+                />
+              </div>
+            ) : (
+              <div className="imagePreviewContainer"> </div>
+            )}
+            <p style={{ fontSize: "14px" }}>이미지 미리보기</p>
+
+            <br />
+            <br />
+            <button type="submit" className="backgroundModalSummit">
+              업로드
+            </button>
+          </form>
         </div>
       </Modal>
     </div>

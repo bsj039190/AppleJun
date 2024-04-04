@@ -16,6 +16,8 @@
   margin-bottom: -200px; /* 아래쪽 간격 조절 */
   font-size: 30px;
   z-index: 1;
+
+  color: #fb92ab;
 }
 
 .loginTextContainer::after {
@@ -25,8 +27,8 @@
   left: 50%; /* 가운데 정렬 */
   transform: translateX(-50%); /* 가운데 정렬 */
   width: 50%; /* 가운데에서부터 좌우로 뻗어나오도록 설정합니다. */
-  height: 1px;
-  background-color: black;
+  height: 2px;
+  background-color: #fb92ab;
 }
 
 .loginButton {

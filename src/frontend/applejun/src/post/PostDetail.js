@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import "../css/app/Background.css";
-import "../css/app/UpperbarProfile.css";
-import "../css/app/PostDetail.css";
+import "../css/Background.css";
+import "../css/UpperbarProfile.css";
+import "../css/PostDetail.css";
 
 const PostDetail = () => {
   const { id } = useParams();

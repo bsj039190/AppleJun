@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
 import { useUser } from "../account/UserContext";
-import "../css/app/Login.css";
-import "../css/app/Background.css";
+import "../css/Login.css";
+import "../css/Background.css";
 
 // 모달 스타일 설정
 const customStyles = {
@@ -60,16 +60,10 @@ function Login() {
     }
     setUsername(name);
     setModalIsOpen(true);
-    console.log(modalIsOpen);
   };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
-
-    console.log(username);
-    console.log(password);
-
-    console.log(`Login id : ${id}`);
 
     try {
       const params = new URLSearchParams();
@@ -88,14 +82,12 @@ function Login() {
         }
       );
 
-      console.log(response.data); // 로그인 성공 시 서버에서 반환하는 데이터 처리
-      // 성공 시 필요한 동작을 수행 (예: 리다이렉트 등)
       alert("로그인 성공!");
       setCurrentUser({ username: username, id: id });
       history.push("/home");
     } catch (err) {
       console.error("Login failed:", err);
-      // 실패 시 필요한 동작을 수행 (예: 에러 메시지 표시 등)
+      alert("로그인에 실패했습니다!");
     }
   };
 
@@ -104,7 +96,6 @@ function Login() {
       const apiResponse = await axios.get(
         "http://localhost:8080/account/get/list"
       );
-      console.log(apiResponse);
 
       for (let i = 0; i < apiResponse.data.contents.length; i++) {
         const data = apiResponse.data.contents[i];
@@ -114,11 +105,10 @@ function Login() {
         } else if (data.id === 2) {
           const soo = extractProfileImageName(data.profileImage);
           setRight(soo);
-          console.log("Soo:", soo);
         }
       }
     } catch (error) {
-      console.log("um");
+      console.log(error);
     }
   };
 

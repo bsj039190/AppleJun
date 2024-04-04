@@ -6,10 +6,10 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 import Modal from "react-modal";
 import MapDelete from "./MapDelete";
-import "../css/app/UpperbarProfile.css";
-import "../css/app/Background.css";
-import "../css/app/MapList.css";
-import "../css/app/Modal.css";
+import "../css/UpperbarProfile.css";
+import "../css/Background.css";
+import "../css/MapList.css";
+import "../css/Modal.css";
 import DatePicker from "react-datepicker";
 
 // 모달 스타일 설정

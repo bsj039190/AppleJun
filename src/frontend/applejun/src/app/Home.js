@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../css/app/Home.css";
+import "../css/Home.css";
 import Modal from "react-modal";
 import AccountUpdate from "../account/AccountUpdate";
 

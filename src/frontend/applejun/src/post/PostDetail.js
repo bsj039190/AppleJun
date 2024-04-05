@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "../css/Background.css";
 import "../css/UpperbarProfile.css";
 import "../css/PostDetail.css";
@@ -58,7 +57,6 @@ const PostDetail = () => {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -71,7 +69,6 @@ const PostDetail = () => {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -85,9 +82,8 @@ const PostDetail = () => {
         withCredentials: true,
       });
       setPost(response.data.contents);
-      console.log(response.data.contents);
 
-      console.log(post.gps1);
+      console.log(response.data.contents.content);
     };
     fetchPostDetail();
     fetchProfile();
@@ -114,7 +110,6 @@ const PostDetail = () => {
       });
 
       setGpsList(filteredGpsList);
-      console.log(filteredGpsList);
     };
     getGps();
   }, [post]);
@@ -175,7 +170,7 @@ const PostDetail = () => {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 
@@ -227,7 +222,7 @@ const PostDetail = () => {
                   textDecoration: "none",
                 }}
               >
-                &lt;
+                &lt;&nbsp;
               </a>
               {post.title}
             </p>

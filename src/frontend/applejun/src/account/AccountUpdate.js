@@ -24,8 +24,6 @@ async function AccountUpdate(selectedProfile, uploadFile) {
           type: "application/json",
         })
       );
-      console.log(selectedProfile);
-      console.log(uploadFile);
       const profileResponse = await axios.put(
         `http://localhost:8080/profile/update/${id}`,
         formData,
@@ -34,7 +32,6 @@ async function AccountUpdate(selectedProfile, uploadFile) {
         }
       );
 
-      console.log(profileResponse.data.msg);
       const uuidAndFileName = profileResponse.data.msg;
 
       //Account 업데이트 로직
@@ -56,8 +53,6 @@ async function AccountUpdate(selectedProfile, uploadFile) {
         }
       );
 
-      console.log(accountRequest.profileImage);
-      //여기까지 다시 썼고 이제 테스트해야함, pwd도 넣으면 어떻게 되는지 확인해봐야함
       alert("수정이 완료되었습니다!");
       return 1;
     } else {

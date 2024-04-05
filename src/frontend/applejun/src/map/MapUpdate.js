@@ -7,11 +7,8 @@ function MapUpdate({ gps }) {
   const [isOpen, setIsOpen] = useState(false); // 초기값을 false로 변경
 
   useEffect(() => {
-    console.log("엄");
-
     const timer = setTimeout(() => {
       setIsOpen(true);
-      console.log("준");
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -20,8 +17,6 @@ function MapUpdate({ gps }) {
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  console.log("엄준식");
 
   return (
     <div>

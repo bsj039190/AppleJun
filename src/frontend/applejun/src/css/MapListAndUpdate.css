@@ -5,6 +5,8 @@
   margin-top: 35px;
   display: flex;
   justify-content: center;
+
+  font-family: "NanumRegular";
 }
 
 .mapListWrapper {

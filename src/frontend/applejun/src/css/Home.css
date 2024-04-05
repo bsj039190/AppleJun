@@ -26,6 +26,8 @@ body {
 
 .homeContainer {
   text-align: center;
+
+  font-family: "NanumRegular";
 }
 
 /* 상단바 css */
@@ -40,6 +42,9 @@ body {
 .upperBar p {
   justify-content: left;
   margin-right: auto;
+  color: white;
+  font-size: 21px;
+  margin-left: 25px;
 }
 
 .upperBar button {
@@ -124,6 +129,8 @@ body {
   font-size: 55px;
   color: #fb92ab;
   margin-bottom: 30px;
+
+  font-family: "Segoe UI";
 }
 
 .todayText {

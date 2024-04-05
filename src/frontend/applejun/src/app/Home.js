@@ -52,11 +52,11 @@ function Home() {
     if (filePath) {
       //원래는 replace가 맞지만 에러가 나서 직접 글자수로 잘라버림
       const fileName = filePath.substr(46);
-      console.log(`background : ${fileName}`);
+      //console.log(`background : ${fileName}`);
 
       return fileName;
     } else {
-      console.log("안됨");
+      console.log("filePath Not Found!");
     }
   };
 
@@ -79,8 +79,6 @@ function Home() {
     const timeDifference = endMidnight.getTime() - startMidnight.getTime();
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    console.log(endDate);
-
     setToday({
       year: endDate.getFullYear(),
       month: endDate.getMonth(),
@@ -90,8 +88,6 @@ function Home() {
     //시작일이 1일이기 때문에 +1을 함
     setDays(days + 1);
   };
-
-  //const fetchProfileImage = async () => {};
 
   const handleProfileSubmit = async (e, selectedProfile) => {
     e.preventDefault();
@@ -103,8 +99,6 @@ function Home() {
     } else {
       window.location.reload();
     }
-
-    console.log("엄준식");
   };
 
   const handleInputChange = (e) => {
@@ -133,9 +127,7 @@ function Home() {
 
   //OpenModal
   const profileButtonClickHandler = (profile) => {
-    console.log(profile.profileImage);
     setSelectedProfile(profile);
-    console.log(profile);
     setModalIsOpen(true);
   };
 
@@ -146,8 +138,6 @@ function Home() {
   const fetchData = async () => {
     try {
       if (currentUser !== 3) {
-        console.log(currentUser);
-
         const response = await axios.get(
           `http://localhost:8080/background/list/${currentUser}`,
           { withCredentials: true }
@@ -163,7 +153,6 @@ function Home() {
         }
       } else {
         //currentUser가 3일때
-        console.log(currentUser);
         alert("게스트 계정은 ADMIN의 배경이 보입니다.");
 
         const response = await axios.get(
@@ -186,13 +175,11 @@ function Home() {
       });
       const joonData = joon.data.contents;
       if (joonData.profileImage !== null) {
-        console.log(joonData.profileImage);
         setLeftProfileImage(joonData.profileImage);
       }
 
       if (joonData != null) {
         setLeft(joonData);
-        console.log(joonData);
       } else {
         console.log("Fail to get BSJ");
       }
@@ -208,7 +195,6 @@ function Home() {
 
       if (sooData != null) {
         setRight(sooData);
-        console.log(sooData);
 
         daysPassedCalculator();
       } else {
@@ -225,7 +211,6 @@ function Home() {
       if (storedUser) {
         const userObject = JSON.parse(storedUser);
         setCurrentUser(userObject.id);
-        console.log(userObject.id);
       }
     };
 

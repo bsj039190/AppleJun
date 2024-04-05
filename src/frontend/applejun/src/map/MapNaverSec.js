@@ -40,8 +40,6 @@ function MapNaverSec() {
     const response = axios
       .get("http://localhost:8080/gps/get/list", { withCredentials: true })
       .then((response) => {
-        console.log(response.data.contents);
-
         for (const gps of response.data.contents) {
           // gps의 아이디가 1이면 건너뛰기
           // if (gps.id === 1) {
@@ -59,8 +57,6 @@ function MapNaverSec() {
                 console.log("error");
                 return alert("Something wrong!");
               }
-
-              console.log(response.result);
 
               const result = response.result;
               const items = result.items;
@@ -94,7 +90,6 @@ function MapNaverSec() {
       infoWindow.setContent(dynamicContent);
       // InfoWindow를 열 때 명시적으로 지도 객체를 지정
       infoWindow.open(map, new navermaps.LatLng(gps.gpsLat, gps.gpsLng));
-      console.log(gps);
     } else {
       console.error("잘못된 GPS 데이터:", gps);
     }

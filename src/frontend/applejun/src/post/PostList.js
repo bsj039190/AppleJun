@@ -104,8 +104,6 @@ const PostList = () => {
         { withCredentials: true }
       );
 
-      console.log(response.data.contents);
-
       if (response.data.contents.length === 0) {
         setHasMore(false); // 불러올 데이터가 없다면 hasMore를 false로 설정
         alert("더 이상의 포스트가 없습니다.");
@@ -210,11 +208,13 @@ const PostList = () => {
           className="upperbarProfileGruopImg"
         />
 
-        <img
-          src="/logos/Heart.png"
-          alt="Heart"
-          style={{ width: "50px", height: "50px" }}
-        />
+        <a href="/home">
+          <img
+            src="/logos/Heart.png"
+            alt="Heart"
+            className="upperbarHeartLogo"
+          />
+        </a>
 
         <img
           src={`/profile-image/${right.profileImage}`}
@@ -224,13 +224,13 @@ const PostList = () => {
         <p>{right.name}</p>
       </div>
 
-      <div className="postListHomeButton">
+      {/* <div className="postListHomeButton">
         <img
           src="/logos/HomeButton.png"
           onClick={() => history.push(`/home`)}
           style={{ width: "36px", height: "36px" }}
         />
-      </div>
+      </div> */}
 
       <div className="whiteCircle">
         <div className="textContainer">
@@ -258,8 +258,6 @@ const PostList = () => {
               <p className="postTitle">{post.title}</p>
               <p className="postContents">{post.content}</p>
               <div className="postImageContainer">
-                {console.log(post.id)}
-                {console.log(post.images)}
                 {(() => {
                   const images = [];
                   for (let i = 0; i < 3; i++) {
@@ -272,7 +270,6 @@ const PostList = () => {
                         src={imgSrc}
                         alt={`Image ${i + 1}`}
                         className="postImage"
-                        onLoad={() => console.log("Image loaded successfully")}
                         onError={() => console.error("Error loading image")}
                       />
                     );

@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: "NanumLight";
+  src: url("./font/NanumSquareNeo-aLt.ttf");
+}
+
+@font-face {
+  font-family: "NanumRegular";
+  src: url("./font/NanumSquareNeo-bRg.ttf");
+}
+
+@font-face {
+  font-family: "NanumBold";
+  src: url("./font/NanumSquareNeo-cBd.ttf");
+}
+
+@font-face {
+  font-family: "NanumExtraBold";
+  src: url("./font/NanumSquareNeo-dEb.ttf");
+}
+
+@font-face {
+  font-family: "NanumHeavy";
+  src: url("./font/NanumSquareNeo-eHv.ttf");
+}

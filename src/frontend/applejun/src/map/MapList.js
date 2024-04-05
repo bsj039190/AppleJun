@@ -62,7 +62,6 @@ const MapList = () => {
         const response = await axios.get("http://localhost:8080/gps/get/list", {
           withCredentials: true,
         });
-        console.log(response);
         setApiResponse(response);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -77,7 +76,6 @@ const MapList = () => {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -90,7 +88,6 @@ const MapList = () => {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -150,12 +147,7 @@ const MapList = () => {
 
   function getMouseClickHandler(seq, mapInstance) {
     return function (e) {
-      console.log(mapInstance);
-      console.log(markers[seq].content.name);
-
       setSelectedGps(markers[seq].content);
-
-      // setModalIsOpen(true);
     };
   }
 
@@ -170,7 +162,6 @@ const MapList = () => {
   //모달 함수들
   const updateClickHandler = () => {
     setModalIsOpen(true);
-    console.log(map);
   };
 
   const closeModal = () => {
@@ -206,10 +197,8 @@ const MapList = () => {
       function (status, response) {
         if (status !== navermaps.Service.Status.OK) {
           console.log("error");
-          return alert("Something wrong!");
+          return alert("Naver Maps Error!");
         }
-
-        console.log(response.result);
 
         const result = response.result;
         const items = result.items;
@@ -234,8 +223,6 @@ const MapList = () => {
     e.preventDefault();
 
     const { id, ...gpsRequest } = selectedGps;
-    console.log(selectedGps);
-    console.log(gpsRequest);
 
     try {
       const apiResponse = await axios.put(
@@ -244,7 +231,6 @@ const MapList = () => {
         { withCredentials: true }
       );
 
-      console.log(apiResponse.data);
       alert("위치 정보 수정이 완료되었습니다!");
       setModalIsOpen(false);
       history.push("/map/list");
@@ -265,8 +251,6 @@ const MapList = () => {
     fetchProfile();
 
     if (apiResponse !== null) {
-      console.log(apiResponse);
-
       // map 변수 선언
       const mapInstance = new navermaps.Map("map", {
         center: new navermaps.LatLng(37.5121391, 126.8426069),
@@ -280,7 +264,6 @@ const MapList = () => {
       const newInfoWindows = [];
 
       const locations = apiResponse.data.contents;
-      console.log(locations);
 
       locations.forEach((location, index) => {
         if (location.id !== 1) {
@@ -400,7 +383,7 @@ const MapList = () => {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 
@@ -426,7 +409,7 @@ const MapList = () => {
           <div className="mapListButton">
             <h4>장소 상세정보</h4>
             <Link to="/map/text/list">
-              <button>리스트로 보기</button>
+              <button style={{ fontSize: "17px" }}>리스트로 보기</button>
             </Link>
           </div>
 
@@ -486,7 +469,7 @@ const MapList = () => {
                   </button>
                   <button
                     onClick={() => updateClickHandler()}
-                    className="updateButton"
+                    className="updateButtonList"
                   >
                     수정
                   </button>

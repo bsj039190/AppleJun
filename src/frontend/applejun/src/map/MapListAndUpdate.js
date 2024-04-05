@@ -76,7 +76,6 @@ function MapListAndUpdate() {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -89,7 +88,6 @@ function MapListAndUpdate() {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -115,8 +113,6 @@ function MapListAndUpdate() {
           return alert("Something wrong!");
         }
 
-        console.log(response.result);
-
         const result = response.result;
         const items = result.items;
 
@@ -140,9 +136,6 @@ function MapListAndUpdate() {
     e.preventDefault();
 
     const { id, ...gpsRequest } = selectedGps;
-    console.log(selectedGps);
-    console.log(gpsRequest);
-
     try {
       const apiResponse = await axios.put(
         `http://localhost:8080/gps/update/${selectedGps.id}`, //id추가
@@ -150,7 +143,6 @@ function MapListAndUpdate() {
         { withCredentials: true }
       );
 
-      console.log(apiResponse.data);
       alert("위치 정보 수정이 완료되었습니다!");
       setModalIsOpen(false);
       history.push("/map/list");
@@ -191,7 +183,6 @@ function MapListAndUpdate() {
 
   const openModal = (gps) => {
     setSelectedGps(gps);
-    console.log(gps);
     setModalIsOpen(true);
   };
 
@@ -268,7 +259,7 @@ function MapListAndUpdate() {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 

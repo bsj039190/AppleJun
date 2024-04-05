@@ -10,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
+  font-family: "NanumRegular";
 }
 
 .postBigContainer img {
@@ -96,6 +97,8 @@
   width: 1024px;
 
   margin-left: 73px;
+
+  white-space: pre-line;
 }
 
 .postDetailButton:hover {

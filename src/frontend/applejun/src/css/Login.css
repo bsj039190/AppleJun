@@ -18,6 +18,7 @@
   z-index: 1;
 
   color: #fb92ab;
+  font-family: "NanumRegular";
 }
 
 .loginTextContainer::after {
@@ -41,6 +42,10 @@
   border: none; /* 테두리를 없앱니다. */
   cursor: pointer; /* 마우스 커서를 포인터로 변경합니다. */
   z-index: 2;
+
+  color: #fb92ab;
+  font-size: 21px;
+  font-family: "NanumBold";
 }
 
 .loginButton img {
@@ -81,13 +86,15 @@
   overflow: hidden; /* 스크롤 막기 */
 }
 
+/* 모달 내용 */
 .modal {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-family: "NanumRegular";
 }
 
-/* 모달 내용 */
 .modal-content {
   background-color: #fff;
   padding: 20px;

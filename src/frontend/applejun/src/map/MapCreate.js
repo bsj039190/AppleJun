@@ -4,13 +4,7 @@ import { useHistory } from "react-router-dom";
 import "../css/Background.css";
 import "../css/UpperbarProfile.css";
 import "../css/MapCreate.css";
-import {
-  Container as MapDiv,
-  NaverMap,
-  Marker,
-  useNavermaps,
-  Container,
-} from "react-naver-maps";
+import { Container as MapDiv, useNavermaps } from "react-naver-maps";
 
 function MapCreate() {
   const [gpsRequest, setGpsrequest] = useState({
@@ -58,7 +52,6 @@ function MapCreate() {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractProfileImageName(joonData.profileImage),
@@ -71,7 +64,6 @@ function MapCreate() {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractProfileImageName(sooData.profileImage),
@@ -97,10 +89,8 @@ function MapCreate() {
       function (status, response) {
         if (status !== navermaps.Service.Status.OK) {
           console.log("error");
-          return alert("Something wrong!");
+          return alert("Naver Maps Error!");
         }
-
-        console.log(response.result);
 
         const result = response.result;
         const items = result.items;
@@ -144,7 +134,6 @@ function MapCreate() {
           { withCredentials: true }
         );
 
-        console.log(apiResponse.data);
         alert("위치 정보 추가가 완료되었습니다!");
         history.push("/map/list");
       } catch (error) {
@@ -161,7 +150,6 @@ function MapCreate() {
       if (storedUser) {
         const userObject = JSON.parse(storedUser);
         setCurrentUser(userObject.id);
-        console.log(userObject.id);
       }
     };
 
@@ -181,7 +169,6 @@ function MapCreate() {
         center: new navermaps.LatLng(gps.gpsLat, gps.gpsLng),
         zoom: 19,
       });
-      console.log(mapInstance);
       setMapInstance(mapInstance);
 
       marker.setMap(mapInstance);

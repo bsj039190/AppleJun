@@ -10,7 +10,6 @@ const Logout = () => {
       const response = await axios.post("/logout");
 
       // 로그아웃이 성공하면 적절한 동작 수행
-      console.log(response.data); // 서버에서 반환한 데이터 출력 또는 다른 동작 수행
       alert("로그아웃 성공!");
       history.push("/");
     } catch (error) {

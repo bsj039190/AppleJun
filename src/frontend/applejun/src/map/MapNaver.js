@@ -22,8 +22,6 @@ const MapNaver = () => {
           withCredentials: true,
         });
 
-        console.log(isMounted);
-
         if (!isMounted) return; // Check if the component is still mounted
 
         const map = new navermaps.Map("map", {
@@ -63,32 +61,19 @@ const MapNaver = () => {
           };
         });
 
-        console.log(markers);
-
-        console.log(map);
-
-        // var marker = new navermaps.Marker(markers);
-
-        // console.log(marker);
-
         markers.forEach((marker) => {
           // position이 유효한 경우에만 Marker를 생성하도록 검사
           if (marker.position) {
-            console.log("엄");
-
             const naverMarker = new navermaps.Marker({
               ...marker,
               marker,
             });
-
-            console.log("준");
 
             if (!naverMarker) {
               console.error("Failed to create the navermaps.Marker object.");
               return; // 중단하여 계속 진행하지 않음
             }
           }
-          console.log("식");
 
           const infoWindow = new navermaps.InfoWindow({
             content: (

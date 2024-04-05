@@ -44,7 +44,6 @@ const PostWrite = () => {
         withCredentials: true,
       });
       setGpsList(response.data.contents);
-      console.log(response.data.contents);
     } catch (error) {
       console.error("Error fetching GPS list:", error);
     }
@@ -57,7 +56,6 @@ const PostWrite = () => {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -70,7 +68,6 @@ const PostWrite = () => {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -84,7 +81,6 @@ const PostWrite = () => {
       ...postRequest,
       [name]: value,
     });
-    console.log(name, ":", value);
   };
 
   const handleFileChange = (e) => {
@@ -93,12 +89,10 @@ const PostWrite = () => {
 
     // 이미지 미리보기 생성
     const previews = Array.from(files).map((file) => URL.createObjectURL(file));
-    console.log(previews);
     setImagePreviews(previews);
   };
 
   const handleDateChange = (date) => {
-    console.log(date);
     setPostRequest({
       ...postRequest,
       date,
@@ -115,8 +109,6 @@ const PostWrite = () => {
 
     if (currentUser != 3) {
       const formData = new FormData();
-
-      console.log(postRequest);
 
       if (fileList.length > 3) {
         alert("사진은 최대 3장까지만 가능합니다.");
@@ -138,7 +130,6 @@ const PostWrite = () => {
         })
       );
 
-      console.log([...formData]);
       try {
         const response = await axios.post(
           "http://localhost:8080/post/create",
@@ -146,7 +137,6 @@ const PostWrite = () => {
           { withCredentials: true }
         );
 
-        console.log(response.data);
         alert("작성을 완료하였습니다!");
         history.push("/post/get/list");
       } catch (error) {
@@ -239,7 +229,7 @@ const PostWrite = () => {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 
@@ -277,7 +267,7 @@ const PostWrite = () => {
               textDecoration: "none",
             }}
           >
-            &lt;
+            &lt;&nbsp;
           </a>
           글 작성하기
         </p>
@@ -482,7 +472,6 @@ const PostWrite = () => {
                     }
                   }
                 } else {
-                  console.log("왜?");
                   for (let i = 0; i < 3; i++) {
                     images.push(
                       <img

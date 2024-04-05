@@ -1,10 +1,6 @@
 import axios from "axios";
 
 const BackgroundUpload = async (uploadFile, backgroundRequest) => {
-  console.log("엄준식");
-
-  console.log(backgroundRequest);
-
   const formData = new FormData();
 
   if (uploadFile == null) {
@@ -19,7 +15,6 @@ const BackgroundUpload = async (uploadFile, backgroundRequest) => {
     new Blob([JSON.stringify(backgroundRequest)], { type: "application/json" })
   );
 
-  console.log([...formData]);
   const upload = async () => {
     try {
       const response = await axios.post(
@@ -28,12 +23,12 @@ const BackgroundUpload = async (uploadFile, backgroundRequest) => {
         { withCredentials: true }
       );
 
-      console.log(response.data);
       alert("작성을 완료하였습니다!");
 
       return 1;
     } catch (error) {
       console.log(error);
+      alert("업로드 실패!");
       return 0;
     }
   };

@@ -8,6 +8,8 @@
   margin-top: 32px;
 
   height: 150vh;
+
+  font-family: "NanumRegular";
 }
 
 .postWriteBoder {
@@ -26,6 +28,8 @@
   margin: 10px 20px;
   width: 1135px;
   height: 480px;
+
+  resize: none;
 }
 
 .postWriteGpsContainer {

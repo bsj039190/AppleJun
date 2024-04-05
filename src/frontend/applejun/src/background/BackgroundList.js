@@ -88,7 +88,6 @@ function BackgroundList() {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -101,7 +100,6 @@ function BackgroundList() {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -115,7 +113,6 @@ function BackgroundList() {
       if (storedUser) {
         const userObject = JSON.parse(storedUser);
         setCurrentUser(userObject.id);
-        console.log(userObject.id);
       }
     };
 
@@ -127,7 +124,6 @@ function BackgroundList() {
     const fetchGetImageList = async (id) => {
       if (id !== 0) {
         // currentUser가 0이 아닌 경우에만 실행
-        console.log(currentUser);
         try {
           if (id == 3) {
             const response = await axios.get(
@@ -208,7 +204,7 @@ function BackgroundList() {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 

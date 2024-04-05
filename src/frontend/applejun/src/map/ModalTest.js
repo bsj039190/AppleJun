@@ -18,7 +18,6 @@ const ModalTest = () => {
         const response = await axios.get("http://localhost:8080/gps/get/list", {
           withCredentials: true,
         });
-        console.log(response);
         setApiResponse(response);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,8 +29,6 @@ const ModalTest = () => {
     fetchData(); // 함수 호출
 
     if (apiResponse !== null) {
-      console.log(apiResponse);
-
       // map 변수 선언
       const mapInstance = new navermaps.Map("map", {
         center: new navermaps.LatLng(37.5121391, 126.8426069),
@@ -45,7 +42,6 @@ const ModalTest = () => {
       const newInfoWindows = [];
 
       const locations = apiResponse.data.contents;
-      console.log(locations);
 
       locations.forEach((location, index) => {
         if (location.id !== 1) {
@@ -128,7 +124,6 @@ const ModalTest = () => {
 
   function getMouseClickHandler(seq, mapInstance) {
     return function (e) {
-      console.log(infoWindows[seq].url);
       const url = infoWindows[seq].url;
       alert("해당 url로 이동합니다");
       window.open(url, "_blank");

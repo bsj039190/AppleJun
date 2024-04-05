@@ -83,8 +83,6 @@ const PostUpdate = () => {
       new Blob([JSON.stringify(updatedPost)], { type: "application/json" })
     );
 
-    console.log([...formData]);
-
     try {
       await axios.put(`http://localhost:8080/post/update/${id}`, formData, {
         withCredentials: true,
@@ -104,7 +102,6 @@ const PostUpdate = () => {
         withCredentials: true,
       });
       setGpsList(response.data.contents);
-      console.log(response.data.contents);
     } catch (error) {
       console.error("Error fetching GPS list:", error);
     }
@@ -117,7 +114,6 @@ const PostUpdate = () => {
 
     const joonData = joon.data.contents;
     if (joonData !== null) {
-      console.log(joonData);
       setLeft({
         name: joonData.name,
         profileImage: extractFileNameAddPath(joonData.profileImage),
@@ -130,7 +126,6 @@ const PostUpdate = () => {
 
     const sooData = soo.data.contents;
     if (sooData !== null) {
-      console.log(sooData);
       setRight({
         name: sooData.name,
         profileImage: extractFileNameAddPath(sooData.profileImage),
@@ -157,7 +152,6 @@ const PostUpdate = () => {
           }
         );
         setPost(postResponse.data.contents);
-        console.log(postResponse.data.contents);
 
         // 포스트 정보가 있으면, 해당 정보를 사용하여 updatedPost 초기값 설정
         if (postResponse.data.contents) {
@@ -198,7 +192,6 @@ const PostUpdate = () => {
         (image) => `/post-image/${extractFileNameAddPath(image)}`
       );
       setImagePreviews(previews);
-      console.log(previews);
     }
   }, [post.images]);
 
@@ -258,7 +251,7 @@ const PostUpdate = () => {
           <img
             src="/logos/Heart.png"
             alt="Heart"
-            style={{ width: "50px", height: "50px" }}
+            className="upperbarHeartLogo"
           />
         </a>
 

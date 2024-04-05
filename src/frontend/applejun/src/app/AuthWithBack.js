@@ -1,5 +1,5 @@
 function AuthWithBack() {
-  console.log("엄");
+  console.log("AuthWithBack");
 }
 
 export default AuthWithBack;

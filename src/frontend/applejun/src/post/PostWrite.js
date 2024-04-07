@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import "../css/UpperbarProfile.css";
 import "../css/Background.css";
 import "../css/PostWrite.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const PostWrite = () => {
   const [postRequest, setPostRequest] = useState({
@@ -368,6 +369,12 @@ const PostWrite = () => {
                     </option>
                   ))}
                 </select>
+              </label>
+
+              <label>
+                <a href="/map/create">
+                  <button>새로운 장소</button>
+                </a>
               </label>
             </div>
 

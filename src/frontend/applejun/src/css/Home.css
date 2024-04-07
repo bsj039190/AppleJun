@@ -10,12 +10,12 @@ body {
 .homeBackground {
   z-index: -2;
 
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 0px;
   /* filter: brightness(70%); 다른것들까지 다같이 어두워짐 뭔가 조치가 필요함 */
-  object-fit: cover; /* 이미지가 부모 요소에 맞게 늘어나도록 설정 */
+  object-fit: fill; /* 이미지가 부모 요소에 맞게 늘어나도록 설정 */
 }
 
 .homeContent {

@@ -59,6 +59,8 @@
 ### [프로필 수정]
 프로필 사진 클릭시 프로필을 수정할 수 있습니다.
 
+![ProfileUpdate](https://github.com/bsj039190/AppleJun/assets/81723581/9f1d1ffd-f402-4fc6-a42e-3f489578ddf9)
+
 
 ### [헤더]
 

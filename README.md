@@ -42,7 +42,7 @@
 사용자 선택 후 비밀번호 입력으로 로그인 할 수 있습니다.
 <게스트 계정은 로그인 과정없이 바로 접속합니다.>
 
-![Login](https://github.com/bsj039190/AppleJun/assets/81723581/b7ea0fbc-8eae-4d35-a9c1-f199a63f3973)
+![Login](https://github.com/bsj039190/AppleJun/assets/81723581/6c04ee86-fec9-49bb-84c4-090853476893)
 
 
 ### [홈화면]

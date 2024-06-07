@@ -41,9 +41,12 @@ const PostWrite = () => {
 
   const getGps = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/gps/get/list", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://localhost:8080/gps/get/list?size=30&page=0",
+        {
+          withCredentials: true,
+        }
+      );
       setGpsList(response.data.contents);
     } catch (error) {
       console.error("Error fetching GPS list:", error);

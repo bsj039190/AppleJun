@@ -59,9 +59,12 @@ const MapList = () => {
   const fetchData = async () => {
     if (apiResponse === null) {
       try {
-        const response = await axios.get("http://localhost:8080/gps/get/list", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "http://localhost:8080/gps/get/list?size=30&page=0",
+          {
+            withCredentials: true,
+          }
+        );
         setApiResponse(response);
       } catch (error) {
         console.error("Error fetching data:", error);

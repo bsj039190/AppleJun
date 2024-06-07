@@ -92,29 +92,29 @@
 
 
 ### [스토리 작성]
-
-스토리를 작성합니다.
+* * *
+1. 스토리를 작성합니다.
 
 ![StoryWrite1](https://github.com/bsj039190/AppleJun/assets/81723581/2a1ca338-6d72-4cdb-89b5-6153a921b399)
 
 
 
-
-좌표는 최대 3개까지 정할 수 있습니다.
+* * *
+2. 좌표는 최대 3개까지 정할 수 있습니다.
 
 ![StoryWrite2](https://github.com/bsj039190/AppleJun/assets/81723581/82f62a03-4a66-4b24-b28f-3fd8871b983d)
 
 
 
-
-사진은 최대 3개까지 업로드 할 수 있습니다.
+* * *
+3. 사진은 최대 3개까지 업로드 할 수 있습니다.
 
 ![StoryWrite3](https://github.com/bsj039190/AppleJun/assets/81723581/11c12bc2-0fdf-4fb3-804c-522c1657f06a)
 
 
 
-
-작성자는 자동으로 업로드 되고 게스트 계정은 업로드 할 수 없습니다.
+* * *
+4. 작성자는 자동으로 업로드 되고 게스트 계정은 업로드 할 수 없습니다.
 
 ![StoryWriteGuest](https://github.com/bsj039190/AppleJun/assets/81723581/007bb0d8-0369-4c0e-8201-f6a00d5f7cbb)
 
@@ -129,17 +129,17 @@
 
 ![Map1](https://github.com/bsj039190/AppleJun/assets/81723581/5ece25ae-1a80-4c86-9b61-5814a4544c53)
 
-
-<URL 이동> : 해당하는 위치의 URL을 새창으로 이동합니다.
+* * *
+1. <URL 이동> : 해당하는 위치의 URL을 새창으로 이동합니다.
 
 ![Map2](https://github.com/bsj039190/AppleJun/assets/81723581/c78d6997-1000-4ac0-ac10-7bcdfd2568c3)
 
-
-<수정> : 모달 창을 열고 해당 좌표를 수정합니다.
+* * *
+2. <수정> : 모달 창을 열고 해당 좌표를 수정합니다.
 
 ![Map3](https://github.com/bsj039190/AppleJun/assets/81723581/7d0a9ac6-db93-46c1-99f5-bd3ef2dee794)
 
-
+* * *
 <삭제> : 해당 좌표를 삭제합니다.
 
 
@@ -162,13 +162,15 @@
 
 새로운 장소를 생성합니다.
 
-&lt;GPS변환&gt; : 버튼을 클릭하면 해당 주소의 위도, 경도 값이 입력됩니다.   
+
+* * *
+1. &lt;GPS변환&gt; : 버튼을 클릭하면 해당 주소의 위도, 경도 값이 입력됩니다.   
 
 ![MapCreate2](https://github.com/bsj039190/AppleJun/assets/81723581/d704067b-b93d-49cb-b5e8-05b74a950394)
 
 
-
-&lt;URL 수정&gt; : 버튼을 클릭하면 네이버 지도에서 이름으로 기록된 검색어가 자동으로 검색됩니다.
+* * *
+2. &lt;URL 수정&gt; : 버튼을 클릭하면 네이버 지도에서 이름으로 기록된 검색어가 자동으로 검색됩니다.
 
 ![MapCreate1](https://github.com/bsj039190/AppleJun/assets/81723581/c4f538c1-ae80-4e6b-a04a-89427c7d3030)
 
@@ -182,7 +184,7 @@
 
 ![Back1](https://github.com/bsj039190/AppleJun/assets/81723581/7fa1149f-755e-450b-9a86-cbc914cbb3c4)
 
-
+* * *
 ![Back2](https://github.com/bsj039190/AppleJun/assets/81723581/da221be0-bb66-46a3-9667-35ec7172525e)
 
 

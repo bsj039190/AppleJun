@@ -66,7 +66,7 @@
 
 헤더에는 현재 위치한 페이지가 어떤 기능인지 알려주고 프로필 사이의 하트를 누르면 홈화면으로 이동합니다.
 
-![Header](https://github.com/bsj039190/AppleJun/assets/81723581/a7d0e6a4-2a4b-4761-b549-6e0e7e24d8db)
+![Header](https://github.com/bsj039190/AppleJun/assets/81723581/0b2726ee-2a48-4f9d-8019-16dd0c664802)
 
 
 

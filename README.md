@@ -98,14 +98,20 @@
 ![StoryWrite1](https://github.com/bsj039190/AppleJun/assets/81723581/2a1ca338-6d72-4cdb-89b5-6153a921b399)
 
 
+
+
 좌표는 최대 3개까지 정할 수 있습니다.
 
 ![StoryWrite2](https://github.com/bsj039190/AppleJun/assets/81723581/82f62a03-4a66-4b24-b28f-3fd8871b983d)
 
 
+
+
 사진은 최대 3개까지 업로드 할 수 있습니다.
 
 ![StoryWrite3](https://github.com/bsj039190/AppleJun/assets/81723581/11c12bc2-0fdf-4fb3-804c-522c1657f06a)
+
+
 
 
 작성자는 자동으로 업로드 되고 게스트 계정은 업로드 할 수 없습니다.
